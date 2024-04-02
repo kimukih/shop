@@ -1,29 +1,91 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
+<!-- Controller Layer -->
 <%
-	//로그인 인증 분기
+	// 로그인 인증 분기
 	if(session.getAttribute("loginEmp") == null){
 	response.sendRedirect("/shop/emp/empLoginForm.jsp");
 	return;
 }
 %>
 
+
 <%
-	// emp 멤버들의 정보를 DB에서 가져오기 위한 쿼리
+	// 페이징 코드
+	// 요청값 분석
+	int currentPage = 1;
+	if(request.getParameter("currentPage") != null){
+		currentPage = Integer.parseInt(request.getParameter("currentPage"));
+	}
+	System.out.println("currentPage : " + currentPage);
+	
+	// 한 페이지당 출력할 게시물 수
+	int rowPerPage = 10;
+	
+	// 페이지마다 시작점이 되는 게시물의 번호
+	int startRow = (currentPage - 1) * rowPerPage;
+	
+	// 화면에 표시할 직원리스트 개수 DB에서 가져오기
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = null;
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
 	
-	String empListSql = "SELECT emp_id empId, emp_name empName, emp_job empJob, hire_date hireDate, active FROM emp ORDER BY active, hire_date DESC";
+	String empCntSql = "SELECT COUNT(*) cnt FROM emp";
+	PreparedStatement empCntStmt = null;
+	ResultSet empCntRs = null;
+	
+	empCntStmt = conn.prepareStatement(empCntSql);
+	empCntRs = empCntStmt.executeQuery();
+	
+	int empCnt = 0;
+	while(empCntRs.next()){
+		empCnt = empCntRs.getInt("cnt");
+	}
+	System.out.println("empCnt : " + empCnt);
+	
+	// 가장 마지막 페이지
+	int lastPage = empCnt / rowPerPage;
+	if(empCnt % rowPerPage != 0){
+		lastPage = empCnt / rowPerPage + 1;
+	}
+%>
+
+<!-- Model Layer -->
+<%
+	// emp 멤버들의 정보를 DB에서 가져오기 위한 쿼리
+	// 특수한 형태의 데이터(RDBMS:mariadb)
+	// 특정 데이터에 맞는 API를 사용하여 자료구조(ResultSet)을 취득하고
+	// 일반화된 자료구조로 변경 (ArrayList<HashMap>) --> 모델 취득
+	// ex) 데이터 : RDBMS, API : JDBC
+	
+	String empListSql = "SELECT emp_id empId, emp_name empName, emp_job empJob, hire_date hireDate, active FROM emp ORDER BY hire_date DESC LIMIT ?, ?";
 	PreparedStatement empListStmt = null;
 	ResultSet empListRs = null;
 	
 	empListStmt = conn.prepareStatement(empListSql);
+	empListStmt.setInt(1, startRow);
+	empListStmt.setInt(2, rowPerPage);
 	System.out.println("empListStmt : " + empListStmt);
 	
-	empListRs = empListStmt.executeQuery();
+	empListRs = empListStmt.executeQuery();	
+	// JDBC API에 종속된 자료구조 모델 --> 기본 API 자료구조 모델로 변경(List)
+	
+	ArrayList<HashMap<String, Object>> list
+	= new ArrayList<HashMap<String, Object>>();
+	
+	while(empListRs.next()){
+		HashMap<String, Object> m = new HashMap<String, Object>();
+		m.put("empId", empListRs.getString("empId"));
+		m.put("empName", empListRs.getString("empName"));
+		m.put("empJob", empListRs.getString("empJob"));
+		m.put("hireDate", empListRs.getString("hireDate"));
+		m.put("active", empListRs.getString("active"));
+		list.add(m);
+	}
 %>
+<!-- View Layer -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,26 +110,35 @@
 		
 		.table{
 			text-align: center;
-			width: 600px;
-			margin-left: 130px;
+			width: 700px;
+			margin-left: 80px;
 		}
 		
 		a{
 			text-decoration: none;
+		}
+		
+		a.page-link{
+			color: #000000;
+		}
+		
+		a.page-link:hover{
+			background-color: #000000;
+			color: #FFFFFF;
 		}
 	</style>
 </head>
 <body>
 	<div class="container">
 	<div class="header">
-	<span><a class="btn btn-dark" style="color: white" href="/shop/emp/empLogout.jsp?session=<%=session.getAttribute("loginEmp")%>">로그아웃</a></span>
-	<span><a class="btn btn-dark" style="color: white" href="/shop/emp/empList.jsp">이전</a></span>
+	<span><a class="btn btn-outline-dark" href="/shop/emp/empLogout.jsp?session=<%=session.getAttribute("loginEmp")%>">로그아웃</a></span>
+	<span><a class="btn btn-outline-dark" href="/shop/emp/empList.jsp">이전</a></span>
 	</div>
 		<div class="row">
 			<div class="col"></div>
 			<div class="main col-8">
 			<!-- 메인 내용 시작 -->
-				<h1>직원 목록</h1>
+				<h1>직원 리스트</h1>
 				<br>
 				<table class="table table-hover" border=1>
 					<tr>
@@ -78,19 +149,61 @@
 						<td>active</td>
 					</tr>
 					<%
-					while(empListRs.next()){
+					for(HashMap<String, Object> m : list){
+						
 					%>
+					<!-- (String)m.get("empId") <-- err
+						 String타입으로 형변환 할 때 m.get()값 전체에 괄호를 씌워주지 않으면 에러발생 -->
 						<tr>
-							<td><%=empListRs.getString("empId")%></td>
-							<td><%=empListRs.getString("empName")%></td>
-							<td><%=empListRs.getString("empJob")%></td>
-							<td><%=empListRs.getString("hireDate")%></td>
-							<td><a class="btn btn-dark" href="/shop/emp/modifyEmpActive.jsp?empId=<%=empListRs.getString("empId")%>&active=<%=empListRs.getString("active")%>"><%=empListRs.getString("active")%></a></td>
+							<td><%=(String)(m.get("empId"))%></td>
+							<td><%=(String)(m.get("empName"))%></td>
+							<td><%=(String)(m.get("empJob"))%></td>
+							<td><%=(String)(m.get("hireDate"))%></td>
+							<td><a class="btn btn-outline-dark" href="/shop/emp/modifyEmpActive.jsp?empId=<%=(String)(m.get("empId"))%>&active=<%=(String)(m.get("active"))%>"><%=(String)(m.get("active"))%></a></td>
 						</tr>
 					<%
 					}
+					// JDBC 자원의 사용이 끝났다면 반납
+					empCntRs.close();
+					empCntStmt.close();
+					
+					empListRs.close();
+					empListStmt.close();
+					
+					conn.close();
 					%>
 				</table>
+				<br>
+				<div class="page">
+					<nav aria-label="Page navigation">
+					  <ul class="pagination justify-content-center">
+					  <%
+					  	if(currentPage > 1 && currentPage < lastPage){
+					  %>
+					  		<li class="page-item"><a class="page-link" href="/shop/emp/empList.jsp?currentPage=1">&laquo;</a></li>
+					    	<li class="page-item"><a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=currentPage-1%>">&lsaquo;</a></li>
+					    	<li class="page-item"><a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=currentPage%>"><%=currentPage%></a></li>
+					    	<li class="page-item"><a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
+					    	<li class="page-item"><a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=lastPage%>">&raquo;</a></li>
+					  <%
+					  	}else if(currentPage == 1){
+					  %>
+					  		<li class="page-item"><a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=currentPage%>"><%=currentPage%></a></li>
+					  		<li class="page-item"><a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
+					    	<li class="page-item"><a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=lastPage%>">&raquo;</a></li>
+					  <%
+					  	}else if(currentPage == lastPage){
+					  %>
+					  		<li class="page-item"><a class="page-link" href="/shop/emp/empList.jsp?currentPage=1">&laquo;</a></li>
+					    	<li class="page-item"><a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=currentPage-1%>">&lsaquo;</a></li>
+					  		<li class="page-item"><a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=currentPage%>"><%=currentPage%></a></li>
+					  <%
+					  	}
+					  %>
+					    
+					  </ul>
+					</nav>
+				</div>
 			<!-- 메인 내용 끝 -->
 			</div>
 			<div class="col"></div>
