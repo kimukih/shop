@@ -32,6 +32,16 @@
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap')
+	</style>
+	<style>
+		.container{
+			font-family: "Noto Sans KR", sans-serif;
+  			font-optical-sizing: auto;
+  			font-weight: <weight>;
+  			font-style: normal;
+		}
+	
 		.main{
 			text-align: center;
 		}
@@ -58,7 +68,8 @@
 			<div class="main col-8">
 			<!-- 메인 내용 시작 -->
 				<h1>직원 목록</h1>
-				<table class="table table-hover table-striped">
+				<br>
+				<table class="table table-hover" border=1>
 					<tr>
 						<td>empId</td>
 						<td>empName</td>
