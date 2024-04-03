@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
+<%@ page import="java.lang.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
 <!-- Controller Layer -->
@@ -60,7 +61,7 @@
 	// 일반화된 자료구조로 변경 (ArrayList<HashMap>) --> 모델 취득
 	// ex) 데이터 : RDBMS, API : JDBC
 	
-	String empListSql = "SELECT emp_id empId, emp_name empName, emp_job empJob, hire_date hireDate, active FROM emp ORDER BY hire_date DESC LIMIT ?, ?";
+	String empListSql = "SELECT emp_id empId, emp_name empName, grade, emp_job empJob, hire_date hireDate, active FROM emp ORDER BY hire_date DESC LIMIT ?, ?";
 	PreparedStatement empListStmt = null;
 	ResultSet empListRs = null;
 	
@@ -82,6 +83,7 @@
 		m.put("empJob", empListRs.getString("empJob"));
 		m.put("hireDate", empListRs.getString("hireDate"));
 		m.put("active", empListRs.getString("active"));
+		m.put("grade", empListRs.getInt("grade"));
 		list.add(m);
 	}
 %>
@@ -159,7 +161,20 @@
 							<td><%=(String)(m.get("empName"))%></td>
 							<td><%=(String)(m.get("empJob"))%></td>
 							<td><%=(String)(m.get("hireDate"))%></td>
-							<td><a class="btn btn-outline-dark" href="/shop/emp/modifyEmpActive.jsp?empId=<%=(String)(m.get("empId"))%>&active=<%=(String)(m.get("active"))%>"><%=(String)(m.get("active"))%></a></td>
+					<%
+							if((Integer)(m.get("grade")) > 0){
+								System.out.println("grade : " + (Integer)(m.get("grade")));
+					%>
+								
+								<td><a class="btn btn-outline-dark" href="/shop/emp/modifyEmpActive.jsp?empId=<%=(String)(m.get("empId"))%>&active=<%=(String)(m.get("active"))%>"><%=(String)(m.get("active"))%></a></td>					
+					<%
+							}else{
+								System.out.println("grade : " + (Integer)(m.get("grade")));
+					%>			
+								<td><a class="btn btn-outline-dark disabled" href="/shop/emp/modifyEmpActive.jsp?empId=<%=(String)(m.get("empId"))%>&active=<%=(String)(m.get("active"))%>"><%=(String)(m.get("active"))%></a></td>
+					<%
+							}
+					%>
 						</tr>
 					<%
 					}
