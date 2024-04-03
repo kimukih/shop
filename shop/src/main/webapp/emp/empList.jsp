@@ -133,7 +133,10 @@
 <body>
 	<div class="container">
 	<div class="header">
-	<span><a class="btn btn-outline-dark" href="/shop/emp/empLogout.jsp?session=<%=session.getAttribute("loginEmp")%>">로그아웃</a></span>
+	<!-- empMenu.jsp include : 서버 기준으로 페이지 요청 vs redirect(클라이언트 기준) -->
+	<!-- 주체가 서버이기 때문에 include할 때에는 절대주소가 /shop/... 으로 시작하지 않는다 -->
+	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
+	<span><a class="btn btn-outline-dark" href="/shop/emp/empLogout.jsp">로그아웃</a></span>
 	<span><a class="btn btn-outline-dark" href="/shop/emp/empList.jsp">이전</a></span>
 	</div>
 		<div class="row">
@@ -162,22 +165,22 @@
 							<td><%=(String)(m.get("empJob"))%></td>
 							<td><%=(String)(m.get("hireDate"))%></td>
 					<%
-							if((Integer)(m.get("grade")) > 0){
-								System.out.println("grade : " + (Integer)(m.get("grade")));
+							HashMap<String, Object> sm = (HashMap<String, Object>)(session.getAttribute("loginEmp"));
+								if((Integer)(sm.get("grade")) > 0){
 					%>
 								
 								<td><a class="btn btn-outline-dark" href="/shop/emp/modifyEmpActive.jsp?empId=<%=(String)(m.get("empId"))%>&active=<%=(String)(m.get("active"))%>"><%=(String)(m.get("active"))%></a></td>					
 					<%
 							}else{
-								System.out.println("grade : " + (Integer)(m.get("grade")));
-					%>			
+					%>
 								<td><a class="btn btn-outline-dark disabled" href="/shop/emp/modifyEmpActive.jsp?empId=<%=(String)(m.get("empId"))%>&active=<%=(String)(m.get("active"))%>"><%=(String)(m.get("active"))%></a></td>
 					<%
 							}
+					}
 					%>
+						
 						</tr>
 					<%
-					}
 					// JDBC 자원의 사용이 끝났다면 반납
 					empCntRs.close();
 					empCntStmt.close();
