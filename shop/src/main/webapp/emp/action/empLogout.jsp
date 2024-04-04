@@ -5,6 +5,6 @@
 <%@ page import="java.net.URLEncoder"%>
 <%
 		session.invalidate();
-		response.sendRedirect("/shop/emp/empLoginForm.jsp");
+		response.sendRedirect("/shop/emp/form/empLoginForm.jsp");
 	
 %>

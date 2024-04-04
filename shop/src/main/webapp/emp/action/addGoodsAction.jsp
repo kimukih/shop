@@ -8,7 +8,7 @@
 	request.setCharacterEncoding("UTF-8");
 	// 로그인 인증 분기
 	if(session.getAttribute("loginEmp") == null){
-	response.sendRedirect("/shop/emp/empLoginForm.jsp");
+	response.sendRedirect("/shop/emp/form/empLoginForm.jsp");
 	return;
 	}
 %>
@@ -25,6 +25,7 @@
 	int goodsPrice = Integer.parseInt(request.getParameter("goodsPrice"));
 	int goodsAmount = Integer.parseInt(request.getParameter("goodsAmount"));
 	String goodsContent = request.getParameter("goodsContent");
+	String pics = request.getParameter("pics");
 	
 	System.out.println("category : " + category);
 	System.out.println("empId : " + empId);
@@ -32,12 +33,13 @@
 	System.out.println("goodsPrice : " + goodsPrice);
 	System.out.println("goodsAmount : " + goodsAmount);
 	System.out.println("goodsContent : " + goodsContent);
+	System.out.println("pics : " + pics);
 	
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = null;
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
 	
-	String addGoodsSql = "INSERT INTO goods(category, emp_id, goods_title, goods_content, goods_price, goods_amount) VALUES(?, ?, ?, ?, ?, ?)";
+	String addGoodsSql = "INSERT INTO goods(category, emp_id, goods_title, goods_content, goods_price, goods_amount, pics) VALUES(?, ?, ?, ?, ?, ?, ?)";
 	
 	PreparedStatement addGoodsStmt = null;
 	addGoodsStmt = conn.prepareStatement(addGoodsSql);
@@ -47,6 +49,7 @@
 	addGoodsStmt.setString(4, goodsContent);
 	addGoodsStmt.setInt(5, goodsPrice);
 	addGoodsStmt.setInt(6, goodsAmount);
+	addGoodsStmt.setString(7, pics);
 	
 	System.out.println("addGoodsStmt : " + addGoodsStmt);
 	
@@ -59,7 +62,7 @@
 		response.sendRedirect("/shop/emp/goodsList.jsp");
 	}else{
 		System.out.println("상품 추가 실패");
-		response.sendRedirect("/shop/emp/addGoodsForm.jsp");
+		response.sendRedirect("/shop/emp/form/addGoodsForm.jsp");
 	}
 	// response.sendRedirect("/shop/emp/goodsList.jsp")
 %>

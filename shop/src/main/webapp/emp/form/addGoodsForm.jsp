@@ -7,7 +7,7 @@
 <%
 	// 로그인 인증 분기
 	if(session.getAttribute("loginEmp") == null){
-	response.sendRedirect("/shop/emp/empLoginForm.jsp");
+	response.sendRedirect("/shop/emp/form/empLoginForm.jsp");
 	return;
 }
 %>
@@ -84,7 +84,7 @@
 	<!-- empMenu.jsp include : 서버 기준으로 페이지 요청 vs redirect(클라이언트 기준) -->
 	<!-- 주체가 서버이기 때문에 include할 때에는 절대주소가 /shop/... 으로 시작하지 않는다 -->
 	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
-	<span><a class="btn btn-outline-dark" href="/shop/emp/empLogout.jsp">로그아웃</a></span>
+	<span><a class="btn btn-outline-dark" href="/shop/emp/action/empLogout.jsp">로그아웃</a></span>
 	<span><a class="btn btn-outline-dark" href="/shop/emp/goodsList.jsp">이전</a></span>
 	</div>
 		<div class="row">
@@ -92,7 +92,7 @@
 			<div class="main col-8">
 			<!-- 메인 내용 시작 -->
 			<h1>상품등록</h1>
-			<form method="post" action="/shop/emp/addGoodsAction.jsp">
+			<form method="post" action="/shop/emp/action/addGoodsAction.jsp">
 			<table class="table category table-hover" border=1>
 				<tr>
 					<td>카테고리 : </td>
@@ -128,6 +128,10 @@
 				<tr>
 					<td>내용 : </td>
 					<td><textarea rows="5" cols="50" name="goodsContent"></textarea></td>
+				</tr>
+				<tr>
+					<td>이미지 첨부 : </td>
+					<td><input type="text" name="goodsAmount" placeholder="PNG 이미지 명을 입력해주세요. ex) pics.png"></td>
 				</tr>
 				</table>
 				<div>

@@ -57,7 +57,7 @@
 		return;
 	}else{
 		String msg = URLEncoder.encode("로그인 정보가 일치하지 않습니다. 다시 시도해주세요.", "UTF-8");
-		response.sendRedirect("/shop/emp/empLoginForm.jsp?msg=" + msg);
+		response.sendRedirect("/shop/emp/form/empLoginForm.jsp?msg=" + msg);
 		return;
 	}
 %>
