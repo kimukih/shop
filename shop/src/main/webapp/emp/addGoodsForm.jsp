@@ -85,7 +85,7 @@
 	<!-- 주체가 서버이기 때문에 include할 때에는 절대주소가 /shop/... 으로 시작하지 않는다 -->
 	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
 	<span><a class="btn btn-outline-dark" href="/shop/emp/empLogout.jsp">로그아웃</a></span>
-	<span><a class="btn btn-outline-dark" href="/shop/emp/empList.jsp">이전</a></span>
+	<span><a class="btn btn-outline-dark" href="/shop/emp/goodsList.jsp">이전</a></span>
 	</div>
 		<div class="row">
 			<div class="col"></div>
