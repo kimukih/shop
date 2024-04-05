@@ -92,7 +92,7 @@
 			<div class="main col-8">
 			<!-- 메인 내용 시작 -->
 			<h1>상품등록</h1>
-			<form method="post" action="/shop/emp/action/addGoodsAction.jsp">
+			<form method="post" action="/shop/emp/action/addGoodsAction.jsp" enctype="multipart/form-data">
 			<table class="table category table-hover" border=1>
 				<tr>
 					<td>카테고리 : </td>
@@ -131,7 +131,7 @@
 				</tr>
 				<tr>
 					<td>이미지 첨부 : </td>
-					<td><input type="text" name="goodsAmount" placeholder="PNG 이미지 명을 입력해주세요. ex) pics.png"></td>
+					<td><input type="file" name="goodsImg"></td>
 				</tr>
 				</table>
 				<div>

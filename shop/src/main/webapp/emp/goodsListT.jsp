@@ -52,7 +52,7 @@
 	}
 	
 	// 시작 번호와, 페이지당 보여줄 게시물 개수
-	int rowPerPage = 15;
+	int rowPerPage = 12;
 	int startRow = (currentPage - 1) * rowPerPage;
 	
 	// 총 게시물 개수 구하기
@@ -94,14 +94,14 @@
 	
 	if(request.getParameter("category") == null){
 		// SELECT * FROM category
-		categoryListSql = "SELECT goods_no goodsNo, category, left(goods_title, 12) goodsTitle, emp_id empId, goods_price goodsPrice, goods_amount goodsAmount, goods_img goodsImg FROM goods LIMIT ?, ?";
+		categoryListSql = "SELECT goods_no goodsNo, category, left(goods_title, 15) goodsTitle, emp_id empId, goods_price goodsPrice, goods_amount goodsAmount, goods_img goodsImg FROM goods LIMIT ?, ?";
 		categoryListStmt = conn.prepareStatement(categoryListSql);
 		categoryListStmt.setInt(1, startRow);
 		categoryListStmt.setInt(2, rowPerPage);
 		System.out.println("categoryListStmt : " + categoryListStmt);
 	}else{
 		// SELECT * FROM category WHERE category = ?
-		categoryListSql = "SELECT goods_no goodsNo, category, left(goods_title, 12) goodsTitle, emp_id empId, goods_price goodsPrice, goods_amount goodsAmount, goods_img goodsImg FROM goods WHERE category = ? LIMIT ?, ?";
+		categoryListSql = "SELECT goods_no goodsNo, category, left(goods_title, 15) goodsTitle, emp_id empId, goods_price goodsPrice, goods_amount goodsAmount, goods_img goodsImg FROM goods WHERE category = ? LIMIT ?, ?";
 		categoryListStmt = conn.prepareStatement(categoryListSql);
 		categoryListStmt.setString(1, category);
 		categoryListStmt.setInt(2, startRow);
@@ -129,20 +129,14 @@
   			font-style: normal;
 		}
 	
-		div.main{
-			text-align: center;
-			border: 1px solid #EAEAEA;
-			padding-top: 50px;
-			padding-bottom: 50px;
-		}
-		
-		div.row{
+		.main{
 			text-align: center;
 		}
 		
 		.table{
 			text-align: center;
-			
+			width: 700px;
+			margin-left: 80px;
 		}
 		
 		a{
@@ -164,29 +158,9 @@
 		
 		div.product{
 			display: inline-block;
-			width: 250px;
-			height: 250px;
-			margin-top: 50px;
-			padding-left: 65px;
-		}
-		
-		nav{
-			margin-top: 70px;
-		}
-		
-		div.header{
-			padding-top: 20px;
-			margin-bottom: 50px;
-		}
-		
-		table.head{
-			width: 1300px;
-			height: 120px;
-		}
-		
-		table.head td{
-			border: 1px solid black;
-			text-align: center;
+			width: 200px;
+			height: 200px;
+			margin-top: 20px;
 		}
 	</style>
 </head>
@@ -201,24 +175,13 @@
 	<span><a class="btn btn-outline-dark" href="/shop/emp/empList.jsp">이전</a></span>
 	<span><a class="btn btn-outline-dark" href="/shop/emp/form/addGoodsForm.jsp">상품등록</a></span>
 	<span><a class="btn btn-outline-dark" href="/shop/emp/goodsBoardList.jsp">상품리스트</a></span>
-	
-	<table class="head" border=1>
-		<tr>
-			<td rowspan="2" style="text-align: center; width: 350px;"><h1><a style="color: #000000;" href="/shop/emp/goodsList.jsp">W. B. Shoppin</a></h1></td>
-			<td style="width : 150px;">전체(카테고리)</td>
-			<td>
-				<form method="post" action="">
-					<input type="text" name="keyword" size="60px" placeholder="찾으시는 상품을 검색해보세요.">
-				</form>
-			</td>
-			<td style="width: 100px;">
-				<button class="btn btn-outline-dark" type="submit">검색</button>
-			</td>
-			<td>내용5</td>
-			<td>내용6</td>
-		</tr>
-		<tr>
-			<td colspan="3">
+	</div>
+		<div class="row">
+			<div class="col"></div>
+			<div class="main col-8">
+			<!-- 메인 내용 시작 -->
+				<h1>W. B. Shoppin</h1>
+				<br>
 				<!-- 서브 메뉴 : 카테고리 별 상품리스트 -->
 				<div>
 					<a style="color: #000000" href="/shop/emp/goodsList.jsp">&nbsp;전체&nbsp;</a>
@@ -232,16 +195,6 @@
 						}
 					%>
 				</div>
-			</td>
-			<td>내용11</td>
-			<td>내용12</td>
-		</tr>
-	</table>
-	</div>
-		<div class="main row">
-			<!-- 메인 내용 시작 -->
-				<br>
-				
 				<br>
 				<!-- 상품리스트 보여주는 코드 시작 -->
 				<%
@@ -252,11 +205,11 @@
 								<%
 								if(categoryListRs.getString("goodsImg").equals("")){
 								%>
-									<img src="/shop/img/noImage.png" width="200px" height="200px"><br>
+									<img src="/shop/img/noImage.png" width="150px" height="150px"><br>
 								<%
 								}else{
 								%>
-									<img src="/shop/img/<%=categoryListRs.getString("goodsImg")%>" width="200px" height="200px"><br>
+									<img src="/shop/img/<%=categoryListRs.getString("goodsImg")%>" width="150px" height="150px"><br>
 								<%
 								}
 								%>
@@ -269,10 +222,8 @@
 					}
 				%>
 				<!-- 상품리스트 보여주는 코드 시작 끝-->
-				<br><br><br><br><br><br>
-				
-		<!-- 페이지네이션 --> 
-			<div>
+				<br><br>
+				<!-- 페이지네이션 --> 
 				<nav aria-label="Page navigation example">
 				  <ul class="pagination justify-content-center">
 				  <%
@@ -324,8 +275,9 @@
 				  %>
 				  </ul>
 				</nav>
-			</div>
 			<!-- 메인 내용 끝 -->
+			</div>
+			<div class="col"></div>
 		</div>
 	</div>
 	
