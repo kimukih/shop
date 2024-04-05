@@ -12,31 +12,31 @@
 }
 %>
 
-<!-- Model Layer -->
 <%
-	// 카테고리 테이블 내용 DB에서 가져오기
+	// 요청값 분석
+	int goodsNo = Integer.parseInt(request.getParameter("goodsNo"));
+	System.out.println("goodsNo : " + goodsNo);
+	
+	// goodsNo에 해당하는 정보를 DB에서 불러오기
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = null;
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
 	
-	String categoryListSql = "SELECT category FROM category";
-	PreparedStatement categoryListStmt = null;
-	ResultSet categoryListRs = null;
+	String goodsOneSql = "SELECT goods_img goodsImg, goods_no goodsNo, goods_title goodsTitle, goods_price goodsPrice, goods_amount goodsAmount FROM goods WHERE goods_no = ?";
+	PreparedStatement goodsOneStmt = null;
+	ResultSet goodsOneRs = null;
 	
-	categoryListStmt = conn.prepareStatement(categoryListSql);
-	categoryListRs = categoryListStmt.executeQuery();
+	goodsOneStmt = conn.prepareStatement(goodsOneSql);
+	goodsOneStmt.setInt(1, goodsNo);
+	System.out.println("goodsNo : " + goodsNo);
 	
-	ArrayList<String> categoryList = new ArrayList<String>();
-	
-	while(categoryListRs.next()){
-		categoryList.add(categoryListRs.getString("category"));
-	}
+	goodsOneRs = goodsOneStmt.executeQuery();
 %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>goodsOne</title>
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<style>
@@ -74,15 +74,10 @@
 		table.category{
 			text-align: left;
 		}
-		
-		div.header{
-			padding-top: 20px;
-			margin-bottom: 50px;
-		}
 	</style>
 </head>
 <body>
-<div class="container">
+	<div class="container">
 	<div class="header">
 	<!-- empMenu.jsp include : 서버 기준으로 페이지 요청 vs redirect(클라이언트 기준) -->
 	<!-- 주체가 서버이기 때문에 include할 때에는 절대주소가 /shop/... 으로 시작하지 않는다 -->
@@ -95,52 +90,26 @@
 			<div class="main col-8">
 			<!-- 메인 내용 시작 -->
 			<h1>상품등록</h1>
-			<form method="post" action="/shop/emp/action/addGoodsAction.jsp" enctype="multipart/form-data">
 			<table class="table category table-hover" border=1>
+			<%
+			ArrayList<HashMap<String, String>> goodsOneList = new ArrayList<>();
+			while(goodsOneRs.next()){
+				HashMap<String, String> m = new HashMap<>();
+				m.put("goodsImg", goodsOneRs.getString("goodsImg"));
+				m.put("goodsNo", goodsOneRs.getString("goodsNo"));
+				m.put("goodsTitle", goodsOneRs.getString("goodsTitle"));
+				m.put("goodsPrice", goodsOneRs.getString("goodsPrice"));
+				m.put("goodsAmount", goodsOneRs.getString("goodsAmount"));
+				
+				goodsOneList.add(m);
+			%>
 				<tr>
-					<td>카테고리 : </td>
-					<td>
-						<select name="category">
-							<option value="">선택</option>
-							<%
-								for(String c : categoryList){
-							%>
-									<option value="<%=c%>"><%=c%></option>
-							<%
-								}
-							%>
-						</select>
-					</td>
+					<td><img src="/shop/img/<%=m.get("goodsImg")%>" width="300px" height="300px"></td>
 				</tr>
-				<tr>
-					<td>등록자 : </td>
-					<td><input type="text" name="empId"></td>
-				</tr>
-				<tr>
-					<td>제목 : </td>
-					<td><input type="text" name="goodsTitle"></td>
-				</tr>
-				<tr>
-					<td>가격 : </td>
-					<td><input type="number" name="goodsPrice"></td>
-				</tr>
-				<tr>
-					<td>수량 : </td>
-					<td><input type="text" name="goodsAmount"></td>
-				</tr>
-				<tr>
-					<td>내용 : </td>
-					<td><textarea rows="5" cols="50" name="goodsContent"></textarea></td>
-				</tr>
-				<tr>
-					<td>이미지 첨부 : </td>
-					<td><input type="file" name="goodsImg"></td>
-				</tr>
-				</table>
-				<div>
-					<button class="btn btn-outline-dark" type="submit">등록하기</button>
-				</div>
-			</form>
+			<%
+			}
+			%>
+			</table>
 			<!-- 메인 내용 끝 -->
 			</div>
 			<div class="col"></div>

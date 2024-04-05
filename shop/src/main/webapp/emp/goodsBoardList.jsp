@@ -135,8 +135,6 @@
 		
 		.table{
 			text-align: center;
-			width: 700px;
-			margin-left: 80px;
 		}
 		
 		a{
@@ -154,6 +152,11 @@
 		
 		span.add{
 			text-align: right;
+		}
+		
+		div.header{
+			padding-top: 20px;
+			margin-bottom: 50px;
 		}
 	</style>
 </head>

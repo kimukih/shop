@@ -112,8 +112,6 @@
 		
 		.table{
 			text-align: center;
-			width: 700px;
-			margin-left: 80px;
 		}
 		
 		a{
@@ -127,6 +125,11 @@
 		a.page-link:hover{
 			background-color: #000000;
 			color: #FFFFFF;
+		}
+		
+		div.header{
+			padding-top: 20px;
+			margin-bottom: 50px;
 		}
 	</style>
 </head>
