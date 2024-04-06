@@ -98,6 +98,7 @@
 				<%
 				}
 				%>
+				<br><br>
 				<span style="font-size: 13px; color: gray;">Copyright © 2024 WBShopin Co.,Ltd. All Rights Reserved.</span>
 			<!-- 메인 내용 끝 -->
 			</div>
