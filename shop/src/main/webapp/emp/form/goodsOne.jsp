@@ -76,7 +76,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>goodsList</title>
+	<title>goodsOne</title>
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<style>
@@ -292,6 +292,8 @@
 				}
 				%>
 				<br><br><br><br><br><br>
+				<a style="margin-top: 30px;" class="btn btn-outline-dark" href="/shop/emp/action/deleteGoodsAction.jsp?goodsNo=<%=goodsNo%>">상품삭제</a>
+				<span style="font-size: 13px; color: gray; margin-top: 30px;">Copyright © 2024 WBShopin Co.,Ltd. All Rights Reserved.</span>
 				
 			<!-- 메인 내용 끝 -->
 		</div>
