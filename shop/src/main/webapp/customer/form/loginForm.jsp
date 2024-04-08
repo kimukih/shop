@@ -2,8 +2,9 @@
 <%@ page import="java.net.URLEncoder"%>
 <%
 	// 로그인 인증 분기
-	if(session.getAttribute("loginEmp") != null){
-		response.sendRedirect("/shop/emp/empList.jsp");
+	// loginCustomer != null <--- 세션이 존재한다 == 로그인 기록이 있다
+	if(session.getAttribute("loginCustomer") != null){
+		response.sendRedirect("/shop/customer/goodsList.jsp");
 		return;
 	}
 
@@ -15,7 +16,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>관리자 로그인 페이지</title>
+	<title>회원 로그인 페이지</title>
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<style>
@@ -73,23 +74,22 @@
 			<div class="col"></div>
 			<div class="main col-8">
 			<!-- 메인 내용 시작 -->
-				<form class="form" method="post" action="/shop/emp/action/empLoginAction.jsp">
+				<form class="form" method="post" action="/shop/customer/action/loginAction.jsp">
 				<h1>W. B. Shoppin</h1>
-				(관리자 로그인)
-				<br><br>
+				<br>
 				<table class="table" border=1>
 					<tr>
-						<td><label for="empId">아이디</label></td>
-						<td><input class="border" type="text" name="empId" placeholder="아이디를 입력해주세요." size="30px"></td>
+						<td><label for="mail">이메일</label></td>
+						<td><input class="border" type="text" name="mail" placeholder="이메일을 입력해주세요." size="30px"></td>
 					</tr>
 					<tr>
-						<td><label for="empPw">비밀번호</label></td>
-						<td><input class="border" type="password" name="empPw" placeholder="비밀번호를 입력해주세요." size="30px"></td>
+						<td><label for="pw">비밀번호</label></td>
+						<td><input class="border" type="password" name="pw" placeholder="비밀번호를 입력해주세요." size="30px"></td>
 					</tr>
 				</table>
 				<br>
 					<button type="submit" class="btn btn-outline-dark">로그인</button>
-					<a class="btn btn-outline-dark" href="">회원가입</a>
+					<a class="btn btn-outline-dark" href="/shop/customer/form/addCustomerForm.jsp">회원가입</a>
 				</form>
 				<br>
 				<%

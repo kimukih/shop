@@ -6,8 +6,11 @@
 <!-- Controller Layer -->
 <%
 	// 로그인 인증 분기
-	if(session.getAttribute("loginEmp") == null){
-	response.sendRedirect("/shop/emp/form/empLoginForm.jsp");
+	// loginCustomer == null <--- 세션이 존재하지 않는다 == 로그인 기록이 없다
+	if(session.getAttribute("loginCustomer") == null){
+		
+	// 로그인 기록이 없으므로 로그인 화면으로 재요청
+	response.sendRedirect("/shop/customer/form/loginForm.jsp");
 	return;
 }
 %>
@@ -30,7 +33,7 @@
 
 <% 
 	HashMap<String, Object> loginMember = 
-	(HashMap<String, Object>)(session.getAttribute("loginEmp"));
+	(HashMap<String, Object>)(session.getAttribute("loginCustomer"));
 %>
 
 <!-- Model Layer -->
@@ -181,6 +184,7 @@
 		
 		a{
 			text-decoration: none;
+			color: #000000;
 		}
 		
 		a:hover{
@@ -233,21 +237,17 @@
 	<!-- empMenu.jsp include : 서버 기준으로 페이지 요청 vs redirect(클라이언트 기준) -->
 	<!-- 주체가 서버이기 때문에 include할 때에는 절대주소가 /shop/... 으로 시작하지 않는다 -->
 	<!-- 메인 메뉴 -->
-	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
-	<span><a class="btn btn-outline-dark" href="/shop/emp/form/addGoodsForm.jsp">상품등록</a></span>
-	<span><a class="btn btn-outline-dark" href="/shop/emp/goodsBoardList.jsp">상품리스트</a></span>
-	
 	<table class="head">
 		<tr>
 			<td rowspan="2" style="text-align: center; width: 300px;">
 				<h1>
-					<a style="color: #000000;" href="/shop/emp/goodsList.jsp">
+					<a style="color: #000000;" href="/shop/customer/goodsList.jsp">
 						W. B. Shoppin
 					</a>
 				</h1>
 			</td>
 			<td colspan="3" style="width: 400px;">
-				<form method="get" action="/shop/emp/goodsList.jsp?keyword=<%=keyword%>">
+				<form method="get" action="/shop/customer/goodsList.jsp?keyword=<%=keyword%>">
 					<select name="category">
 						<option value="">카테고리(전체)</option>
 					<%
@@ -263,13 +263,13 @@
 				</form>
 			</td>
 			<td rowspan="2" style="width: 100px">
-				<a href="/shop/emp/empOne.jsp">
+				<a href="/shop/customer/customerOne.jsp">
 					<img src="/shop/img/user.png" style="width: 30px; height: 30px; margin-bottom: 10px;"><br>
-					(M) <%=(String)(loginMember.get("empName"))%> 님
+					<%=(String)(loginMember.get("name"))%> 님
 				</a>
 			</td>
 			<td rowspan="2" style="width: 100px">
-				<a href="/shop/emp/action/empLogout.jsp">
+				<a href="/shop/customer/action/logoutAction.jsp">
 					<img src="/shop/img/logout.png" style="width: 30px; height: 30px; margin-bottom: 10px;"><br>
 					로그아웃
 				</a>
@@ -279,12 +279,12 @@
 			<td colspan="3">
 				<!-- 서브 메뉴 : 카테고리 별 상품리스트 -->
 				<div>
-					<a href="/shop/emp/goodsList.jsp">&nbsp;전체&nbsp;</a>
+					<a href="/shop/customer/goodsList.jsp">&nbsp;전체&nbsp;</a>
 					<%
 						for(HashMap m : categoryList){
 					%>
 							<b>| </b> 
-							<a href="/shop/emp/goodsList.jsp?category=<%=(String)(m.get("category"))%>">
+							<a href="/shop/customer/goodsList.jsp?category=<%=(String)(m.get("category"))%>">
 							&nbsp;<%=(String)(m.get("category"))%>(<%=(Integer)(m.get("cnt"))%>)&nbsp;</a>
 					<%
 						}
@@ -302,7 +302,7 @@
 					while(categoryListRs.next()){
 				%>
 						<div class="product">
-							<a href="/shop/emp/form/goodsOne.jsp?goodsNo=<%=categoryListRs.getInt("goodsNo")%>">
+							<a href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=categoryListRs.getInt("goodsNo")%>">
 								<%
 								if(categoryListRs.getString("goodsImg").equals("")){
 								%>

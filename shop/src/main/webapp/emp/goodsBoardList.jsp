@@ -94,14 +94,14 @@
 	
 	if(request.getParameter("category") == null){
 		// SELECT * FROM category
-		categoryListSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, emp_id empId, goods_price goodsPrice FROM goods LIMIT ?, ?";
+		categoryListSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, emp_id empId, FORMAT(goods_price, 0) goodsPrice FROM goods LIMIT ?, ?";
 		categoryListStmt = conn.prepareStatement(categoryListSql);
 		categoryListStmt.setInt(1, startRow);
 		categoryListStmt.setInt(2, rowPerPage);
 		System.out.println("categoryListStmt : " + categoryListStmt);
 	}else{
 		// SELECT * FROM category WHERE category = ?
-		categoryListSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, emp_id empId, goods_price goodsPrice FROM goods WHERE category = ? LIMIT ?, ?";
+		categoryListSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, emp_id empId, FORMAT(goods_price, 0) goodsPrice FROM goods WHERE category = ? LIMIT ?, ?";
 		categoryListStmt = conn.prepareStatement(categoryListSql);
 		categoryListStmt.setString(1, category);
 		categoryListStmt.setInt(2, startRow);
@@ -115,7 +115,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>goodsList</title>
+	<title>카테고리 별 상품 리스트</title>
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<style>
@@ -139,6 +139,10 @@
 		
 		a{
 			text-decoration: none;
+		}
+		
+		a:hover{
+			color: gray;
 		}
 		
 		a.page-link{
@@ -178,12 +182,12 @@
 				<br>
 				<!-- 서브 메뉴 : 카테고리 별 상품리스트 -->
 				<div>
-					<a style="color: #000000" href="/shop/emp/goodsList.jsp">&nbsp;전체&nbsp;</a>
+					<a href="/shop/emp/goodsBoardList.jsp">&nbsp;전체&nbsp;</a>
 					<%
 						for(HashMap m : categoryList){
 					%>
 							<b>| </b> 
-							<a style="color: #000000" href="/shop/emp/goodsBoardList.jsp?category=<%=(String)(m.get("category"))%>">
+							<a href="/shop/emp/goodsBoardList.jsp?category=<%=(String)(m.get("category"))%>">
 							&nbsp;<%=(String)(m.get("category"))%>(<%=(Integer)(m.get("cnt"))%>)&nbsp;</a>
 					<%
 						}
@@ -205,7 +209,7 @@
 						<td><%=categoryListRs.getInt("goodsNo")%></td>
 						<td><%=categoryListRs.getString("category")%></td>
 						<td><a href="/shop/emp/form/goodsBoardOne.jsp?goodsNo=<%=categoryListRs.getInt("goodsNo")%>"><%=categoryListRs.getString("goodsTitle")%></a></td>
-						<td><%=categoryListRs.getString("goodsPrice")%></td>
+						<td><%=categoryListRs.getString("goodsPrice")%>원</td>
 						<td><%=categoryListRs.getString("empId")%></td>
 					</tr>
 				<%
@@ -215,53 +219,53 @@
 				<br> 
 				<nav aria-label="Page navigation example">
 				  <ul class="pagination justify-content-center">
-				  <%
-				  if(request.getParameter("category") == null){
-				  	if(currentPage > 1 && currentPage < lastPage){
-				  %>
+				<%
+				if(request.getParameter("category") == null){
+					if(currentPage > 1 && currentPage < lastPage){
+				%>
 				  		<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=1">&laquo;</a></li>
 				   		<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=currentPage-1%>">&lsaquo;</a></li>
 				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=currentPage%>"><%=currentPage%></a></li>
 				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
 				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=lastPage%>">&raquo;</a></li>
-				  <%
+				<%
 				  	}else if(currentPage == 1){
-				  %>
+				%>
 				  		<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=currentPage%>"><%=currentPage%></a></li>
 				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
 				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=lastPage%>">&raquo;</a></li>
-				  <%
+				<%
 				  	}else if(currentPage == lastPage){
-				  %>
+				%>
 				  		<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=1">&laquo;</a></li>
 				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=currentPage-1%>">&lsaquo;</a></li>
 				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=currentPage%>"><%=currentPage%></a></li>
-				  <%
+				<%
 				  	}
-				  }else{
-					  if(currentPage > 1 && currentPage < lastPage){
-				  %>
+				}else{
+					if(currentPage > 1 && currentPage < lastPage){
+				%>
 					  	<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=1">&laquo;</a></li>
 					   	<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=currentPage-1%>&category=<%=category%>">&lsaquo;</a></li>
 					    <li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=currentPage%>&category=<%=category%>"><%=currentPage%></a></li>
 					    <li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=currentPage+1%>&category=<%=category%>">&rsaquo;</a></li>
 					    <li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=lastPage%>&category=<%=category%>">&raquo;</a></li>
-				  <%
-				  }else if(currentPage == 1){
-				  %>
+				<%
+					}else if(currentPage == 1){
+				%>
 				  		<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=currentPage%>&category=<%=category%>"><%=currentPage%></a></li>
 				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=currentPage+1%>&category=<%=category%>">&rsaquo;</a></li>
 				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=lastPage%>&category=<%=category%>">&raquo;</a></li>
-				  <%
+				<%
 				  	}else if(currentPage == lastPage){
-				  %>
+				%>
 					  	<li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=1">&laquo;</a></li>
 					    <li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=currentPage-1%>">&lsaquo;</a></li>
 					    <li class="page-item"><a class="page-link" href="/shop/emp/goodsBoardList.jsp?currentPage=<%=currentPage%>"><%=currentPage%></a></li>
-				  <%
-					 }
-				  }
-				  %>
+				<%
+					}
+				}
+				%>
 				  </ul>
 				</nav>
 			<!-- 메인 내용 끝 -->

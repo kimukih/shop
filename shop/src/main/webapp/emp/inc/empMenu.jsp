@@ -28,7 +28,7 @@
 		<span>
 			<!-- 개인정보수정 -->
 			<a href="/shop/emp/empOne.jsp">
-				<%=(String)(loginMember.get("empName"))%>
+				(M) <%=(String)(loginMember.get("empName"))%>
 				님 반갑습니다.
 			</a>
 		</span>

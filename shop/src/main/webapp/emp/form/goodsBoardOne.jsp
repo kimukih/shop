@@ -22,7 +22,7 @@
 	Connection conn = null;
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
 	
-	String goodsBoardOneSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, goods_price goodsPrice, emp_id empId, goods_img goodsImg FROM goods WHERE goods_no = ?";
+	String goodsBoardOneSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, FORMAT(goods_price, 0) goodsPrice, emp_id empId, goods_img goodsImg FROM goods WHERE goods_no = ?";
 	PreparedStatement goodsBoardOneStmt = null;
 	ResultSet goodsBoardOneRs = null;
 	goodsBoardOneStmt = conn.prepareStatement(goodsBoardOneSql);
@@ -35,7 +35,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>goodsBoardOne</title>
+	<title>상품상세</title>
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<style>
@@ -94,7 +94,7 @@
 				<div class="col"></div>
 				<div class="main col-8">
 				<!-- 메인 내용 시작 -->
-				<h1>상품 상세</h1>
+				<h1>상품상세</h1>
 				<br>
 					<table class="table table-hover" border=1>
 						<%
@@ -124,7 +124,7 @@
 						</tr>
 						<tr>
 							<td>가격</td>
-							<td><%=goodsBoardOneRs.getInt("goodsPrice")%>원</td>
+							<td><%=goodsBoardOneRs.getString("goodsPrice")%>원</td>
 						</tr>
 						<%
 						}

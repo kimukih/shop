@@ -61,7 +61,7 @@
 	// 일반화된 자료구조로 변경 (ArrayList<HashMap>) --> 모델 취득
 	// ex) 데이터 : RDBMS, API : JDBC
 	
-	String empListSql = "SELECT emp_id empId, emp_name empName, grade, emp_job empJob, hire_date hireDate, active FROM emp ORDER BY hire_date DESC LIMIT ?, ?";
+	String empListSql = "SELECT emp_id empId, emp_name empName, grade, emp_job empJob, hire_date hireDate, active FROM emp ORDER BY active, hire_date DESC LIMIT ?, ?";
 	PreparedStatement empListStmt = null;
 	ResultSet empListRs = null;
 	
@@ -92,7 +92,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>직원 리스트</title>
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<style>

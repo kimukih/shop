@@ -6,8 +6,8 @@
 <!-- Controller Layer -->
 <%
 	// 로그인 인증 분기
-	if(session.getAttribute("loginEmp") == null){
-	response.sendRedirect("/shop/emp/form/empLoginForm.jsp");
+	if(session.getAttribute("loginCustomer") == null){
+	response.sendRedirect("/shop/customer/form/loginForm.jsp");
 	return;
 }
 %>
@@ -33,7 +33,7 @@
 
 <% 
 	HashMap<String, Object> loginMember = 
-	(HashMap<String, Object>)(session.getAttribute("loginEmp"));
+	(HashMap<String, Object>)(session.getAttribute("loginCustomer"));
 %>
 
 <!-- Model Layer -->
@@ -76,7 +76,7 @@
 	String categoryAllSql = "SELECT category FROM category";
 	PreparedStatement categoryAllStmt = null;
 	ResultSet categoryAllRs = null;
-	
+		
 	categoryAllStmt = conn.prepareStatement(categoryAllSql);
 	categoryAllRs = categoryAllStmt.executeQuery();
 %>
@@ -177,22 +177,17 @@
 <body>
 <div class="container">
 	<div class="header">
-	<!-- empMenu.jsp include : 서버 기준으로 페이지 요청 vs redirect(클라이언트 기준) -->
-	<!-- 주체가 서버이기 때문에 include할 때에는 절대주소가 /shop/... 으로 시작하지 않는다 -->
-	<!-- 메인 메뉴 -->
-	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
-	
 	<table class="head">
 		<tr>
 			<td rowspan="2" style="text-align: center; width: 300px;">
 				<h1>
-					<a style="color: #000000;" href="/shop/emp/goodsList.jsp">
+					<a style="color: #000000;" href="/shop/customer/goodsList.jsp">
 						W. B. Shoppin
 					</a>
 				</h1>
 			</td>
 			<td colspan="3" style="width: 400px;">
-				<form method="get" action="/shop/emp/goodsList.jsp?keyword=<%=keyword%>">
+				<form method="get" action="/shop/customer/goodsList.jsp?keyword=<%=keyword%>">
 					<select name="category">
 						<option value="">카테고리(전체)</option>
 						<%
@@ -208,13 +203,13 @@
 				</form>
 			</td>
 			<td rowspan="2" style="width: 100px">
-				<a style="color: #000000;" href="/shop/emp/empOne.jsp">
+				<a style="color: #000000;" href="/shop/customer/customerOne.jsp">
 					<img src="/shop/img/user.png" style="width: 30px; height: 30px; margin-bottom: 10px;"><br>
-					(M) <%=(String)(loginMember.get("empName"))%> 님
+					<%=(String)(loginMember.get("name"))%> 님
 				</a>
 			</td>
 			<td rowspan="2" style="width: 100px">
-				<a style="color: #000000;" href="/shop/emp/action/empLogout.jsp">
+				<a style="color: #000000;" href="/shop/customer/action/logout.jsp">
 					<img src="/shop/img/logout.png" style="width: 30px; height: 30px; margin-bottom: 10px;"><br>
 					로그아웃
 				</a>
@@ -224,12 +219,12 @@
 			<td colspan="3">
 				<!-- 서브 메뉴 : 카테고리 별 상품리스트 -->
 				<div>
-					<a style="color: #000000" href="/shop/emp/goodsList.jsp">&nbsp;전체&nbsp;</a>
+					<a style="color: #000000" href="/shop/customer/goodsList.jsp">&nbsp;전체&nbsp;</a>
 					<%
 						for(HashMap m : categoryList){
 					%>
 							<b>| </b> 
-							<a style="color: #000000" href="/shop/emp/goodsList.jsp?category=<%=(String)(m.get("category"))%>">
+							<a style="color: #000000" href="/shop/customer/goodsList.jsp?category=<%=(String)(m.get("category"))%>">
 							&nbsp;<%=(String)(m.get("category"))%>(<%=(Integer)(m.get("cnt"))%>)&nbsp;</a>
 					<%
 						}
@@ -316,9 +311,9 @@
 				<%
 				}
 				%>
-				<br>
-				<a style="margin-top: 30px" class="btn btn-outline-danger" href="/shop/emp/action/deleteGoodsAction.jsp?goodsNo=<%=goodsNo%>">상품삭제</a>
+				<br><br><br><br><br><br>
 				<span style="font-size: 13px; color: gray; margin-top: 30px;">Copyright © 2024 WBShopin Co.,Ltd. All Rights Reserved.</span>
+				
 			<!-- 메인 내용 끝 -->
 		</div>
 	</div>
