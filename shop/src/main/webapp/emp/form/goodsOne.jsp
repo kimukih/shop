@@ -158,6 +158,11 @@
 			display: grid;
 			grid-template-columns: 1fr 1fr;
 		}
+		
+		a.plusMinus{
+			border: 1px solid #000000;
+			text-align: center;
+		}
 	</style>
 </head>
 <body>
@@ -274,8 +279,18 @@
 							</table>
 							<br>
 							<form>
-							수량 : <input type="number" name="amount"><br>
-							총 상품금액(수량) : 0원(0개) -- 수량에 따라 금액++<br>
+							<h4>
+								수량 : <input type="number" name="amount" min="1" max="100" value="1">
+								<a class="plusMinus" href=""><b>&nbsp;+&nbsp;</b></a>
+								<a class="plusMinus" href=""><b>&nbsp;-&nbsp;</b></a>
+							</h4>
+							<br>
+							
+							<h4>
+								총 상품금액(수량) : 0원(0개) &nbsp;&nbsp;
+							</h4>
+							<br>
+							
 							<button type="submit" class="btn btn-outline-dark">구매하기</button>
 							<button type="submit" class="btn btn-outline-dark">찜하기</button>
 							</form>
@@ -292,7 +307,7 @@
 				}
 				%>
 				<br><br><br><br><br><br>
-				<a style="margin-top: 30px;" class="btn btn-outline-dark" href="/shop/emp/action/deleteGoodsAction.jsp?goodsNo=<%=goodsNo%>">상품삭제</a>
+				<a style="margin-top: 30px;" class="btn btn-outline-danger" href="/shop/emp/action/deleteGoodsAction.jsp?goodsNo=<%=goodsNo%>">상품삭제</a>
 				<span style="font-size: 13px; color: gray; margin-top: 30px;">Copyright © 2024 WBShopin Co.,Ltd. All Rights Reserved.</span>
 				
 			<!-- 메인 내용 끝 -->

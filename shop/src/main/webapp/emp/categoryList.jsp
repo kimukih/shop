@@ -111,7 +111,7 @@
 					<tr>
 						<td><%=m.get("category")%></td>
 						<td><%=m.get("createDate")%></td>
-						<td><a class="btn btn-outline-dark" href="/shop/emp/action/deleteCategoryAction.jsp?category=<%=m.get("category")%>">삭제</a></td>
+						<td><a class="btn btn-outline-danger" href="/shop/emp/action/deleteCategoryAction.jsp?category=<%=m.get("category")%>">삭제</a></td>
 						
 					</tr>
 				<%

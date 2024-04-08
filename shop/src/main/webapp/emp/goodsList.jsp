@@ -70,21 +70,27 @@
 	int startRow = (currentPage - 1) * rowPerPage;
 	
 	// 총 게시물 개수 구하기
+	// 카테고리 별 검색어에 해당하는 결과물만 가져오도록 분기
 	String categoryListCntSql = "";
+	PreparedStatement categoryListCntStmt = null;
 	
 	if(category.equals("")){
 		// SELECT * FROM category
-		categoryListCntSql = "SELECT COUNT(*) cnt FROM goods";
+		categoryListCntSql = "SELECT COUNT(*) cnt FROM goods WHERE goods_title LIKE ? OR goods_content LIKE ?";
+		categoryListCntStmt = conn.prepareStatement(categoryListCntSql);
+		categoryListCntStmt.setString(1, "%"+keyword+"%");
+		categoryListCntStmt.setString(2, "%"+keyword+"%");
+		System.out.println("categoryListCntStmt : " + categoryListCntStmt);
 	}else{
 		// SELECT * FROM category WHERE category = ?
-		categoryListCntSql = "SELECT COUNT(*) cnt FROM goods WHERE category = ?";
+		categoryListCntSql = "SELECT COUNT(*) cnt FROM goods WHERE category = ? AND (goods_title LIKE ? OR goods_content LIKE ?)";
+		categoryListCntStmt = conn.prepareStatement(categoryListCntSql);
+		categoryListCntStmt.setString(1, category);
+		categoryListCntStmt.setString(2, "%"+keyword+"%");
+		categoryListCntStmt.setString(3, "%"+keyword+"%");
+		System.out.println("categoryListCntStmt : " + categoryListCntStmt);
 	}
-	PreparedStatement categoryListCntStmt = null;
 	ResultSet categoryListCntRs = null;
-			
-	categoryListCntStmt = conn.prepareStatement(categoryListCntSql);
-	categoryListCntStmt.setString(1, category);
-	System.out.println("categoryListCntStmt : " + categoryListCntStmt);
 	
 	categoryListCntRs = categoryListCntStmt.executeQuery();
 	
@@ -100,6 +106,7 @@
 	if(categoryListCnt % rowPerPage != 0){
 		lastPage = categoryListCnt / rowPerPage + 1;
 	}
+	System.out.println("lastPage : " + lastPage);
 	
 	// 카테고리에 해당하는 상품리스트를 가져오는 코드 작성
 	String categoryListSql = "";
@@ -127,6 +134,15 @@
 		System.out.println("categoryListStmt : " + categoryListStmt);
 	}
 	categoryListRs = categoryListStmt.executeQuery();
+	
+	// 검색을 위한 카테고리 목록 가져오기
+	String categoryAllSql = "SELECT category FROM category";
+	PreparedStatement categoryAllStmt = null;
+	ResultSet categoryAllRs = null;
+	
+	categoryAllStmt = conn.prepareStatement(categoryAllSql);
+	categoryAllRs = categoryAllStmt.executeQuery();
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -229,12 +245,13 @@
 				<form method="get" action="/shop/emp/goodsList.jsp?keyword=<%=keyword%>">
 					<select name="category">
 						<option value="">카테고리(전체)</option>
-						<option value="귀멸의칼날">귀멸의칼날</option>
-						<option value="나루토">나루토</option>
-						<option value="스파이패밀리">스파이패밀리</option>
-						<option value="원피스">원피스</option>
-						<option value="짱구는못말려">짱구는못말려</option>
-						<option value="포켓몬스터">포켓몬스터</option>
+					<%
+					while(categoryAllRs.next()){
+					%>
+						<option value="<%=categoryAllRs.getString("category")%>"><%=categoryAllRs.getString("category")%></option>
+					<%
+					}
+					%>
 					</select>
 					<input style="margin-left: 20px;" type="text" name="keyword" size="55px" placeholder="찾으시는 상품을 검색해보세요.">
 					<button class="btn btn-outline-dark" type="submit" style="margin-left: 20px;">검색</button>
@@ -317,17 +334,21 @@
 				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage+1%>&category=<%=category%>&keyword=<%=keyword%>">&rsaquo;</a></li>
 				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=lastPage%>&category=<%=category%>&keyword=<%=keyword%>">&raquo;</a></li>
 				  <%
-				  	}else if(currentPage == 1){
+				  	}else if(lastPage == 1){
 				  %>
 				  		<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage%>&category=<%=category%>&keyword=<%=keyword%>"><%=currentPage%></a></li>
-				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage+1%>&category=<%=category%>&keyword=<%=keyword%>">&rsaquo;</a></li>
-				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=lastPage%>&category=<%=category%>&keyword=<%=keyword%>">&raquo;</a></li>
 				  <%
 				  	}else if(currentPage == lastPage){
 				  %>
 				  		<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=1&category=<%=category%>&keyword=<%=keyword%>">&laquo;</a></li>
 				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage-1%>&category=<%=category%>&keyword=<%=keyword%>">&lsaquo;</a></li>
 				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage%>&category=<%=category%>&keyword=<%=keyword%>"><%=currentPage%></a></li>
+				  <%
+				  	}else if(currentPage == 1){
+				  %>
+				  		<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage%>&category=<%=category%>&keyword=<%=keyword%>"><%=currentPage%></a></li>
+				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage+1%>&category=<%=category%>&keyword=<%=keyword%>">&rsaquo;</a></li>
+				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=lastPage%>&category=<%=category%>&keyword=<%=keyword%>">&raquo;</a></li>
 				  <%
 				  	}
 				  }else{
@@ -339,17 +360,21 @@
 					    <li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage+1%>&category=<%=category%>&keyword=<%=keyword%>">&rsaquo;</a></li>
 					    <li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=lastPage%>&category=<%=category%>&keyword=<%=keyword%>">&raquo;</a></li>
 				  <%
-				  }else if(currentPage == 1){
+				  	}else if(lastPage == 1){
 				  %>
 				  		<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage%>&category=<%=category%>&keyword=<%=keyword%>"><%=currentPage%></a></li>
-				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage+1%>&category=<%=category%>&keyword=<%=keyword%>">&rsaquo;</a></li>
-				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=lastPage%>&category=<%=category%>&keyword=<%=keyword%>">&raquo;</a></li>
 				  <%
 				  	}else if(currentPage == lastPage){
 				  %>
 					  	<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=1&category=<%=category%>&keyword=<%=keyword%>">&laquo;</a></li>
-					    <li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage-1%>&keyword=<%=keyword%>">&lsaquo;</a></li>
-					    <li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage%>&keyword=<%=keyword%>"><%=currentPage%></a></li>
+					    <li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage-1%>&category=<%=category%>&keyword=<%=keyword%>">&lsaquo;</a></li>
+					    <li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage%>&category=<%=category%>&keyword=<%=keyword%>"><%=currentPage%></a></li>
+				  <%
+				  	}else if(currentPage == 1){
+				  %>
+				  		<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage%>&category=<%=category%>&keyword=<%=keyword%>"><%=currentPage%></a></li>
+				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage+1%>&category=<%=category%>&keyword=<%=keyword%>">&rsaquo;</a></li>
+				    	<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=lastPage%>&category=<%=category%>&keyword=<%=keyword%>">&raquo;</a></li>
 				  <%
 					 }
 				  }

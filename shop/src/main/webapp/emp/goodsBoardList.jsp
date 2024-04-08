@@ -194,7 +194,7 @@
 					<tr>
 						<td>No</td>
 						<td width="120px">카테고리</td>
-						<td>제목</td>
+						<td>상품명</td>
 						<td>가격</td>
 						<td>등록자</td>
 					</tr>
@@ -204,7 +204,7 @@
 					<tr>
 						<td><%=categoryListRs.getInt("goodsNo")%></td>
 						<td><%=categoryListRs.getString("category")%></td>
-						<td><%=categoryListRs.getString("goodsTitle")%></td>
+						<td><a href="/shop/emp/form/goodsBoardOne.jsp?goodsNo=<%=categoryListRs.getInt("goodsNo")%>"><%=categoryListRs.getString("goodsTitle")%></a></td>
 						<td><%=categoryListRs.getString("goodsPrice")%></td>
 						<td><%=categoryListRs.getString("empId")%></td>
 					</tr>
