@@ -78,25 +78,31 @@
 			<div class="col"></div>
 			<div class="main col-8">
 			<!-- 메인 내용 시작 -->
-			<h1>회원가입</h1>
+			<h1>
+				<a style="color: #000000;" href="/shop/customer/form/loginForm.jsp">
+					W. B. Shoppin
+				</a>
+			</h1>
+			<br>
+			<h3>회원가입</h3>
 			<br>
 			<form method="post" action="/shop/customer/action/addCustomerAction.jsp">
 				<table class="table table-hover" border=1>
 					<tr>
 						<td>이메일 : </td>
-						<td><input type="email" name="mail" style="width: 400px;"></td>
+						<td><input type="email" name="mail" style="width: 400px;" required="required"></td>
 					</tr>
 					<tr>
 						<td>비밀번호 : </td>
-						<td><input type="password" name="pw" style="width: 400px;"></td>
+						<td><input type="password" name="pw" style="width: 400px;" required="required"></td>
 					</tr>
 					<tr>
 						<td>이름 : </td>
-						<td><input type="text" name="name" style="width: 400px;"></td>
+						<td><input type="text" name="name" style="width: 400px;" required="required"></td>
 					</tr>
 					<tr>
 						<td>생년월일 : </td>
-						<td><input type="date" name="birth"></td>
+						<td><input type="date" name="birth" required="required"></td>
 					</tr>
 					<tr>
 						<td>성별 : </td>
