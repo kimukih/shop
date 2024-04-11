@@ -75,7 +75,7 @@
 			<div class="main col-8">
 			<!-- 메인 내용 시작 -->
 				<form class="form" method="post" action="/shop/customer/action/loginAction.jsp">
-				<h1>W. B. Shoppin</h1>
+				<h1>W.B.Shoppin</h1>
 				<br>
 				<table class="table" border=1>
 					<tr>

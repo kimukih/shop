@@ -16,6 +16,19 @@
 	System.out.println("msg : " + msg);
 %>
 
+<%
+	// 요청값 분석
+	String mail = request.getParameter("mail");
+	System.out.println("mail : " + mail);
+	
+	String mailCheck = request.getParameter("mailCheck");
+	String errMsg = request.getParameter("errMsg");
+	String sucMsg = request.getParameter("sucMsg");
+	
+	System.out.println("mailCheck : " + mailCheck);
+	System.out.println("errMsg : " + errMsg);
+	System.out.println("sucMsg : " + sucMsg);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,19 +99,66 @@
 			<br>
 			<h3>회원가입</h3>
 			<br>
+			<form method="post" action="/shop/customer/action/checkIdAction.jsp">
+				<table class="table table-hover" border=1>
+					<tr>
+						<td>이메일 중복체크 : </td>
+						<%
+						if(errMsg != null){
+						%>
+						<td>
+							<input type="email" name="mailCheck" required="required" style="width: 350px;" placeholder="이메일을 입력해주세요." value="<%=mailCheck%>">
+							<br>
+							<%=errMsg%>
+						</td>
+						<%
+						}else if(sucMsg != null){
+						%>
+						<td>
+							<input type="email" name="mailCheck" required="required" style="width: 350px;" placeholder="이메일을 입력해주세요." value="<%=mailCheck%>">
+							<br>
+							<%=sucMsg%>
+						</td>
+						<%
+						}else{
+						%>
+						<td>
+							<input type="email" name="mailCheck" required="required" style="width: 350px;" placeholder="이메일을 입력해주세요.">
+						</td>
+						<%
+						}
+						%>
+						<td><button class="btn btn-outline-dark" type="submit">중복체크</button></td>
+					</tr>
+				</table>
+			</form>
 			<form method="post" action="/shop/customer/action/addCustomerAction.jsp">
 				<table class="table table-hover" border=1>
 					<tr>
 						<td>이메일 : </td>
-						<td><input type="email" name="mail" style="width: 400px;" required="required"></td>
+						<%
+						if(sucMsg != null){
+						%>
+						<td>
+							<input type="email" name="mail" style="width: 350px;" required="required" value="<%=mailCheck%>" readonly="readonly">
+						</td>
+						<%
+						}else{
+						%>
+						<td>
+							<input type="email" name="mail" style="width: 350px;" required="required" placeholder="이메일 중복체크를 진행해주세요." readonly="readonly">
+						</td>
+						<%
+						}
+						%>
 					</tr>
 					<tr>
 						<td>비밀번호 : </td>
-						<td><input type="password" name="pw" style="width: 400px;" required="required"></td>
+						<td><input type="password" name="pw" style="width: 350px;" required="required" placeholder="비밀번호를 입력해주세요."></td>
 					</tr>
 					<tr>
 						<td>이름 : </td>
-						<td><input type="text" name="name" style="width: 400px;" required="required"></td>
+						<td><input type="text" name="name" style="width: 350px;" required="required" placeholder="이름을 입력해주세요."></td>
 					</tr>
 					<tr>
 						<td>생년월일 : </td>

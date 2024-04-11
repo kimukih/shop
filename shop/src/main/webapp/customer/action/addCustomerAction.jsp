@@ -27,7 +27,7 @@
 	PreparedStatement addCustomerStmt = null;
 	
 	addCustomerStmt = conn.prepareStatement(addCustomerSql);
-	addCustomerStmt.setString(1, name);
+	addCustomerStmt.setString(1, mail);
 	addCustomerStmt.setString(2, pw);
 	addCustomerStmt.setString(3, name);
 	addCustomerStmt.setString(4, birth);
@@ -37,7 +37,7 @@
 	int addCustomerRow = addCustomerStmt.executeUpdate();
 	if(addCustomerRow == 1){
 		System.out.println("회원가입이 성공적으로 완료되었습니다.");
-		response.sendRedirect("/shop/customer/form/addCustomerResult.jsp");
+		response.sendRedirect("/shop/customer/form/addCustomerResult.jsp?name=" + URLEncoder.encode(name, "UTF-8"));
 	}else{
 		System.out.println("회원가입에 실패하였습니다.");
 		response.sendRedirect("/shop/customer/form/addCustomerForm.jsp");

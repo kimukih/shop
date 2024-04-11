@@ -1,4 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="java.lang.*" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.net.URLEncoder"%>
+<%
+	// 요청값 분석
+	String name = request.getParameter("name");
+	System.out.println("name : " + name);
+	
+	// 회원가입한 정보중 name을 DB에서 가져오기
+	Class.forName("org.mariadb.jdbc.Driver");
+	Connection conn = null;
+	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
+	
+	String cusNameSql = "SELECT name FROM customer WHERE name = ?";
+	PreparedStatement cusNameStmt = null;
+	ResultSet cusNameRs = null;
+	
+	cusNameStmt = conn.prepareStatement(cusNameSql);
+	cusNameStmt.setString(1, name);
+	System.out.println("cusNameStmt : " + cusNameStmt);
+	
+	cusNameRs = cusNameStmt.executeQuery();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,11 +85,17 @@
 			<div class="col"></div>
 			<div class="main col-8">
 			<!-- 메인 내용 시작 -->
-				<h1>W.B.Shoppin</h1>
+				<h1>Welcome to W.B.Shoppin</h1>
 				<br>
-				<h3>Nice To Meet You !!</h3>
+				<img src="/shop/img/logo.png" width="500px" height="500px;">
 				<br>
-				<h3>W.B.Shoppin의 회원이 되신것을 환영합니다.</h3>
+				<%
+				if(cusNameRs.next()){
+				%>
+				<h3><%=cusNameRs.getString("name")%>님 W.B.Shoppin의 회원이 되신것을 환영합니다.</h3>
+				<%
+				}
+				%>
 				<br>
 				<h5>다양한 카테고리의 상품들을 구경하고 구매해 보세요!</h5>
 				<br>
