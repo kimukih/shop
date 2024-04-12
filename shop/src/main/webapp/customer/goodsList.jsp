@@ -29,6 +29,9 @@
 	}
 	System.out.println("keyword : " + keyword);
 	
+	String mail = request.getParameter("mail");
+	System.out.println("mail : " + mail);
+	
 %>
 
 <% 
@@ -145,7 +148,6 @@
 	
 	categoryAllStmt = conn.prepareStatement(categoryAllSql);
 	categoryAllRs = categoryAllStmt.executeQuery();
-	
 %>
 <!DOCTYPE html>
 <html>
@@ -263,7 +265,7 @@
 				</form>
 			</td>
 			<td rowspan="2" style="width: 100px">
-				<a href="/shop/customer/customerOne.jsp">
+				<a href="/shop/customer/form/customerOne.jsp?mail=<%=mail%>">
 					<img src="/shop/img/user.png" style="width: 30px; height: 30px; margin-bottom: 10px;"><br>
 					<%=(String)(loginMember.get("name"))%> 님
 				</a>
