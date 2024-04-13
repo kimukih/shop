@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <%@ page import="java.util.*" %>
 <%@ page import="java.lang.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
-
 <%
 	// 로그인 인증 분기
 	// loginCustomer == null <--- 세션이 존재하지 않는다 == 로그인 기록이 없다
@@ -37,6 +35,7 @@
 	customerOneRs = customerOneStmt.executeQuery();
 	
 %>
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -139,7 +138,7 @@
 				%>
 				</table>
 				<br>
-				<a class="btn btn-outline-dark" href="/shop/customer/form/updateCustomerForm.jsp">정보수정</a>
+				<a class="btn btn-outline-dark" href="/shop/customer/form/updateCustomerForm.jsp?mail=<%=mail%>">정보수정</a>
 				<a class="btn btn-outline-dark" href="/shop/customer/form/deleteCustomerForm.jsp?mail=<%=mail%>">회원탈퇴</a>
 			<!-- 메인 내용 시작 -->
 			</div>
