@@ -16,26 +16,26 @@
 	// 요청값 분석
 	int goodsNo = Integer.parseInt(request.getParameter("goodsNo"));
 	System.out.println("goodsNo : " + goodsNo);
-	
+
 	// 상품 정보에 대한 데이터 DB에서 가져오기
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = null;
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	
+		
 	String goodsBoardOneSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, goods_content goodsContent, FORMAT(goods_price, 0) goodsPrice, emp_id empId, goods_img goodsImg FROM goods WHERE goods_no = ?";
 	PreparedStatement goodsBoardOneStmt = null;
 	ResultSet goodsBoardOneRs = null;
 	goodsBoardOneStmt = conn.prepareStatement(goodsBoardOneSql);
 	goodsBoardOneStmt.setInt(1, goodsNo);
 	System.out.println("goodsBoardOneStmt : " + goodsBoardOneStmt);
-	
+		
 	goodsBoardOneRs = goodsBoardOneStmt.executeQuery();
 %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>상품상세</title>
+	<title>상품 상세 수정</title>
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<style>
@@ -85,7 +85,7 @@
 		}
 	</style>
 </head>
-<body>	
+<body>
 	<div class="container">
 		<div class="header">
 		<!-- empMenu.jsp include : 서버 기준으로 페이지 요청 vs redirect(클라이언트 기준) -->
@@ -93,21 +93,24 @@
 		<!-- 메인 메뉴 -->
 		<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
 		<span><a class="btn btn-outline-dark" href="/shop/emp/action/empLogout.jsp">로그아웃</a></span>
-		<span><a class="btn btn-outline-dark" href="/shop/emp/goodsBoardList.jsp">이전</a></span>
+		<span><a class="btn btn-outline-dark" href="/shop/emp/form/goodsBoardOne.jsp?goodsNo=<%=goodsNo%>">이전</a></span>
 		</div>
-			<div class="row">
-				<div class="col"></div>
-				<div class="main col-8">
-				<!-- 메인 내용 시작 -->
-				<h1>상품상세</h1>
+		<div class="row">
+			<div class="col"></div>
+			<div class="main col-8">
+			<!-- 메인 내용 시작 -->
+				<h1>상품상세 수정</h1>
 				<br>
+				<form method="post" action="/shop/emp/action/updateGoodsAction.jsp">
 					<table class="table table-hover" border=1>
 						<%
 						while(goodsBoardOneRs.next()){
 						%>
 						<tr>
 							<td class="column">No</td>
-							<td><%=goodsBoardOneRs.getInt("goodsNo")%></td>
+							<td>
+								<input type="number" name="goodsNo" value="<%=goodsBoardOneRs.getInt("goodsNo")%>" readonly="readonly">
+							</td>
 						</tr>
 						<tr>
 							<td class="column">카테고리</td>
@@ -115,7 +118,9 @@
 						</tr>
 						<tr>
 							<td class="column">상품명</td>
-							<td><%=goodsBoardOneRs.getString("goodsTitle")%></td>
+							<td>
+								<input type="text" name="goodsTitle" value="<%=goodsBoardOneRs.getString("goodsTitle")%>">
+							</td>
 						</tr>
 						<tr>
 							<td class="column">등록자</td>
@@ -129,24 +134,25 @@
 						</tr>
 						<tr>
 							<td class="column">가격</td>
-							<td><%=goodsBoardOneRs.getString("goodsPrice")%>원</td>
+							<td>
+								<input type="text" name="goodsPrice" value="<%=goodsBoardOneRs.getString("goodsPrice")%>">
+							</td>
 						</tr>
 						<tr>
 							<td class="column">상품내용</td>
-							<td><%=goodsBoardOneRs.getString("goodsContent")%></td>
+							<td>
+								<textarea name="goodsContent" rows="5" cols="70"><%=goodsBoardOneRs.getString("goodsContent")%></textarea>
+							</td>
 						</tr>
 						<%
 						}
 						%>
 					</table>
-					<br>
-					
-					<a class="btn btn-outline-dark" href="/shop/emp/form/updateGoodsForm.jsp?goodsNo=<%=goodsNo%>">상품수정</a>&nbsp;&nbsp;&nbsp;&nbsp;
-					<a class="btn btn-outline-danger" href="/shop/emp/action/deleteGoodsAction.jsp?goodsNo=<%=goodsNo%>">상품삭제</a>
-				</div>
-				<div class="col"></div>
+					<button type="submit" class="btn btn-outline-dark">수정하기</button>
+				</form>
 			</div>
+			<div class="col"></div>
 		</div>
-				<!-- 메인 내용 끝 -->
+	</div>
 </body>
 </html>
