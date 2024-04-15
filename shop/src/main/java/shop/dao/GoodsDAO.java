@@ -185,6 +185,58 @@ public class GoodsDAO {
 		return goodsBoardOneRs;
 	}
 	
+	public static int getAddGoods(
+			String category,
+			String empId,
+			String goodsTitle,
+			String goodsContent,
+			int goodsPrice,
+			int goodsAmount,
+			String fileName
+			) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		String addGoodsSql = "INSERT INTO goods(category, emp_id, goods_title, goods_content, goods_price, goods_amount, goods_img) VALUES(?, ?, ?, ?, ?, ?, ?)";
+		
+		PreparedStatement addGoodsStmt = null;
+		addGoodsStmt = conn.prepareStatement(addGoodsSql);
+		addGoodsStmt.setString(1, category);
+		addGoodsStmt.setString(2, empId);
+		addGoodsStmt.setString(3, goodsTitle);
+		addGoodsStmt.setString(4, goodsContent);
+		addGoodsStmt.setInt(5, goodsPrice);
+		addGoodsStmt.setInt(6, goodsAmount);
+		addGoodsStmt.setString(7, fileName);
+		
+		System.out.println("addGoodsStmt : " + addGoodsStmt);
+		
+		int addGoodsRow = addGoodsStmt.executeUpdate();
+		
+		conn.close();
+		return addGoodsRow;
+	}
+	
+	public static int updateGoods(String goodsTitle, String goodsContent, String goodsPrice, int goodsNo) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		String updateGoodsSql = "UPDATE goods SET goods_title = ?, goods_price = ?, goods_content = ? WHERE goods_no = ?";
+		PreparedStatement updateGoodsStmt = null;
+		
+		updateGoodsStmt = conn.prepareStatement(updateGoodsSql);
+		updateGoodsStmt.setString(1, goodsTitle);
+		updateGoodsStmt.setString(2, goodsPrice);
+		updateGoodsStmt.setString(3, goodsContent);
+		updateGoodsStmt.setInt(4, goodsNo);
+		System.out.println("updateGoodsStmt : " + updateGoodsStmt);
+		
+		int updateGoodsRow = updateGoodsStmt.executeUpdate();
+		
+		conn.close();
+		return updateGoodsRow;
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 

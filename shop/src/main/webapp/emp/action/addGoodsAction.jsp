@@ -5,6 +5,7 @@
 <%@ page import="java.io.*" %>
 <%@ page import="java.nio.file.*" %>
 <%@ page import="java.net.URLEncoder"%>
+<%@ page import="shop.dao.GoodsDAO"%>
 <!-- Controller Layer -->
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -54,6 +55,10 @@
 	System.out.println("goodsAmount : " + goodsAmount);
 	System.out.println("goodsContent : " + goodsContent);
 	
+	// DB에 goods 정보 추가
+	int addGoodsRow = GoodsDAO.getAddGoods(category, empId, goodsTitle, goodsContent, goodsPrice, goodsAmount, fileName);
+	
+	/*
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = null;
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
@@ -73,6 +78,7 @@
 	System.out.println("addGoodsStmt : " + addGoodsStmt);
 	
 	int addGoodsRow = addGoodsStmt.executeUpdate();
+	*/
 %>
 	<!-- Controller Layer -->
 <%

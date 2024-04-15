@@ -3,6 +3,7 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
+<%@ page import="shop.dao.CategoryDAO"%>
 <!-- Controller Layer -->
 <%
 	// 로그인 인증 분기
@@ -15,10 +16,9 @@
 <!-- Model Layer -->
 <%
 	// 카테고리 테이블 내용 DB에서 가져오기
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	
+	ArrayList<String> categoryList = CategoryDAO.getAddGoodsCategoryList();
+
+	/*
 	String categoryListSql = "SELECT category FROM category";
 	PreparedStatement categoryListStmt = null;
 	ResultSet categoryListRs = null;
@@ -31,6 +31,7 @@
 	while(categoryListRs.next()){
 		categoryList.add(categoryListRs.getString("category"));
 	}
+	*/
 %>
 <!DOCTYPE html>
 <html>

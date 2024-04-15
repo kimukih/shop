@@ -3,6 +3,7 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
+<%@ page import="shop.dao.GoodsDAO"%>
 <!-- Controller Layer -->
 <%
 	// 로그인 인증 분기
@@ -25,6 +26,16 @@
 	System.out.println("goodsContent : " + goodsContent);
 	
 	// 상품 상세 정보를 수정한 내용을 DB에 저장하기
+	int updateGoodsRow = GoodsDAO.updateGoods(goodsTitle, goodsContent, goodsPrice, goodsNo);
+	
+	if(updateGoodsRow == 1){
+		System.out.println("상품 상세 정보 수정에 성공하였습니다.");
+		response.sendRedirect("/shop/emp/form/goodsBoardOne.jsp?goodsNo=" + goodsNo);
+	}else{
+		System.out.println("상품 상세 정보 수정에 실패하였습니다.");
+		response.sendRedirect("/shop/emp/form/updateGoodsForm.jsp?goodsNo=" + goodsNo);
+	}
+	/*
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = null;
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
@@ -47,6 +58,5 @@
 		System.out.println("상품 상세 정보 수정에 실패하였습니다.");
 		response.sendRedirect("/shop/emp/form/updateGoodsForm.jsp?goodsNo=" + goodsNo);
 	}
-	
-
+	*/
 %>

@@ -3,6 +3,7 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
+<%@ page import="shop.dao.GoodsDAO"%>
 <!-- Controller Layer -->
 <%
 	// 로그인 인증 분기
@@ -18,10 +19,9 @@
 	System.out.println("goodsNo : " + goodsNo);
 
 	// 상품 정보에 대한 데이터 DB에서 가져오기
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-		
+	ResultSet goodsBoardOneRs = GoodsDAO.getGoodsBoardOneRs(goodsNo);
+	
+	/*
 	String goodsBoardOneSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, goods_content goodsContent, FORMAT(goods_price, 0) goodsPrice, emp_id empId, goods_img goodsImg FROM goods WHERE goods_no = ?";
 	PreparedStatement goodsBoardOneStmt = null;
 	ResultSet goodsBoardOneRs = null;
@@ -30,6 +30,7 @@
 	System.out.println("goodsBoardOneStmt : " + goodsBoardOneStmt);
 		
 	goodsBoardOneRs = goodsBoardOneStmt.executeQuery();
+	*/
 %>
 <!DOCTYPE html>
 <html>
