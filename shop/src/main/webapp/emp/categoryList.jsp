@@ -3,6 +3,7 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
+<%@ page import="shop.dao.CategoryDAO"%>
 <!-- Controller Layer -->
 <%
 	// 로그인 인증 분기
@@ -13,9 +14,11 @@
 %>
 
 <%
+	ArrayList<HashMap<String, String>> list = CategoryDAO.getCategoryList();
+
+	/*
 	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
+	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
 	
 	String categoryListSql = "SELECT category, create_date createDate FROM category";
 	PreparedStatement categoryListStmt = null;
@@ -23,7 +26,16 @@
 	
 	categoryListStmt = conn.prepareStatement(categoryListSql);
 	categoryListRs = categoryListStmt.executeQuery();
-
+	
+	ArrayList<HashMap<String, String>> list = new ArrayList<>();
+	while(categoryListRs.next()){
+		HashMap<String, String> m = new HashMap<>();
+		m.put("category", categoryListRs.getString("category"));
+		m.put("createDate", categoryListRs.getString("createDate"));
+		
+		list.add(m);
+	}
+	*/
 %>
 <!DOCTYPE html>
 <html>
@@ -97,22 +109,12 @@
 						<td>&nbsp;</td>
 					</tr>
 				<%
-				ArrayList<HashMap<String, String>> list = new ArrayList<>();
-				while(categoryListRs.next()){
-					HashMap<String, String> m = new HashMap<>();
-					m.put("category", categoryListRs.getString("category"));
-					m.put("createDate", categoryListRs.getString("createDate"));
-					
-					list.add(m);
-				}
-				
 				for(HashMap<String, String> m : list){
 				%>
 					<tr>
 						<td><%=m.get("category")%></td>
 						<td><%=m.get("createDate")%></td>
-						<td><a class="btn btn-outline-danger" href="/shop/emp/action/deleteCategoryAction.jsp?category=<%=m.get("category")%>">삭제</a></td>
-						
+						<td><a class="btn btn-outline-danger" href="/shop/emp/action/deleteCategoryAction.jsp?category=<%=m.get("category")%>">삭제</a></td>						
 					</tr>
 				<%
 				}

@@ -3,6 +3,7 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
+<%@ page import="shop.dao.EmpDAO"%>
 <!-- Controller Layer -->
 <%
 	// 로그인 인증 분기
@@ -29,10 +30,9 @@
 	int startRow = (currentPage - 1) * rowPerPage;
 	
 	// 화면에 표시할 직원리스트 개수 DB에서 가져오기
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
+	int empCnt = EmpDAO.getEmpCnt();
 	
+	/*
 	String empCntSql = "SELECT COUNT(*) cnt FROM emp";
 	PreparedStatement empCntStmt = null;
 	ResultSet empCntRs = null;
@@ -44,6 +44,7 @@
 	while(empCntRs.next()){
 		empCnt = empCntRs.getInt("cnt");
 	}
+	*/
 	System.out.println("empCnt : " + empCnt);
 	
 	// 가장 마지막 페이지
@@ -60,7 +61,9 @@
 	// 특정 데이터에 맞는 API를 사용하여 자료구조(ResultSet)을 취득하고
 	// 일반화된 자료구조로 변경 (ArrayList<HashMap>) --> 모델 취득
 	// ex) 데이터 : RDBMS, API : JDBC
+	ArrayList<HashMap<String, Object>> list = EmpDAO.getEmpList(startRow, rowPerPage);
 	
+	/*
 	String empListSql = "SELECT emp_id empId, emp_name empName, grade, emp_job empJob, hire_date hireDate, active FROM emp ORDER BY active, hire_date DESC LIMIT ?, ?";
 	PreparedStatement empListStmt = null;
 	ResultSet empListRs = null;
@@ -86,6 +89,7 @@
 		m.put("grade", empListRs.getInt("grade"));
 		list.add(m);
 	}
+	*/
 %>
 <!-- View Layer -->
 <!DOCTYPE html>
@@ -181,18 +185,7 @@
 							}
 					}
 					%>
-						
 						</tr>
-					<%
-					// JDBC 자원의 사용이 끝났다면 반납
-					empCntRs.close();
-					empCntStmt.close();
-					
-					empListRs.close();
-					empListStmt.close();
-					
-					conn.close();
-					%>
 				</table>
 				<br>
 				<div class="page">
