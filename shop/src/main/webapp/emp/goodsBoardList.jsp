@@ -3,6 +3,7 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
+<%@ page import="shop.dao.GoodsDAO"%>
 <!-- Controller Layer -->
 <%
 	// 로그인 인증 분기
@@ -21,10 +22,9 @@
 <!-- Model Layer -->
 <%
 	// 카테고리 테이블 내용 DB에서 가져오기
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
+	ArrayList<HashMap<String, Object>> categoryList = GoodsDAO.getCategoryCnt();
 	
+	/*
 	String categoryCntSql = "SELECT category, COUNT(*) cnt FROM goods GROUP BY category ORDER BY category";
 	PreparedStatement categoryCntStmt = null;
 	ResultSet categoryCntRs = null;
@@ -39,8 +39,7 @@
 		m.put("category", categoryCntRs.getString("category"));
 		m.put("cnt", categoryCntRs.getInt("cnt"));
 		categoryList.add(m);
-	}
-	
+	*/
 	// 디버깅 코드
 	System.out.println(categoryList);
 	System.out.println("category : " + category);
@@ -56,6 +55,9 @@
 	int startRow = (currentPage - 1) * rowPerPage;
 	
 	// 총 게시물 개수 구하기
+	int categoryListCnt = GoodsDAO.getCategoryListCnt(category);
+	System.out.println("categoryListCnt : " + categoryListCnt);
+	/*
 	String categoryListCntSql = "";
 	
 	if(request.getParameter("category") == null){
@@ -78,7 +80,7 @@
 	if(categoryListCntRs.next()){
 		categoryListCnt = categoryListCntRs.getInt("cnt");
 	}
-	System.out.println("categoryListCnt : " + categoryListCnt);
+	*/
 	
 	// 마지막 페이지
 	// 총 게시물 개수를 페이지당 게시물 수로 나눔
@@ -88,6 +90,9 @@
 	}
 	
 	// 카테고리에 해당하는 상품리스트를 가져오는 코드 작성
+	ResultSet categoryListRs = GoodsDAO.getGoodsBoardListRs(category, startRow, rowPerPage);
+	
+	/*
 	String categoryListSql = "";
 	PreparedStatement categoryListStmt = null;
 	ResultSet categoryListRs = null;
@@ -109,6 +114,7 @@
 		System.out.println("categoryListStmt : " + categoryListStmt);
 	}
 	categoryListRs = categoryListStmt.executeQuery();
+	*/
 		
 %>
 <!DOCTYPE html>

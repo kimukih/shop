@@ -28,6 +28,41 @@ public class CategoryDAO {
 		return list;
 	}
 	
+	public static ArrayList<HashMap<String, Object>> getCategoryCnt() throws Exception{
+		
+		Connection conn = DBHelper.getConnection();
+		
+		String categoryCntSql = "SELECT category, COUNT(*) cnt FROM goods GROUP BY category ORDER BY category";
+		PreparedStatement categoryCntStmt = null;
+		ResultSet categoryCntRs = null;
+		
+		categoryCntStmt = conn.prepareStatement(categoryCntSql);
+		categoryCntRs = categoryCntStmt.executeQuery();
+		
+		ArrayList<HashMap<String, Object>> categoryCnt = new ArrayList<HashMap<String, Object>>();
+		
+		while(categoryCntRs.next()){
+			HashMap<String, Object> m = new HashMap<String, Object>();
+			m.put("category", categoryCntRs.getString("category"));
+			m.put("cnt", categoryCntRs.getInt("cnt"));
+			categoryCnt.add(m);
+		}
+		conn.close();
+		return categoryCnt;
+	}
+	
+	public static ResultSet getCategoryAllRs() throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		String categoryAllSql = "SELECT category FROM category";
+		PreparedStatement categoryAllStmt = conn.prepareStatement(categoryAllSql);
+		ResultSet categoryAllRs = categoryAllStmt.executeQuery();
+		
+		conn.close();
+		return categoryAllRs;
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 

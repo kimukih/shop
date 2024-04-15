@@ -3,6 +3,8 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
+<%@ page import="shop.dao.CategoryDAO"%>
+<%@ page import="shop.dao.GoodsDAO"%>
 <!-- Controller Layer -->
 <%
 	// 로그인 인증 분기
@@ -36,10 +38,9 @@
 <!-- Model Layer -->
 <%
 	// 카테고리 테이블 내용 DB에서 가져오기
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
+	ArrayList<HashMap<String, Object>> categoryList = CategoryDAO.getCategoryCnt();
 	
+	/*
 	String categoryCntSql = "SELECT category, COUNT(*) cnt FROM goods GROUP BY category ORDER BY category";
 	PreparedStatement categoryCntStmt = null;
 	ResultSet categoryCntRs = null;
@@ -58,6 +59,7 @@
 	
 	// 디버깅 코드
 	System.out.println(categoryList);
+	*/
 	
 	// 페이지네이션
 	int currentPage = 1;
@@ -71,6 +73,10 @@
 	
 	// 총 게시물 개수 구하기
 	// 카테고리 별 검색어에 해당하는 결과물만 가져오도록 분기
+	int categoryListCnt = GoodsDAO.getCategoryListCnt(category, keyword);
+	System.out.println("categoryListCnt : " + categoryListCnt);
+	
+	/*
 	String categoryListCntSql = "";
 	PreparedStatement categoryListCntStmt = null;
 	
@@ -90,15 +96,13 @@
 		categoryListCntStmt.setString(3, "%"+keyword+"%");
 		System.out.println("categoryListCntStmt : " + categoryListCntStmt);
 	}
-	ResultSet categoryListCntRs = null;
-	
-	categoryListCntRs = categoryListCntStmt.executeQuery();
+	ResultSet categoryListCntRs =  categoryListCntStmt.executeQuery();
 	
 	int categoryListCnt = 0;
 	if(categoryListCntRs.next()){
 		categoryListCnt = categoryListCntRs.getInt("cnt");
 	}
-	System.out.println("categoryListCnt : " + categoryListCnt);
+	*/
 	
 	// 마지막 페이지
 	// 총 게시물 개수를 페이지당 게시물 수로 나눔
@@ -109,9 +113,12 @@
 	System.out.println("lastPage : " + lastPage);
 	
 	// 카테고리에 해당하는 상품리스트를 가져오는 코드 작성
+	ResultSet categoryListRs = GoodsDAO.getCategoryListRs(category, keyword, startRow, rowPerPage);
+	
+	/*
+	ResultSet categoryListRs = null;
 	String categoryListSql = "";
 	PreparedStatement categoryListStmt = null;
-	ResultSet categoryListRs = null;
 	
 	if(category.equals("")){
 		// SELECT * FROM category
@@ -134,15 +141,19 @@
 		System.out.println("categoryListStmt : " + categoryListStmt);
 	}
 	categoryListRs = categoryListStmt.executeQuery();
+	*/
 	
 	// 검색을 위한 카테고리 목록 가져오기
+	ResultSet categoryAllRs = CategoryDAO.getCategoryAllRs();
+	
+	/*
 	String categoryAllSql = "SELECT category FROM category";
 	PreparedStatement categoryAllStmt = null;
 	ResultSet categoryAllRs = null;
 	
 	categoryAllStmt = conn.prepareStatement(categoryAllSql);
 	categoryAllRs = categoryAllStmt.executeQuery();
-	
+	*/
 %>
 <!DOCTYPE html>
 <html>
