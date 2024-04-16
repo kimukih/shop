@@ -3,6 +3,7 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
+<%@ page import="shop.dao.CustomerDAO"%>
 <%
 	// 로그인 인증 분기
 	// loginCustomer == null <--- 세션이 존재하지 않는다 == 로그인 기록이 없다
@@ -20,9 +21,11 @@
 	System.out.println("mail : " + mail);
 	
 	// mail에 해당하는 customer의 상세 정보 가져오기
+	ResultSet customerOneRs = CustomerDAO.getCustomerOne(mail);
+	
+	/*
 	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
+	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
 	
 	String customerOneSql = "SELECT mail, name, birth, gender, update_date updateDate, create_date createDate FROM customer WHERE mail = ?";
 	PreparedStatement customerOneStmt = null;
@@ -33,7 +36,7 @@
 	System.out.println("customerOneStmt : " + customerOneStmt);
 	
 	customerOneRs = customerOneStmt.executeQuery();
-	
+	*/
 %>
 <!DOCTYPE html>
 <html>

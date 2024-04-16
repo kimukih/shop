@@ -3,15 +3,18 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
+<%@ page import="shop.dao.CustomerDAO"%>
 <%
 	// 요청값 분석
 	String name = request.getParameter("name");
 	System.out.println("name : " + name);
 	
-	// 회원가입한 정보중 name을 DB에서 가져오기
+	// 회원가입한 정보 중 name을 DB에서 가져오기
+	ResultSet cusNameRs = CustomerDAO.getCusName(name);
+	
+	/*
 	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
+	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
 	
 	String cusNameSql = "SELECT name FROM customer WHERE name = ?";
 	PreparedStatement cusNameStmt = null;
@@ -22,6 +25,7 @@
 	System.out.println("cusNameStmt : " + cusNameStmt);
 	
 	cusNameRs = cusNameStmt.executeQuery();
+	*/
 %>
 <!DOCTYPE html>
 <html>
