@@ -237,6 +237,22 @@ public class GoodsDAO {
 		return updateGoodsRow;
 	}
 	
+	public static int deleteGoods(int goodsNo) throws Exception {
+			
+			Connection conn = DBHelper.getConnection();
+			
+			String deleteGoodsSql = "DELETE FROM goods WHERE goods_no = ?";
+			PreparedStatement deleteGoodsStmt = null;
+			deleteGoodsStmt = conn.prepareStatement(deleteGoodsSql);
+			deleteGoodsStmt.setInt(1, goodsNo);
+			System.out.println("deleteGoodsStmt : " + deleteGoodsStmt);
+			
+			int deleteGoodsRow = deleteGoodsStmt.executeUpdate();
+			
+			conn.close();
+			return deleteGoodsRow;
+		}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 

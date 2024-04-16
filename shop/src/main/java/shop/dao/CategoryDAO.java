@@ -100,6 +100,23 @@ public class CategoryDAO {
 		return addCategoryRow;
 	}
 	
+	public static int deleteCategory(String category) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		String deleteCategorySql = "DELETE FROM category WHERE category = ?";
+		PreparedStatement deleteCategoryStmt = null;
+		
+		deleteCategoryStmt = conn.prepareStatement(deleteCategorySql);
+		deleteCategoryStmt.setString(1, category);
+		System.out.println("deleteCategoryStmt : " + deleteCategoryStmt);
+		
+		int deleteCategoryRow = deleteCategoryStmt.executeUpdate();
+		
+		conn.close();
+		return deleteCategoryRow;
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 

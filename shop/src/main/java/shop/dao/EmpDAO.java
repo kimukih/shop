@@ -118,6 +118,30 @@ public class EmpDAO {
 		return list;
 	}
 	
+	public static int modifyEmpActive(String empId, String active) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		String activeSwitchSql = null;
+		PreparedStatement activeSwitchStmt = null;
+		
+		if(active.equals("OFF")){
+			activeSwitchSql = "UPDATE emp SET active = 'ON' WHERE emp_id = ?";
+			activeSwitchStmt = conn.prepareStatement(activeSwitchSql);
+			activeSwitchStmt.setString(1, empId);
+		}else{
+			activeSwitchSql = "UPDATE emp SET active = 'OFF' WHERE emp_id = ?";
+			activeSwitchStmt = conn.prepareStatement(activeSwitchSql);
+			activeSwitchStmt.setString(1, empId);
+		}
+		System.out.println("activeSwitchStmt : " + activeSwitchStmt);
+		
+		int modifyActiveRow = activeSwitchStmt.executeUpdate();
+		
+		conn.close();
+		return modifyActiveRow;
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
