@@ -3,6 +3,7 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
+<%@ page import="shop.dao.CustomerDAO"%>
 <%
 	// 로그인 인증 분기
 	// loginCustomer == null <--- 세션이 존재하지 않는다 == 로그인 기록이 없다
@@ -28,9 +29,20 @@
 	System.out.println("pw : " + pw);
 
 	// 수정한 회원 정보를 DB customer table에 반영하기
+	int updateCustomerRow = CustomerDAO.updateCustomer(mail, pw, name, birth, gender);
+	
+	if(updateCustomerRow == 1){
+		System.out.println("회원 정보 수정에 성공하였습니다.");
+		response.sendRedirect("/shop/customer/form/customerOne.jsp?mail=" + mail);
+	}else{
+		System.out.println("회원 정보 수정에 실패하였습니다.");
+		String msg = URLEncoder.encode("비밀번호가 일치하지 않습니다. 다시 시도해주세요.", "UTF-8");
+		response.sendRedirect("/shop/customer/form/updateCustomerForm.jsp?mail=" + mail + "&msg=" + msg);
+	}
+	
+	/*
 	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
+	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
 	
 	String updateCustomerSql = "UPDATE customer SET name = ?, birth = ?, gender = ?, update_date = NOW() WHERE mail = ? AND pw = PASSWORD(?)";
 	PreparedStatement updateCustomerStmt = null;
@@ -44,12 +56,5 @@
 	System.out.println("updateCustomerStmt : " + updateCustomerStmt);
 	
 	int updateCustomerRow = updateCustomerStmt.executeUpdate();
-	if(updateCustomerRow == 1){
-		System.out.println("회원 정보 수정에 성공하였습니다.");
-		response.sendRedirect("/shop/customer/form/customerOne.jsp?mail=" + mail);
-	}else{
-		System.out.println("회원 정보 수정에 실패하였습니다.");
-		String msg = URLEncoder.encode("비밀번호가 일치하지 않습니다. 다시 시도해주세요.", "UTF-8");
-		response.sendRedirect("/shop/customer/form/updateCustomerForm.jsp?mail=" + mail + "&msg=" + msg);
-	}
+	*/
 %>
