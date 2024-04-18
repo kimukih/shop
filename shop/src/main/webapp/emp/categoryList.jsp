@@ -14,7 +14,7 @@
 %>
 
 <%
-	ArrayList<HashMap<String, String>> list = CategoryDAO.getCategoryList();
+	ArrayList<HashMap<String, String>> categoryList = CategoryDAO.getCategoryList();
 
 	/*
 	Class.forName("org.mariadb.jdbc.Driver");
@@ -109,12 +109,12 @@
 						<td>&nbsp;</td>
 					</tr>
 				<%
-				for(HashMap<String, String> m : list){
+				for(HashMap<String, String> m : categoryList){
 				%>
 					<tr>
-						<td><%=m.get("category")%></td>
-						<td><%=m.get("createDate")%></td>
-						<td><a class="btn btn-outline-danger" href="/shop/emp/action/deleteCategoryAction.jsp?category=<%=m.get("category")%>">삭제</a></td>						
+						<td><%=(String)(m.get("category"))%></td>
+						<td><%=(String)(m.get("createDate"))%></td>
+						<td><a class="btn btn-outline-danger" href="/shop/emp/action/deleteCategoryAction.jsp?category=<%=(String)(m.get("category"))%>">삭제</a></td>						
 					</tr>
 				<%
 				}

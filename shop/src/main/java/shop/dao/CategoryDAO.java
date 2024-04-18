@@ -51,16 +51,22 @@ public class CategoryDAO {
 		return categoryCnt;
 	}
 	
-	public static ResultSet getCategoryAllRs() throws Exception {
+	public static ArrayList<String> getCategoryAll() throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
+		
+		ArrayList<String> categoryAll = new ArrayList<>();
 		
 		String categoryAllSql = "SELECT category FROM category";
 		PreparedStatement categoryAllStmt = conn.prepareStatement(categoryAllSql);
 		ResultSet categoryAllRs = categoryAllStmt.executeQuery();
 		
+		while(categoryAllRs.next()) {
+			categoryAll.add(categoryAllRs.getString("category"));
+		}
+		
 		conn.close();
-		return categoryAllRs;
+		return categoryAll;
 	}
 	
 	public static ArrayList<String> getAddGoodsCategoryList() throws Exception{

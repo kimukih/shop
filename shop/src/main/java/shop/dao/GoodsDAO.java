@@ -38,36 +38,50 @@ public class GoodsDAO {
 		return categoryListCnt;
 	}
 	
-	public static ResultSet getCategoryListRs(String category, String keyword, int startRow, int rowPerPage) throws Exception {
+	public static ArrayList<HashMap<String, Object>> getGoodsList(String category, String keyword, int startRow, int rowPerPage) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
 		
-		String categoryListSql = "";
-		PreparedStatement categoryListStmt = null;
-		ResultSet categoryListRs = null;
+		ArrayList<HashMap<String, Object>> goodsList = new ArrayList<HashMap<String, Object>>();
+		
+		String goodsListSql = "";
+		PreparedStatement goodsListStmt = null;
+		ResultSet goodsListRs = null;
 		
 		if(category.equals("")){
 			// SELECT * FROM category
-			categoryListSql = "SELECT goods_no goodsNo, category, left(goods_title, 12) goodsTitle, emp_id empId, FORMAT(goods_price, 0) goodsPrice, goods_amount goodsAmount, goods_img goodsImg FROM goods WHERE goods_title LIKE ? OR goods_content LIKE ? LIMIT ?, ?";
-			categoryListStmt = conn.prepareStatement(categoryListSql);
-			categoryListStmt.setString(1, "%"+keyword+"%");
-			categoryListStmt.setString(2, "%"+keyword+"%");
-			categoryListStmt.setInt(3, startRow);
-			categoryListStmt.setInt(4, rowPerPage);
+			goodsListSql = "SELECT goods_no goodsNo, category, left(goods_title, 12) goodsTitle, emp_id empId, goods_price goodsPrice, goods_amount goodsAmount, goods_img goodsImg FROM goods WHERE goods_title LIKE ? OR goods_content LIKE ? LIMIT ?, ?";
+			goodsListStmt = conn.prepareStatement(goodsListSql);
+			goodsListStmt.setString(1, "%"+keyword+"%");
+			goodsListStmt.setString(2, "%"+keyword+"%");
+			goodsListStmt.setInt(3, startRow);
+			goodsListStmt.setInt(4, rowPerPage);
 		}else{
 			// SELECT * FROM category WHERE category = ?
-			categoryListSql = "SELECT goods_no goodsNo, category, left(goods_title, 12) goodsTitle, emp_id empId, FORMAT(goods_price, 0) goodsPrice, goods_amount goodsAmount, goods_img goodsImg FROM goods WHERE category = ? AND (goods_title LIKE ? OR goods_content LIKE ?) LIMIT ?, ?";
-			categoryListStmt = conn.prepareStatement(categoryListSql);
-			categoryListStmt.setString(1, category);
-			categoryListStmt.setString(2, "%"+keyword+"%");
-			categoryListStmt.setString(3, "%"+keyword+"%");
-			categoryListStmt.setInt(4, startRow);
-			categoryListStmt.setInt(5, rowPerPage);
+			goodsListSql = "SELECT goods_no goodsNo, category, left(goods_title, 12) goodsTitle, emp_id empId, goods_price goodsPrice, goods_amount goodsAmount, goods_img goodsImg FROM goods WHERE category = ? AND (goods_title LIKE ? OR goods_content LIKE ?) LIMIT ?, ?";
+			goodsListStmt = conn.prepareStatement(goodsListSql);
+			goodsListStmt.setString(1, category);
+			goodsListStmt.setString(2, "%"+keyword+"%");
+			goodsListStmt.setString(3, "%"+keyword+"%");
+			goodsListStmt.setInt(4, startRow);
+			goodsListStmt.setInt(5, rowPerPage);
 		}
-		categoryListRs = categoryListStmt.executeQuery();
+		goodsListRs = goodsListStmt.executeQuery();
+		
+		while(goodsListRs.next()) {
+			HashMap<String, Object> m = new HashMap<>();
+			m.put("goodsNo", goodsListRs.getInt("goodsNo"));
+			m.put("category", goodsListRs.getString("category"));
+			m.put("goodsTitle", goodsListRs.getString("goodsTitle"));
+			m.put("empId", goodsListRs.getString("empId"));
+			m.put("goodsPrice", goodsListRs.getInt("goodsPrice"));
+			m.put("goodsAmount", goodsListRs.getInt("goodsAmount"));
+			m.put("goodsImg", goodsListRs.getString("goodsImg"));
+			goodsList.add(m);
+		}
 		
 		conn.close();
-		return categoryListRs;
+		return goodsList;
 	}
 	
 	public static ArrayList<HashMap<String, Object>> getCategoryCnt() throws Exception{
@@ -120,41 +134,55 @@ public class GoodsDAO {
 		return categoryListCnt;
 	}
 	
-	public static ResultSet getGoodsBoardListRs(String category, int startRow, int rowPerPage) throws Exception {
+	public static ArrayList<HashMap<String, Object>> getGoodsBoardList(String category, int startRow, int rowPerPage) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
 		
-		String categoryListSql = "";
-		PreparedStatement categoryListStmt = null;
-		ResultSet categoryListRs = null;
+		ArrayList<HashMap<String, Object>> goodsBoardList = new ArrayList<>();
+		
+		String goodsBoardListSql = "";
+		PreparedStatement goodsBoardListStmt = null;
+		ResultSet goodsBoardListRs = null;
 		
 		if(category == null){
 			// SELECT * FROM category
-			categoryListSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, emp_id empId, FORMAT(goods_price, 0) goodsPrice FROM goods LIMIT ?, ?";
-			categoryListStmt = conn.prepareStatement(categoryListSql);
-			categoryListStmt.setInt(1, startRow);
-			categoryListStmt.setInt(2, rowPerPage);
-			System.out.println("categoryListStmt : " + categoryListStmt);
+			goodsBoardListSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, emp_id empId, goods_price goodsPrice FROM goods LIMIT ?, ?";
+			goodsBoardListStmt = conn.prepareStatement(goodsBoardListSql);
+			goodsBoardListStmt.setInt(1, startRow);
+			goodsBoardListStmt.setInt(2, rowPerPage);
+			System.out.println("goodsBoardListStmt : " + goodsBoardListStmt);
 		}else{
 			// SELECT * FROM category WHERE category = ?
-			categoryListSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, emp_id empId, FORMAT(goods_price, 0) goodsPrice FROM goods WHERE category = ? LIMIT ?, ?";
-			categoryListStmt = conn.prepareStatement(categoryListSql);
-			categoryListStmt.setString(1, category);
-			categoryListStmt.setInt(2, startRow);
-			categoryListStmt.setInt(3, rowPerPage);
-			System.out.println("categoryListStmt : " + categoryListStmt);
+			goodsBoardListSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, emp_id empId, goods_price goodsPrice FROM goods WHERE category = ? LIMIT ?, ?";
+			goodsBoardListStmt = conn.prepareStatement(goodsBoardListSql);
+			goodsBoardListStmt.setString(1, category);
+			goodsBoardListStmt.setInt(2, startRow);
+			goodsBoardListStmt.setInt(3, rowPerPage);
+			System.out.println("goodsBoardListStmt : " + goodsBoardListStmt);
 		}
-		categoryListRs = categoryListStmt.executeQuery();
+		goodsBoardListRs = goodsBoardListStmt.executeQuery();
+		
+		while(goodsBoardListRs.next()) {
+			HashMap<String, Object> m = new HashMap<>();
+			m.put("goodsNo", goodsBoardListRs.getInt("goodsNo"));
+			m.put("category", goodsBoardListRs.getString("category"));
+			m.put("goodsTitle", goodsBoardListRs.getString("goodsTitle"));
+			m.put("empId", goodsBoardListRs.getString("empId"));
+			m.put("goodsPrice", goodsBoardListRs.getInt("goodsPrice"));
+			goodsBoardList.add(m);
+		}
 		
 		conn.close();
-		return categoryListRs;
+		return goodsBoardList;
 	}
 	
-	public static ResultSet getGoodsOneRs(int goodsNo) throws Exception {
+	public static ArrayList<HashMap<String, Object>> getGoodsOne(int goodsNo) throws Exception {
+		
+		ArrayList<HashMap<String, Object>> goodsOne = new ArrayList<HashMap<String, Object>>();
 		
 		Connection conn = DBHelper.getConnection();
 		
-		String goodsOneSql = "SELECT emp_id empId, goods_img goodsImg, goods_no goodsNo, goods_title goodsTitle, goods_content goodsContent, FORMAT(goods_price, 0) goodsPrice, goods_amount goodsAmount FROM goods WHERE goods_no = ?";
+		String goodsOneSql = "SELECT category, emp_id empId, goods_img goodsImg, goods_no goodsNo, goods_title goodsTitle, goods_content goodsContent, goods_price goodsPrice, goods_amount goodsAmount FROM goods WHERE goods_no = ?";
 		PreparedStatement goodsOneStmt = null;
 		ResultSet goodsOneRs = null;
 			
@@ -164,15 +192,30 @@ public class GoodsDAO {
 			
 		goodsOneRs = goodsOneStmt.executeQuery();
 		
+		while(goodsOneRs.next()) {
+			HashMap<String, Object> m = new HashMap<String, Object>();
+			m.put("category", goodsOneRs.getString("category"));
+			m.put("empId", goodsOneRs.getString("empId"));
+			m.put("goodsImg", goodsOneRs.getString("goodsImg"));
+			m.put("goodsNo", goodsOneRs.getInt("goodsNo"));
+			m.put("goodsTitle", goodsOneRs.getString("goodsTitle"));
+			m.put("goodsContent", goodsOneRs.getString("goodsContent"));
+			m.put("goodsPrice", goodsOneRs.getInt("goodsPrice"));
+			m.put("goodsAmount", goodsOneRs.getInt("goodsAmount"));
+			goodsOne.add(m);
+		}
+		
 		conn.close();
-		return goodsOneRs;
+		return goodsOne;
 	}
 	
-	public static ResultSet getGoodsBoardOneRs(int goodsNo) throws Exception {
+	public static ArrayList<HashMap<String, Object>> getGoodsBoardOne(int goodsNo) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
 		
-		String goodsBoardOneSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, goods_content goodsContent, FORMAT(goods_price, 0) goodsPrice, emp_id empId, goods_img goodsImg FROM goods WHERE goods_no = ?";
+		ArrayList<HashMap<String, Object>> goodsBoardOne = new ArrayList<>();
+		
+		String goodsBoardOneSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, goods_content goodsContent, goods_price goodsPrice, emp_id empId, goods_img goodsImg FROM goods WHERE goods_no = ?";
 		PreparedStatement goodsBoardOneStmt = null;
 		ResultSet goodsBoardOneRs = null;
 		goodsBoardOneStmt = conn.prepareStatement(goodsBoardOneSql);
@@ -181,8 +224,20 @@ public class GoodsDAO {
 		
 		goodsBoardOneRs = goodsBoardOneStmt.executeQuery();
 		
+		while(goodsBoardOneRs.next()) {
+			HashMap<String, Object> m = new HashMap<>();
+			m.put("goodsNo", goodsBoardOneRs.getInt("goodsNo"));
+			m.put("category", goodsBoardOneRs.getString("category"));
+			m.put("goodsTitle", goodsBoardOneRs.getString("goodsTitle"));
+			m.put("goodsContent", goodsBoardOneRs.getString("goodsContent"));
+			m.put("goodsPrice", goodsBoardOneRs.getInt("goodsPrice"));
+			m.put("empId", goodsBoardOneRs.getString("empId"));
+			m.put("goodsImg", goodsBoardOneRs.getString("goodsImg"));
+			goodsBoardOne.add(m);
+		}
+		
 		conn.close();
-		return goodsBoardOneRs;
+		return goodsBoardOne;
 	}
 	
 	public static int getAddGoods(
@@ -251,11 +306,5 @@ public class GoodsDAO {
 			
 			conn.close();
 			return deleteGoodsRow;
-		}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 	}
-
 }

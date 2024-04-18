@@ -5,9 +5,11 @@ import java.util.*;
 
 public class CustomerDAO {
 		
-	public static ResultSet getCusName(String name) throws Exception {
+	public static HashMap<String, Object> getCusName(String name) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
+		
+		HashMap<String, Object> cusName = new HashMap<>();
 		
 		String cusNameSql = "SELECT name FROM customer WHERE name = ?";
 		PreparedStatement cusNameStmt = null;
@@ -19,13 +21,19 @@ public class CustomerDAO {
 		
 		cusNameRs = cusNameStmt.executeQuery();
 		
+		if(cusNameRs.next()) {
+			cusName.put("name", cusNameRs.getString("name"));
+		}
+		
 		conn.close();
-		return cusNameRs;
+		return cusName;
 	}
 	
-	public static ResultSet getCustomerOne(String mail) throws Exception {
+	public static ArrayList<HashMap<String, Object>> getCustomerOne(String mail) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
+		
+		ArrayList<HashMap<String, Object>> customerOne = new ArrayList<HashMap<String, Object>>();
 		
 		String customerOneSql = "SELECT mail, name, birth, gender, update_date updateDate, create_date createDate FROM customer WHERE mail = ?";
 		PreparedStatement customerOneStmt = null;
@@ -37,26 +45,48 @@ public class CustomerDAO {
 		
 		customerOneRs = customerOneStmt.executeQuery();
 		
+		while(customerOneRs.next()) {
+			HashMap<String, Object> m = new HashMap<>();
+			m.put("mail", customerOneRs.getString("mail"));
+			m.put("name", customerOneRs.getString("name"));
+			m.put("birth", customerOneRs.getString("birth"));
+			m.put("gender", customerOneRs.getString("gender"));
+			m.put("updateDate", customerOneRs.getString("updateDate"));
+			m.put("createDate", customerOneRs.getString("createDate"));
+			customerOne.add(m);
+		}
+		
 		conn.close();
-		return customerOneRs;
+		return customerOne;
 	}
 	
-	public static ResultSet getUpdateCustomerInfo(String mail) throws Exception {
+	public static ArrayList<HashMap<String, Object>> getCustomerInfo(String mail) throws Exception {
 			
 			Connection conn = DBHelper.getConnection();
 			
-			String updateCustomerInfoSql = "SELECT mail, name, birth, gender FROM customer WHERE mail = ?";
-			PreparedStatement updateCustomerInfoStmt = null;
-			ResultSet updateCustomerInfoRs = null;
+			ArrayList<HashMap<String, Object>> customerInfo = new ArrayList<>();
 			
-			updateCustomerInfoStmt = conn.prepareStatement(updateCustomerInfoSql);
-			updateCustomerInfoStmt.setString(1, mail);
-			System.out.println("updateCustomerInfoStmt : " + updateCustomerInfoStmt);
+			String customerInfoSql = "SELECT mail, name, birth, gender FROM customer WHERE mail = ?";
+			PreparedStatement customerInfoStmt = null;
+			ResultSet customerInfoRs = null;
 			
-			updateCustomerInfoRs = updateCustomerInfoStmt.executeQuery();
+			customerInfoStmt = conn.prepareStatement(customerInfoSql);
+			customerInfoStmt.setString(1, mail);
+			System.out.println("customerInfoStmt : " + customerInfoStmt);
+			
+			customerInfoRs = customerInfoStmt.executeQuery();
+			
+			while(customerInfoRs.next()) {
+				HashMap<String, Object> m = new HashMap<String, Object>();
+				m.put("mail", customerInfoRs.getString("mail"));
+				m.put("name", customerInfoRs.getString("name"));
+				m.put("birth", customerInfoRs.getString("birth"));
+				m.put("gender", customerInfoRs.getString("gender"));
+				customerInfo.add(m);
+			}
 			
 			conn.close();
-			return updateCustomerInfoRs;
+			return customerInfo;
 	}
 	
 	public static HashMap<String, String> customerLogin(String mail, String pw) throws Exception{
@@ -110,6 +140,68 @@ public class CustomerDAO {
 		
 		conn.close();
 		return updateCustomerRow;
+	}
+	
+	public static int addCustomer(String mail, String pw, String name, String birth, String gender) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		String addCustomerSql = "INSERT INTO customer(mail, pw, name, birth, gender) VALUES(?, PASSWORD(?), ?, ?, ?)";
+		PreparedStatement addCustomerStmt = null;
+		
+		addCustomerStmt = conn.prepareStatement(addCustomerSql);
+		addCustomerStmt.setString(1, mail);
+		addCustomerStmt.setString(2, pw);
+		addCustomerStmt.setString(3, name);
+		addCustomerStmt.setString(4, birth);
+		addCustomerStmt.setString(5, gender);
+		System.out.println("addCustomerStmt : " + addCustomerStmt);
+		
+		int addCustomerRow = addCustomerStmt.executeUpdate();
+		
+		conn.close();
+		return addCustomerRow;
+	}
+	
+	public static boolean checkId(String mail) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		boolean checkId;
+		
+		String checkIdSql = "SELECT mail FROM customer WHERE mail = ?";
+		PreparedStatement checkIdStmt = null;
+		ResultSet checkIdRs = null;
+		
+		checkIdStmt = conn.prepareStatement(checkIdSql);
+		checkIdStmt.setString(1, mail);
+		
+		checkIdRs = checkIdStmt.executeQuery();
+		if(checkIdRs.next()) {
+			checkId = true;
+		}else {
+			checkId = false;
+		}
+		
+		conn.close();
+		return checkId;
+	}
+	
+	public static int deleteCustomer(String mail, String pw) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		String deleteCustomerSql = "DELETE FROM customer WHERE mail = ? AND pw = PASSWORD(?)";
+		PreparedStatement deleteCustomerStmt = null;
+		
+		deleteCustomerStmt = conn.prepareStatement(deleteCustomerSql);
+		deleteCustomerStmt.setString(1, mail);
+		deleteCustomerStmt.setString(2, pw);
+		System.out.println("deleteCustomerStmt : " + deleteCustomerStmt);
+		
+		int deleteCustomerRow = deleteCustomerStmt.executeUpdate();
+		
+		conn.close();
+		return deleteCustomerRow;
 	}
 
 }

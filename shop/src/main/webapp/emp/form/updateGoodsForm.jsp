@@ -19,7 +19,7 @@
 	System.out.println("goodsNo : " + goodsNo);
 
 	// 상품 정보에 대한 데이터 DB에서 가져오기
-	ResultSet goodsBoardOneRs = GoodsDAO.getGoodsBoardOneRs(goodsNo);
+	ArrayList<HashMap<String, Object>> goodsBoardOne = GoodsDAO.getGoodsBoardOne(goodsNo);
 	
 	/*
 	String goodsBoardOneSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, goods_content goodsContent, FORMAT(goods_price, 0) goodsPrice, emp_id empId, goods_img goodsImg FROM goods WHERE goods_no = ?";
@@ -105,44 +105,44 @@
 				<form method="post" action="/shop/emp/action/updateGoodsAction.jsp">
 					<table class="table table-hover" border=1>
 						<%
-						while(goodsBoardOneRs.next()){
+						for(HashMap<String, Object> m : goodsBoardOne){
 						%>
 						<tr>
 							<td class="column">No</td>
 							<td>
-								<input type="number" name="goodsNo" value="<%=goodsBoardOneRs.getInt("goodsNo")%>" readonly="readonly">
+								<input type="number" name="goodsNo" value="<%=(Integer)(m.get("goodsNo"))%>" readonly="readonly">
 							</td>
 						</tr>
 						<tr>
 							<td class="column">카테고리</td>
-							<td><%=goodsBoardOneRs.getString("category")%></td>
+							<td><%=(String)(m.get("category"))%></td>
 						</tr>
 						<tr>
 							<td class="column">상품명</td>
 							<td>
-								<input type="text" name="goodsTitle" value="<%=goodsBoardOneRs.getString("goodsTitle")%>">
+								<input type="text" name="goodsTitle" value="<%=(String)(m.get("goodsTitle"))%>">
 							</td>
 						</tr>
 						<tr>
 							<td class="column">등록자</td>
-							<td><%=goodsBoardOneRs.getString("empId")%></td>
+							<td><%=(String)(m.get("empId"))%></td>
 						</tr>
 						<tr>
 							<td class="column" style="vertical-align: middle">상품이미지</td>
 							<td>
-								<img src="/shop/img/<%=goodsBoardOneRs.getString("goodsImg")%>" width="200px" height="200px">
+								<img src="/shop/img/<%=(String)(m.get("goodsImg"))%>" width="200px" height="200px">
 							</td>
 						</tr>
 						<tr>
 							<td class="column">가격</td>
 							<td>
-								<input type="text" name="goodsPrice" value="<%=goodsBoardOneRs.getString("goodsPrice")%>">
+								<input type="text" name="goodsPrice" value="<%=(Integer)(m.get("goodsPrice"))%>">
 							</td>
 						</tr>
 						<tr>
 							<td class="column">상품내용</td>
 							<td>
-								<textarea name="goodsContent" rows="5" cols="70"><%=goodsBoardOneRs.getString("goodsContent")%></textarea>
+								<textarea name="goodsContent" rows="5" cols="70"><%=(String)(m.get("goodsContent"))%></textarea>
 							</td>
 						</tr>
 						<%

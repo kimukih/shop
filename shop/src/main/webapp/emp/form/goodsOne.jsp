@@ -41,12 +41,12 @@
 <!-- Model Layer -->
 <%
 	// 카테고리 테이블 내용 DB에서 가져오기
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	
 	ArrayList<HashMap<String, Object>> categoryList = CategoryDAO.getCategoryCnt();
 	
 	/*
+	Class.forName("org.mariadb.jdbc.Driver");
+	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
+	
 	String categoryCntSql = "SELECT category, COUNT(*) cnt FROM goods GROUP BY category ORDER BY category";
 	PreparedStatement categoryCntStmt = null;
 	ResultSet categoryCntRs = null;
@@ -67,7 +67,7 @@
 	System.out.println(categoryList);
 	
 	// goodsNo에 해당하는 정보를 DB에서 불러오기
-	ResultSet goodsOneRs = GoodsDAO.getGoodsOneRs(goodsNo);
+	ArrayList<HashMap<String, Object>> goodsOne = GoodsDAO.getGoodsOne(goodsNo);
 	
 	/*
 	String goodsOneSql = "SELECT emp_id empId, goods_img goodsImg, goods_no goodsNo, goods_title goodsTitle, goods_content goodsContent, FORMAT(goods_price, 0) goodsPrice, goods_amount goodsAmount FROM goods WHERE goods_no = ?";
@@ -82,7 +82,7 @@
 	*/
 	
 	// 검색을 위한 카테고리 목록 가져오기
-	ResultSet categoryAllRs = CategoryDAO.getCategoryAllRs();
+	ArrayList<String> categoryAll = CategoryDAO.getCategoryAll();
 	
 	/*
 	String categoryAllSql = "SELECT category FROM category";
@@ -209,9 +209,9 @@
 					<select name="category">
 						<option value="">카테고리(전체)</option>
 						<%
-						while(categoryAllRs.next()){
+						for(String s : categoryAll){
 						%>
-							<option value="<%=categoryAllRs.getString("category")%>"><%=categoryAllRs.getString("category")%></option>
+							<option value="<%=s%>"><%=s%></option>
 						<%
 						}
 						%>
@@ -256,18 +256,7 @@
 			<!-- 메인 내용 시작 -->
 				<br>
 				<%
-				ArrayList<HashMap<String, String>> goodsOneList = new ArrayList<>();
-				while(goodsOneRs.next()){
-					HashMap<String, String> m = new HashMap<>();
-					m.put("goodsImg", goodsOneRs.getString("goodsImg"));
-					m.put("empId", goodsOneRs.getString("empId"));
-					m.put("goodsNo", goodsOneRs.getString("goodsNo"));
-					m.put("goodsTitle", goodsOneRs.getString("goodsTitle"));
-					m.put("goodsContent", goodsOneRs.getString("goodsContent"));
-					m.put("goodsPrice", goodsOneRs.getString("goodsPrice"));
-					m.put("goodsAmount", goodsOneRs.getString("goodsAmount"));
-					
-					goodsOneList.add(m);
+				for(HashMap<String, Object> m : goodsOne){
 				%>
 					<div class="grid">
 						<div>

@@ -21,7 +21,7 @@
 	System.out.println("mail : " + mail);
 	
 	// mail에 해당하는 customer의 상세 정보 가져오기
-	ResultSet customerOneRs = CustomerDAO.getCustomerOne(mail);
+	ArrayList<HashMap<String, Object>> customerOne = CustomerDAO.getCustomerOne(mail);
 	
 	/*
 	Class.forName("org.mariadb.jdbc.Driver");
@@ -110,31 +110,31 @@
 				<br>
 				<table class="table table-hover" border=1>
 				<%
-				while(customerOneRs.next()){
+				for(HashMap<String, Object> m : customerOne){
 				%>
 				<tr>
 					<td>이메일</td>
-					<td><%=customerOneRs.getString("mail")%></td>
+					<td><%=(String)(m.get("mail"))%></td>
 				</tr>
 				<tr>
 					<td>이름</td>
-					<td><%=customerOneRs.getString("name")%></td>
+					<td><%=(String)(m.get("name"))%></td>
 				</tr>
 				<tr>
 					<td>생년월일</td>
-					<td><%=customerOneRs.getString("birth")%></td>
+					<td><%=(String)(m.get("birth"))%></td>
 				</tr>
 				<tr>
 					<td>성별</td>
-					<td><%=customerOneRs.getString("gender")%></td>
+					<td><%=(String)(m.get("gender"))%></td>
 				</tr>
 				<tr>
 					<td>가입날짜</td>
-					<td><%=customerOneRs.getString("createDate")%></td>
+					<td><%=(String)(m.get("createDate"))%></td>
 				</tr>
 				<tr>
 					<td>수정날짜</td>
-					<td><%=customerOneRs.getString("updateDate")%></td>
+					<td><%=(String)(m.get("updateDate"))%></td>
 				</tr>
 				<%
 				}

@@ -56,7 +56,7 @@
 	
 	// 총 게시물 개수 구하기
 	int categoryListCnt = GoodsDAO.getCategoryListCnt(category);
-	System.out.println("categoryListCnt : " + categoryListCnt);
+	
 	/*
 	String categoryListCntSql = "";
 	
@@ -90,7 +90,7 @@
 	}
 	
 	// 카테고리에 해당하는 상품리스트를 가져오는 코드 작성
-	ResultSet categoryListRs = GoodsDAO.getGoodsBoardListRs(category, startRow, rowPerPage);
+	ArrayList<HashMap<String, Object>> goodsBoardList = GoodsDAO.getGoodsBoardList(category, startRow, rowPerPage);
 	
 	/*
 	String categoryListSql = "";
@@ -209,14 +209,14 @@
 						<td>등록자</td>
 					</tr>
 				<%
-					while(categoryListRs.next()){
+					for(HashMap<String, Object> m : goodsBoardList){
 				%>
 					<tr>
-						<td><%=categoryListRs.getInt("goodsNo")%></td>
-						<td><%=categoryListRs.getString("category")%></td>
-						<td><a href="/shop/emp/form/goodsBoardOne.jsp?goodsNo=<%=categoryListRs.getInt("goodsNo")%>"><%=categoryListRs.getString("goodsTitle")%></a></td>
-						<td><%=categoryListRs.getString("goodsPrice")%>원</td>
-						<td><%=categoryListRs.getString("empId")%></td>
+						<td><%=(Integer)(m.get("goodsNo"))%></td>
+						<td><%=(String)(m.get("category"))%></td>
+						<td><a href="/shop/emp/form/goodsBoardOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo"))%>"><%=(String)(m.get("goodsTitle"))%></a></td>
+						<td><%=(Integer)(m.get("goodsPrice"))%>원</td>
+						<td><%=(String)(m.get("empId"))%></td>
 					</tr>
 				<%
 					}

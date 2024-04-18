@@ -10,7 +10,7 @@
 	System.out.println("name : " + name);
 	
 	// 회원가입한 정보 중 name을 DB에서 가져오기
-	ResultSet cusNameRs = CustomerDAO.getCusName(name);
+	HashMap<String, Object> cusName = CustomerDAO.getCusName(name);
 	
 	/*
 	Class.forName("org.mariadb.jdbc.Driver");
@@ -93,13 +93,7 @@
 				<br>
 				<img src="/shop/img/logo.png" width="500px" height="500px;">
 				<br>
-				<%
-				if(cusNameRs.next()){
-				%>
-				<h3><%=cusNameRs.getString("name")%>님 W.B.Shoppin의 회원이 되신것을 환영합니다.</h3>
-				<%
-				}
-				%>
+				<h3><%=cusName.get("name")%>님 W.B.Shoppin의 회원이 되신것을 환영합니다.</h3>
 				<br>
 				<h5>다양한 카테고리의 상품들을 구경하고 구매해 보세요!</h5>
 				<br>

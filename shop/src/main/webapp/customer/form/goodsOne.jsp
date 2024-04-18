@@ -41,13 +41,12 @@
 <!-- Model Layer -->
 <%
 	// 카테고리 테이블 내용 DB에서 가져오기
+	ArrayList<HashMap<String, Object>> categoryList = GoodsDAO.getCategoryCnt();
+	
+	/*
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
 	
-	ArrayList<HashMap<String, Object>> categoryList = GoodsDAO.getCategoryCnt();
-	System.out.println(categoryList);
-	
-	/*
 	String categoryCntSql = "SELECT category, COUNT(*) cnt FROM goods GROUP BY category ORDER BY category";
 	PreparedStatement categoryCntStmt = null;
 	ResultSet categoryCntRs = null;
@@ -66,7 +65,7 @@
 	*/
 	
 	// goodsNo에 해당하는 정보를 DB에서 불러오기
-	ResultSet goodsOneRs = GoodsDAO.getGoodsOneRs(goodsNo);
+	ArrayList<HashMap<String, Object>> goodsOne = GoodsDAO.getGoodsOne(goodsNo);
 	
 	/*
 	String goodsOneSql = "SELECT emp_id empId, goods_img goodsImg, goods_no goodsNo, goods_title goodsTitle, goods_content goodsContent, FORMAT(goods_price, 0) goodsPrice, goods_amount goodsAmount FROM goods WHERE goods_no = ?";
@@ -81,7 +80,7 @@
 	*/
 	
 	// 검색을 위한 카테고리 목록 가져오기
-	ResultSet categoryAllRs = CategoryDAO.getCategoryAllRs();
+	ArrayList<String> categoryAll = CategoryDAO.getCategoryAll();
 	
 	/*
 	String categoryAllSql = "SELECT category FROM category";
@@ -203,9 +202,9 @@
 					<select name="category">
 						<option value="">카테고리(전체)</option>
 						<%
-						while(categoryAllRs.next()){
+						for(String c : categoryAll){
 						%>
-							<option value="<%=categoryAllRs.getString("category")%>"><%=categoryAllRs.getString("category")%></option>
+							<option value="<%=c%>"><%=c%></option>
 						<%
 						}
 						%>
@@ -250,40 +249,33 @@
 			<!-- 메인 내용 시작 -->
 				<br>
 				<%
-				ArrayList<HashMap<String, String>> goodsOneList = new ArrayList<>();
-				while(goodsOneRs.next()){
-					HashMap<String, String> m = new HashMap<>();
-					m.put("goodsImg", goodsOneRs.getString("goodsImg"));
-					m.put("empId", goodsOneRs.getString("empId"));
-					m.put("goodsNo", goodsOneRs.getString("goodsNo"));
-					m.put("goodsTitle", goodsOneRs.getString("goodsTitle"));
-					m.put("goodsContent", goodsOneRs.getString("goodsContent"));
-					m.put("goodsPrice", goodsOneRs.getString("goodsPrice"));
-					m.put("goodsAmount", goodsOneRs.getString("goodsAmount"));
-					
-					goodsOneList.add(m);
+				for(HashMap<String, Object> m : goodsOne){
 				%>
 					<div class="grid">
 						<div>
-							<img src="/shop/img/<%=m.get("goodsImg")%>" width="550px" height="600px">
+							<img src="/shop/img/<%=(String)(m.get("goodsImg"))%>" width="550px" height="600px">
 						</div>
 						<div>
 							<table class="table">
 								<tr>
 									<td><h2>상품명 : </h2></td>
-									<td><h2><%=m.get("goodsTitle")%></h2></td>
+									<td><h2><%=(String)(m.get("goodsTitle"))%></h2></td>
+								</tr>
+								<tr>
+									<td>카테고리 : </td>
+									<td><%=(String)(m.get("category"))%></td>
 								</tr>
 								<tr>
 									<td>등록자 : </td>
-									<td><%=m.get("empId")%></td>
+									<td><%=(String)(m.get("empId"))%></td>
 								</tr>
 								<tr>
 									<td>가격 : </td>
-									<td><%=m.get("goodsPrice")%>원</td>
+									<td><%=(Integer)(m.get("goodsPrice"))%>원</td>
 								</tr>
 								<tr>
 									<td>판매재고 : </td>
-									<td><%=m.get("goodsAmount")%>개</td>
+									<td><%=(Integer)(m.get("goodsAmount"))%>개</td>
 								</tr>
 								<tr>
 									<td>배송방법 : </td>

@@ -19,7 +19,7 @@
 	System.out.println("goodsNo : " + goodsNo);
 	
 	// 상품 정보에 대한 데이터 DB에서 가져오기
-	ResultSet goodsBoardOneRs = GoodsDAO.getGoodsBoardOneRs(goodsNo);
+	ArrayList<HashMap<String, Object>> goodsBoardOne = GoodsDAO.getGoodsBoardOne(goodsNo);
 	
 	/*
 	String goodsBoardOneSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, goods_content goodsContent, FORMAT(goods_price, 0) goodsPrice, emp_id empId, goods_img goodsImg FROM goods WHERE goods_no = ?";
@@ -104,37 +104,37 @@
 				<br>
 					<table class="table table-hover" border=1>
 						<%
-						while(goodsBoardOneRs.next()){
+						for(HashMap<String, Object> m : goodsBoardOne){
 						%>
 						<tr>
 							<td class="column">No</td>
-							<td><%=goodsBoardOneRs.getInt("goodsNo")%></td>
+							<td><%=(Integer)(m.get("goodsNo"))%></td>
 						</tr>
 						<tr>
 							<td class="column">카테고리</td>
-							<td><%=goodsBoardOneRs.getString("category")%></td>
+							<td><%=(String)(m.get("category"))%></td>
 						</tr>
 						<tr>
 							<td class="column">상품명</td>
-							<td><%=goodsBoardOneRs.getString("goodsTitle")%></td>
+							<td><%=(String)(m.get("goodsTitle"))%></td>
 						</tr>
 						<tr>
 							<td class="column">등록자</td>
-							<td><%=goodsBoardOneRs.getString("empId")%></td>
+							<td><%=(String)(m.get("empId"))%></td>
 						</tr>
 						<tr>
 							<td class="column" style="vertical-align: middle">상품이미지</td>
 							<td>
-								<img src="/shop/img/<%=goodsBoardOneRs.getString("goodsImg")%>" width="200px" height="200px">
+								<img src="/shop/img/<%=(String)(m.get("goodsImg"))%>" width="200px" height="200px">
 							</td>
 						</tr>
 						<tr>
 							<td class="column">가격</td>
-							<td><%=goodsBoardOneRs.getString("goodsPrice")%>원</td>
+							<td><%=(Integer)(m.get("goodsPrice"))%>원</td>
 						</tr>
 						<tr>
 							<td class="column">상품내용</td>
-							<td><%=goodsBoardOneRs.getString("goodsContent")%></td>
+							<td><%=(String)(m.get("goodsContent"))%></td>
 						</tr>
 						<%
 						}

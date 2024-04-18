@@ -26,7 +26,7 @@
 	// DB에 파라미터로 받은 이메일과 비밀번호와 같은 정보가 있는지 확인하고
 	// 정보가 존재하면 session 로그인 정보로 등록
 	HashMap<String, String> loginCustomer = CustomerDAO.customerLogin(mail, pw);
-	System.out.println("디버깅 : " + CustomerDAO.customerLogin(mail, pw));
+
 		// session을 사용한 로그인 기능 구현
 		// session 변수 "loginCustomer"안에 HashMap 값인 loginCustomer를 넣음
 		// 이후 session.getAttribute("loginCustomer") 를 통해 세션정보 사용 가능

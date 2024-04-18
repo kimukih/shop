@@ -3,6 +3,7 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
+<%@ page import="shop.dao.CustomerDAO"%>
 <%
 	// 로그인 인증 분기
 	// loginCustomer == null <--- 세션이 존재하지 않는다 == 로그인 기록이 없다
@@ -23,9 +24,21 @@
 	System.out.println("pw : " + pw);
 	
 	// DB의 mail, pw에 해당하는 회원정보 삭제하기
+	int deleteCustomerRow = CustomerDAO.deleteCustomer(mail, pw);
+	
+	if(deleteCustomerRow == 1){
+		System.out.println("회원 정보 삭제에 성공하였습니다.");
+		session.invalidate();
+		response.sendRedirect("/shop/customer/form/deleteCustomerResult.jsp");
+	}else{
+		System.out.println("회원 정보 삭제에 실패하였습니다.");
+		String msg = URLEncoder.encode("비밀번호가 일치하지 않습니다. 다시 시도해주세요.", "UTF-8");
+		response.sendRedirect("/shop/customer/form/deleteCustomerForm.jsp?mail=" + mail + "&msg=" + msg);
+	}
+	
+	/*
 	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
+	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
 	
 	String deleteCustomerSql = "DELETE FROM customer WHERE mail = ? AND pw = PASSWORD(?)";
 	PreparedStatement deleteCustomerStmt = null;
@@ -36,6 +49,7 @@
 	System.out.println("deleteCustomerStmt : " + deleteCustomerStmt);
 	
 	int deleteCustomerRow = deleteCustomerStmt.executeUpdate();
+	
 	if(deleteCustomerRow == 1){
 		System.out.println("회원 정보 삭제에 성공하였습니다.");
 		session.invalidate();
@@ -45,5 +59,6 @@
 		String msg = URLEncoder.encode("비밀번호가 일치하지 않습니다. 다시 시도해주세요.", "UTF-8");
 		response.sendRedirect("/shop/customer/form/deleteCustomerForm.jsp?mail=" + mail + "&msg=" + msg);
 	}
+	*/
 	
 %>

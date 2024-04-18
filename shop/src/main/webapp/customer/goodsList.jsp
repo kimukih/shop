@@ -121,7 +121,7 @@
 	System.out.println("lastPage : " + lastPage);
 	
 	// 카테고리에 해당하는 상품리스트를 가져오는 코드 작성
-	ResultSet categoryListRs = GoodsDAO.getCategoryListRs(category, keyword, startRow, rowPerPage);
+	ArrayList<HashMap<String, Object>> getGoodsList = GoodsDAO.getGoodsList(category, keyword, startRow, rowPerPage);
 	
 	/*
 	String categoryListSql = "";
@@ -152,7 +152,7 @@
 	*/
 	
 	// 검색을 위한 카테고리 목록 가져오기
-	ResultSet categoryAllRs = CategoryDAO.getCategoryAllRs();
+	ArrayList<String> categoryAll = CategoryDAO.getCategoryAll();
 	
 	/*
 	String categoryAllSql = "SELECT category FROM category";
@@ -267,9 +267,9 @@
 					<select name="category">
 						<option value="">카테고리(전체)</option>
 					<%
-					while(categoryAllRs.next()){
+					for(String c : categoryAll){
 					%>
-						<option value="<%=categoryAllRs.getString("category")%>"><%=categoryAllRs.getString("category")%></option>
+						<option value="<%=c%>"><%=c%></option>
 					<%
 					}
 					%>
@@ -315,24 +315,24 @@
 				<br>
 				<!-- 상품리스트 보여주는 코드 시작 -->
 				<%
-					while(categoryListRs.next()){
+					for(HashMap<String, Object> m : getGoodsList){
 				%>
 						<div class="product">
-							<a href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=categoryListRs.getInt("goodsNo")%>">
+							<a href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo"))%>">
 								<%
-								if(categoryListRs.getString("goodsImg").equals("")){
+								if(m.get("goodsImg").equals("")){
 								%>
 									<img src="/shop/img/noImage.png" width="200px" height="200px"><br>
 								<%
 								}else{
 								%>
-									<img src="/shop/img/<%=categoryListRs.getString("goodsImg")%>" width="200px" height="200px"><br>
+									<img src="/shop/img/<%=(String)(m.get("goodsImg"))%>" width="200px" height="200px"><br>
 								<%
 								}
 								%>
-								<%=categoryListRs.getInt("goodsNo")%>. <%=categoryListRs.getString("goodsTitle")%>...<br>
-								판매가격 : <%=categoryListRs.getString("goodsPrice")%>원<br>
-								판매수량 : <%=categoryListRs.getString("goodsAmount")%>개<br>
+								<%=(Integer)(m.get("goodsNo"))%>. <%=(String)(m.get("goodsTitle"))%>...<br>
+								판매가격 : <%=(Integer)(m.get("goodsPrice"))%>원<br>
+								판매수량 : <%=(Integer)(m.get("goodsAmount"))%>개<br>
 							</a>
 						</div>
 				<%

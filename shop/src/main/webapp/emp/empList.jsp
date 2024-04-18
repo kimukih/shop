@@ -45,7 +45,6 @@
 		empCnt = empCntRs.getInt("cnt");
 	}
 	*/
-	System.out.println("empCnt : " + empCnt);
 	
 	// 가장 마지막 페이지
 	int lastPage = empCnt / rowPerPage;

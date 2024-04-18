@@ -24,7 +24,7 @@
 	System.out.println("msg : " + msg);
 
 	// mail에 해당하는 customer의 상세 정보 가져오기
-	ResultSet updateCustomerRs = CustomerDAO.getUpdateCustomerInfo(mail);
+	ArrayList<HashMap<String, Object>> customerInfo = CustomerDAO.getCustomerInfo(mail);
 	
 	/*
 	Class.forName("org.mariadb.jdbc.Driver");
@@ -115,25 +115,25 @@
 				<form method="post" action="/shop/customer/action/updateCustomerAction.jsp">
 					<table class="table table-hover" border=1>
 					<%
-						while(updateCustomerRs.next()){
+						for(HashMap<String, Object> m : customerInfo){
 					%>
 						<tr>
 							<td>이메일 : </td>
-							<td><input type="email" name="mail" value="<%=updateCustomerRs.getString("mail")%>" style="width: 350px;" readonly="readonly"></td>
+							<td><input type="email" name="mail" value="<%=(String)(m.get("mail"))%>" style="width: 350px;" readonly="readonly"></td>
 						</tr>
 						<tr>
 							<td>이름 : </td>
-							<td><input type="text" name="name" style="width: 350px;" required="required" placeholder="이름을 입력해주세요." value="<%=updateCustomerRs.getString("name")%>"></td>
+							<td><input type="text" name="name" style="width: 350px;" required="required" placeholder="이름을 입력해주세요." value="<%=(String)(m.get("name"))%>"></td>
 						</tr>
 						<tr>
 							<td>생년월일 : </td>
-							<td><input type="date" name="birth" required="required" value="<%=updateCustomerRs.getString("birth")%>"></td>
+							<td><input type="date" name="birth" required="required" value="<%=(String)(m.get("birth"))%>"></td>
 						</tr>
 						<tr>
 							<td>성별 : </td>
 							<td>
 							<%
-								if(updateCustomerRs.getString("mail").equals("남")){
+								if(m.get("gender").equals("남")){
 							%>
 									<input type="radio" name="gender" value="남" checked="checked"> 남&nbsp;&nbsp;&nbsp;&nbsp;
 									<input type="radio" name="gender" value="여"> 여
