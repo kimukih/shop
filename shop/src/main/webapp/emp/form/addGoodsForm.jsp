@@ -32,6 +32,9 @@
 		categoryList.add(categoryListRs.getString("category"));
 	}
 	*/
+	
+	// DAO 디버깅 코드
+	System.out.println("CategoryDAO.getAddGoodsCategoryList() : " + CategoryDAO.getAddGoodsCategoryList());
 %>
 <!DOCTYPE html>
 <html>

@@ -59,4 +59,7 @@
 		response.sendRedirect("/shop/emp/form/updateGoodsForm.jsp?goodsNo=" + goodsNo);
 	}
 	*/
+	
+	// DAO 디버깅 코드
+	System.out.println("GoodsDAO.updateGoods(goodsTitle, goodsContent, goodsPrice, goodsNo) : " + GoodsDAO.updateGoods(goodsTitle, goodsContent, goodsPrice, goodsNo));
 %>

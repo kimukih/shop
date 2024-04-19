@@ -154,6 +154,12 @@
 	categoryAllStmt = conn.prepareStatement(categoryAllSql);
 	categoryAllRs = categoryAllStmt.executeQuery();
 	*/
+	
+	// DAO 디버깅 코드
+	System.out.println("CategoryDAO.getCategoryCnt() : " + CategoryDAO.getCategoryCnt());
+	System.out.println("GoodsDAO.getCategoryListCnt() : " + GoodsDAO.getCategoryListCnt(category, keyword));
+	System.out.println("GoodsDAO.getGoodsList() : " + GoodsDAO.getGoodsList(category, keyword, startRow, rowPerPage));
+	System.out.println("CategoryDAO.getCategoryAll() : " + CategoryDAO.getCategoryAll());
 %>
 <!DOCTYPE html>
 <html>

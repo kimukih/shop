@@ -28,6 +28,9 @@
 		System.out.println("카테고리 추가 실패!");
 	}
 	
+	// DAO 디버깅 코드
+	System.out.println("CategoryDAO.getAddCategory(category) : " + CategoryDAO.getAddCategory(category));
+	
 	/*
 	String addCategorySql = "INSERT INTO category(category) VALUES(?)";
 	PreparedStatement addCategoryStmt = null;

@@ -20,6 +20,9 @@ pageEncoding="UTF-8"%>
 		System.out.println("상품 삭제 실패");
 	}
 	
+	// DAO 디버깅 코드
+	System.out.println("GoodsDAO.deleteGoods(goodsNo) : " + GoodsDAO.deleteGoods(goodsNo));
+	
 	/*
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");

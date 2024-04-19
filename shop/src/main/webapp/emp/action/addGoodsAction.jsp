@@ -54,34 +54,12 @@
 	System.out.println("goodsPrice : " + goodsPrice);
 	System.out.println("goodsAmount : " + goodsAmount);
 	System.out.println("goodsContent : " + goodsContent);
-	
-	// DB에 goods 정보 추가
-	int addGoodsRow = GoodsDAO.getAddGoods(category, empId, goodsTitle, goodsContent, goodsPrice, goodsAmount, fileName);
-	
-	/*
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	
-	String addGoodsSql = "INSERT INTO goods(category, emp_id, goods_title, goods_content, goods_price, goods_amount, goods_img) VALUES(?, ?, ?, ?, ?, ?, ?)";
-	
-	PreparedStatement addGoodsStmt = null;
-	addGoodsStmt = conn.prepareStatement(addGoodsSql);
-	addGoodsStmt.setString(1, category);
-	addGoodsStmt.setString(2, empId);
-	addGoodsStmt.setString(3, goodsTitle);
-	addGoodsStmt.setString(4, goodsContent);
-	addGoodsStmt.setInt(5, goodsPrice);
-	addGoodsStmt.setInt(6, goodsAmount);
-	addGoodsStmt.setString(7, fileName);
-	
-	System.out.println("addGoodsStmt : " + addGoodsStmt);
-	
-	int addGoodsRow = addGoodsStmt.executeUpdate();
-	*/
 %>
 	<!-- Controller Layer -->
 <%
+	//DB에 goods 정보 추가
+	int addGoodsRow = GoodsDAO.getAddGoods(category, empId, goodsTitle, goodsContent, goodsPrice, goodsAmount, fileName);
+	
 	if(addGoodsRow == 1){
 		// 저장될 위치를 현재 프로젝트(톰켓 컨텍스트)안으로 지정
 		String uploadPath = request.getServletContext().getRealPath("img");
@@ -104,6 +82,9 @@
 		System.out.println("상품 추가 실패");
 		return;
 	}
+	
+	// DAO 디버깅 코드
+	System.out.println("GoodsDAO.getAddGoods(category, empId, goodsTitle, goodsContent, goodsPrice, goodsAmount, fileName) : " + GoodsDAO.getAddGoods(category, empId, goodsTitle, goodsContent, goodsPrice, goodsAmount, fileName));
 
 	/*
 	File df = new File(filePath, rs.getString("fileName"));
@@ -113,4 +94,26 @@
 	
 	// I/O stream은 가비지컬렉터의 대상이 아니기 때문에
 	// 사용후 지워주지 않으면 심각한 메모리 누수가 발생한다
+	
+	/*
+	Class.forName("org.mariadb.jdbc.Driver");
+	Connection conn = null;
+	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
+	
+	String addGoodsSql = "INSERT INTO goods(category, emp_id, goods_title, goods_content, goods_price, goods_amount, goods_img) VALUES(?, ?, ?, ?, ?, ?, ?)";
+	
+	PreparedStatement addGoodsStmt = null;
+	addGoodsStmt = conn.prepareStatement(addGoodsSql);
+	addGoodsStmt.setString(1, category);
+	addGoodsStmt.setString(2, empId);
+	addGoodsStmt.setString(3, goodsTitle);
+	addGoodsStmt.setString(4, goodsContent);
+	addGoodsStmt.setInt(5, goodsPrice);
+	addGoodsStmt.setInt(6, goodsAmount);
+	addGoodsStmt.setString(7, fileName);
+	
+	System.out.println("addGoodsStmt : " + addGoodsStmt);
+	
+	int addGoodsRow = addGoodsStmt.executeUpdate();
+	*/
 %>

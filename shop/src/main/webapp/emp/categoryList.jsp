@@ -36,6 +36,9 @@
 		list.add(m);
 	}
 	*/
+	
+	// DAO 디버깅 코드
+	System.out.println("CategoryDAO.getCategoryList() : " + CategoryDAO.getCategoryList());
 %>
 <!DOCTYPE html>
 <html>

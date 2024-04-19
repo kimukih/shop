@@ -89,6 +89,10 @@
 		list.add(m);
 	}
 	*/
+	
+	// DAO 디버깅 코드
+	System.out.println("EmpDAO.getEmpCnt() : " + EmpDAO.getEmpCnt());
+	System.out.println("EmpDAO.getEmpList(startRow, rowPerPage) : " + EmpDAO.getEmpList(startRow, rowPerPage));
 %>
 <!-- View Layer -->
 <!DOCTYPE html>

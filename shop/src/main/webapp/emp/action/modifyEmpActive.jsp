@@ -9,8 +9,6 @@
 	System.out.println("empId : " + empId);
 	System.out.println("active : " + active);
 
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
 	
 	// active 상태가 OFF 일 때 누르면 ON으로, ON 일 때 누르면 OFF로 변경
 	int modifyActiveRow = EmpDAO.modifyEmpActive(empId, active);
@@ -20,7 +18,13 @@
 		return;
 	}
 	
+	// DAO 디버깅 코드
+	System.out.println("EmpDAO.modifyEmpActive(empId, active) : " + EmpDAO.modifyEmpActive(empId, active));
+	
 	/*
+	Class.forName("org.mariadb.jdbc.Driver");
+	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
+	
 	String activeSwitchSql = null;
 	PreparedStatement activeSwitchStmt = null;
 	

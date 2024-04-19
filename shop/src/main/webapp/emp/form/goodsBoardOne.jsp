@@ -31,6 +31,9 @@
 	
 	goodsBoardOneRs = goodsBoardOneStmt.executeQuery();
 	*/
+	
+	// DAO 디버깅 코드
+	System.out.println("GoodsDAO.getGoodsBoardOne(goodsNo) : " + GoodsDAO.getGoodsBoardOne(goodsNo));
 %>
 <!DOCTYPE html>
 <html>

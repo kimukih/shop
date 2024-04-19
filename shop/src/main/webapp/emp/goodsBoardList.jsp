@@ -115,7 +115,11 @@
 	}
 	categoryListRs = categoryListStmt.executeQuery();
 	*/
-		
+	
+	// DAO 디버깅 코드
+	System.out.println("GoodsDAO.getCategoryList() : " + GoodsDAO.getCategoryCnt());
+	System.out.println("GoodsDAO.getCategoryListCnt(category) : " + GoodsDAO.getCategoryListCnt(category));
+	System.out.println("GoodsDAO.getGoodsBoardList(category, startRow, rowPerPage) : " + GoodsDAO.getGoodsBoardList(category, startRow, rowPerPage));	
 %>
 <!DOCTYPE html>
 <html>
