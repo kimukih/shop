@@ -90,6 +90,11 @@
 	categoryAllStmt = conn.prepareStatement(categoryAllSql);
 	categoryAllRs = categoryAllStmt.executeQuery();
 	*/
+	
+	// DAO 디버깅 코드
+	System.out.println("GoodsDAO.getCategoryCnt() : " + GoodsDAO.getCategoryCnt());
+	System.out.println("GoodsDAO.getGoodsOne(goodsNo) : " + GoodsDAO.getGoodsOne(goodsNo));
+	System.out.println("CategoryDAO.getCategoryAll() : " + CategoryDAO.getCategoryAll());
 %>
 <!DOCTYPE html>
 <html>

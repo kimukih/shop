@@ -37,6 +37,9 @@
 	
 	customerOneRs = customerOneStmt.executeQuery();
 	*/
+	
+	// DAO 디버깅 코드
+	System.out.println("CustomerDAO.getCustomerOne(mail) : " + CustomerDAO.getCustomerOne(mail));
 %>
 <!DOCTYPE html>
 <html>

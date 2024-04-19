@@ -49,4 +49,7 @@
 		String sucMsg = URLEncoder.encode("사용 가능한 이메일 주소 입니다.", "UTF-8");
 		response.sendRedirect("/shop/customer/form/addCustomerForm.jsp?mailCheck=" + mail + "&sucMsg=" + sucMsg);
 	*/
+	
+	// DAO 디버깅 코드
+	System.out.println("CustomerDAO.checkId(mail) : " + CustomerDAO.checkId(mail));
 %>

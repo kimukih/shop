@@ -44,12 +44,12 @@
 <!-- Model Layer -->
 <%
 	// 카테고리 테이블 내용 DB에서 가져오기
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	
 	ArrayList<HashMap<String, Object>> categoryList = CategoryDAO.getCategoryCnt();
 	
 	/*
+	Class.forName("org.mariadb.jdbc.Driver");
+	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
+	
 	String categoryCntSql = "SELECT category, COUNT(*) cnt FROM goods GROUP BY category ORDER BY category";
 	PreparedStatement categoryCntStmt = null;
 	ResultSet categoryCntRs = null;
@@ -162,6 +162,12 @@
 	categoryAllStmt = conn.prepareStatement(categoryAllSql);
 	categoryAllRs = categoryAllStmt.executeQuery();
 	*/
+	
+	// DAO 디버깅 코드
+	System.out.println("CategoryDAO.getCategoryCnt() : " + CategoryDAO.getCategoryCnt());
+	System.out.println("GoodsDAO.getCategoryListCnt(category, keyword) : " + GoodsDAO.getCategoryListCnt(category, keyword));
+	System.out.println("GoodsDAO.getGoodsList(category, keyword, startRow, rowPerPage) : " + GoodsDAO.getGoodsList(category, keyword, startRow, rowPerPage));
+	System.out.println("CategoryDAO.getCategoryAll() : " + CategoryDAO.getCategoryAll());
 %>
 <!DOCTYPE html>
 <html>

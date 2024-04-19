@@ -64,4 +64,7 @@
 		customerLogin.put("name", loginRs.getString("name"));
 	}
 	*/
+	
+	// DAO 디버깅 코드
+	System.out.println("CustomerDAO.customerLogin(mail, pw) : " + CustomerDAO.customerLogin(mail, pw));
 %>

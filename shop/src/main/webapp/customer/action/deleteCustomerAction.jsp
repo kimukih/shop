@@ -61,4 +61,6 @@
 	}
 	*/
 	
+	// DAO 디버깅 코드
+	System.out.println("CustomerDAO.deleteCustomer(mail, pw) : " + CustomerDAO.deleteCustomer(mail, pw));
 %>

@@ -26,6 +26,9 @@
 	
 	cusNameRs = cusNameStmt.executeQuery();
 	*/
+	
+	// DAO 디버깅 코드
+	System.out.println("CustomerDAO.getCusName(name) : " + CustomerDAO.getCusName(name));
 %>
 <!DOCTYPE html>
 <html>

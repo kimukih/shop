@@ -41,6 +41,9 @@
 	
 	updateCustomerRs = updateCustomerStmt.executeQuery();
 	*/
+	
+	// DAO 디버깅 코드
+	System.out.println("CustomerDAO.getCustomerInfo(mail) : " + CustomerDAO.getCustomerInfo(mail));
 %>
 <!DOCTYPE html>
 <html>
