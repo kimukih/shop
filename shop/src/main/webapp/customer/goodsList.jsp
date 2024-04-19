@@ -268,7 +268,7 @@
 					</a>
 				</h1>
 			</td>
-			<td colspan="3" style="width: 400px;">
+			<td colspan="3" style="width: 350px;">
 				<form method="get" action="/shop/customer/goodsList.jsp?keyword=<%=keyword%>">
 					<select name="category">
 						<option value="">카테고리(전체)</option>
@@ -284,13 +284,25 @@
 					<button class="btn btn-outline-dark" type="submit" style="margin-left: 20px;">검색</button>
 				</form>
 			</td>
-			<td rowspan="2" style="width: 100px">
-				<a href="/shop/customer/form/customerOne.jsp?mail=<%=mail%>">
+			<td rowspan="2" style="width: 70px">
+				<a href="/shop/customer/form/customerOne.jsp?mail=<%=loginMember.get("mail")%>">
 					<img src="/shop/img/user.png" style="width: 30px; height: 30px; margin-bottom: 10px;"><br>
 					<%=(String)(loginMember.get("name"))%> 님
 				</a>
 			</td>
-			<td rowspan="2" style="width: 100px">
+			<td rowspan="2" style="width: 70px">
+				<%
+				for(HashMap<String, Object> m : getGoodsList){
+				%>
+				<a href="/shop/customer/form/ordersInfoForm.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">
+				<%
+				}
+				%>
+					<img src="/shop/img/cart.png" style="width: 30px; height: 30px; margin-bottom: 10px;"><br>
+					주문조회
+				</a>
+			</td>
+			<td rowspan="2" style="width: 70px">
 				<a href="/shop/customer/action/logout.jsp">
 					<img src="/shop/img/logout.png" style="width: 30px; height: 30px; margin-bottom: 10px;"><br>
 					로그아웃

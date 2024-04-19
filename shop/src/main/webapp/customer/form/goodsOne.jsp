@@ -218,13 +218,19 @@
 					<button class="btn btn-outline-dark" type="submit" style="margin-left: 20px;">검색</button>
 				</form>
 			</td>
-			<td rowspan="2" style="width: 100px">
-				<a style="color: #000000;" href="/shop/customer/customerOne.jsp">
+			<td rowspan="2" style="width: 70px">
+				<a style="color: #000000;" href="/shop/customer/form/customerOne.jsp?mail=<%=loginMember.get("mail")%>">
 					<img src="/shop/img/user.png" style="width: 30px; height: 30px; margin-bottom: 10px;"><br>
 					<%=(String)(loginMember.get("name"))%> 님
 				</a>
 			</td>
-			<td rowspan="2" style="width: 100px">
+			<td rowspan="2" style="width: 70px">
+				<a style="color: #000000;" href="/shop/customer/form/ordersInfoForm.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=goodsNo%>">
+					<img src="/shop/img/cart.png" style="width: 30px; height: 30px; margin-bottom: 10px;"><br>
+					주문조회
+				</a>
+			</td>
+			<td rowspan="2" style="width: 70px">
 				<a style="color: #000000;" href="/shop/customer/action/logout.jsp">
 					<img src="/shop/img/logout.png" style="width: 30px; height: 30px; margin-bottom: 10px;"><br>
 					로그아웃
@@ -301,11 +307,11 @@
 							<br>
 							
 							<h4>
-								총 상품금액(수량) : 0원(0개) &nbsp;&nbsp;
+								총 상품금액(수량) : <%=(Integer)(m.get("goodsPrice"))%>원(1개) &nbsp;&nbsp;
 							</h4>
 							<br>
 							
-							<button type="submit" class="btn btn-outline-dark">구매하기</button>
+							<a href="/shop/customer/form/ordersGoodsForm.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=goodsNo%>" class="btn btn-outline-dark">구매하기</a>
 							<button type="submit" class="btn btn-outline-dark">찜하기</button>
 							</form>
 						</div>
@@ -316,6 +322,13 @@
 						<h2>상품 설명</h2>
 						<br>
 						<%=m.get("goodsContent")%>
+					</div>
+					<div style="margin-top: 30px;">
+						<hr>
+						<br>
+						<h2>상품 리뷰</h2>
+						<br>
+						상품 리뷰 자리 입니다.
 					</div>
 				<%
 				}

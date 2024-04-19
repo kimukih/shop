@@ -32,7 +32,7 @@
 		// 이후 session.getAttribute("loginCustomer") 를 통해 세션정보 사용 가능
 	if(loginCustomer != null){
 		session.setAttribute("loginCustomer", loginCustomer);
-		response.sendRedirect("/shop/customer/goodsList.jsp?mail=" + mail);
+		response.sendRedirect("/shop/customer/goodsList.jsp?mail=" + loginCustomer.get("mail"));
 	}else{
 		String msg = URLEncoder.encode("로그인 정보가 일치하지 않습니다. 다시 시도해주세요.", "UTF-8");
 		response.sendRedirect("/shop/customer/form/loginForm.jsp?msg=" + msg);
