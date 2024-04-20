@@ -35,6 +35,7 @@
 
 	// 구매 상품 정보 가져오기
 	ArrayList<HashMap<String, Object>> goodsOne = GoodsDAO.getGoodsOne(goodsNo);
+	System.out.println("goodsOne : " + goodsOne);
 %>
 <!DOCTYPE html>
 <html>
@@ -200,10 +201,6 @@
 						<td class="menu">연락처</td>
 						<td class="content"><input class="border" type="text" name="phoneNumber"></td>
 					</tr>
-					<tr>
-						<td class="menu">요청사항</td>
-						<td class="content"><input class="border" type="text" name="requestComment"></td>
-					</tr>
 				</table>
 				<br>
 				<br>
@@ -215,7 +212,7 @@
 				%>
 					<tr>
 						<td class="menu">상품명</td>
-						<td class="content"><%=(String)(m.get("goodsTitle"))%></td>
+						<td class="content"><input class="border" type="text" name="goodsTitle" value="<%=(String)(m.get("goodsTitle"))%>" readonly="readonly"></td>
 					</tr>
 					<tr>
 						<td class="menu">총구매수량</td>
@@ -223,7 +220,7 @@
 					</tr>
 					<tr>
 						<td class="menu">총상품가격</td>
-						<td class="content"><input class="border" type="text" name="totalPrice" value="<%=(Integer)(m.get("goodsPrice"))%>" readonly="readonly">원</td>
+						<td class="content"><input class="border" type="text" name="goodsPrice" value="<%=(Integer)(m.get("goodsPrice"))%>" readonly="readonly">원</td>
 					</tr>
 					<tr>
 						<td class="menu">배송비</td>
@@ -231,7 +228,7 @@
 					</tr>
 					<tr>
 						<td class="menu">총결제금액</td>
-						<td class="content"><input class="border" type="text" name="addressName" value="<%=(Integer)(m.get("goodsPrice")) + 2500%>" readonly="readonly">원</td>
+						<td class="content"><input class="border" type="text" name="totalPrice" value="<%=(Integer)(m.get("goodsPrice")) + 2500%>" readonly="readonly">원</td>
 					</tr>
 					<tr>
 						<td class="menu">결제수단</td>

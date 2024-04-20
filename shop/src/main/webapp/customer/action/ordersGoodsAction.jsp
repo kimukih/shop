@@ -19,15 +19,22 @@
 	int goodsNo = Integer.parseInt(request.getParameter("goodsNo"));
 	int totalAmount = Integer.parseInt(request.getParameter("totalAmount"));
 	int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
+	String addressName = request.getParameter("addressName");
+	String address = request.getParameter("address");
+	String phoneNumber = request.getParameter("phoneNumber");
 	
 	System.out.println("mail : " + mail);
 	System.out.println("goodsTitle : " + goodsTitle);
 	System.out.println("goodsNo : " + goodsNo);
 	System.out.println("totalAmount : " + totalAmount);
 	System.out.println("totalPrice : " + totalPrice);
+	System.out.println("addressName : " + addressName);
+	System.out.println("address : " + address);
+	System.out.println("phoneNumber : " + phoneNumber);
 
 	// 주문결제한 내용을 orders Table에 추가
-	boolean createOrders = OrdersDAO.createOrders(mail, goodsNo, totalAmount, totalPrice);
+	boolean createOrders = OrdersDAO.createOrders(mail, goodsNo, goodsTitle, totalAmount, totalPrice, addressName, address, phoneNumber);
+	
 	if(createOrders){
 		System.out.println("상품 결제 정보가 추가되었습니다.");
 		response.sendRedirect("/shop/customer/form/ordersGoodsResult.jsp");

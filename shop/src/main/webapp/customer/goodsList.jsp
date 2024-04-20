@@ -294,7 +294,7 @@
 				<%
 				for(HashMap<String, Object> m : getGoodsList){
 				%>
-				<a href="/shop/customer/form/ordersInfoForm.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">
+				<a href="/shop/customer/form/ordersInfoList.jsp?mail=<%=loginMember.get("mail")%>">
 				<%
 				}
 				%>

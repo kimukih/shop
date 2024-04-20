@@ -14,7 +14,7 @@ public class DBHelper {
 		
 		// 비밀번호를 코드로 남겨서 직접 사용하는것은 보안문제가 생길 가능성이 높아
 		// 개인PC에 properties 형식으로 남겨 간접적으로 비밀번호를 사용할 수 있도록 설정
-		FileReader fr = new FileReader("d:\\dev\\auth\\mariadb.properties");
+		FileReader fr = new FileReader("c:\\dev\\auth\\mariadb.properties");
 		Properties prop = new Properties();
 		prop.load(fr);
 		// System.out.println(prop.getProperty("id"));
