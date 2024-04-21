@@ -46,7 +46,7 @@ public class OrdersDAO {
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
 			HashMap<String, Object> m = new HashMap<String, Object>();
-			m.put("ordersNo", rs.getString("ordersNo"));
+			m.put("ordersNo", rs.getInt("ordersNo"));
 			m.put("goodsNo", rs.getInt("goodsNo"));
 			m.put("goodsTitle", rs.getString("goodsTitle"));
 			m.put("addressName", rs.getString("addressName"));
@@ -58,5 +58,33 @@ public class OrdersDAO {
 		
 		conn.close();
 		return ordersListInfo;
+	}
+	
+	public static ArrayList<HashMap<String, Object>> getOrdersInfoOne(String mail, int ordersNo) throws Exception{
+		
+		Connection conn = DBHelper.getConnection();
+		
+		ArrayList<HashMap<String, Object>> ordersInfoOne = new ArrayList<HashMap<String, Object>>();
+		
+		String sql = "SELECT orders_no ordersNo, goods_no goodsNo, goods_title goodsTitle, total_amount totalAmount, total_price totalPrice, orders_date ordersDate, state FROM orders WHERE mail = ? AND orders_no = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, mail);
+		stmt.setInt(2, ordersNo);
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			HashMap<String, Object> m = new HashMap<>();
+			m.put("ordersNo", rs.getInt("ordersNo"));
+			m.put("goodsNo", rs.getInt("goodsNo"));
+			m.put("goodsTitle", rs.getString("goodsTitle"));
+			m.put("totalAmount", rs.getInt("totalAmount"));
+			m.put("totalPrice", rs.getInt("totalPrice"));
+			m.put("ordersDate", rs.getString("ordersDate"));
+			m.put("state", rs.getString("state"));
+			ordersInfoOne.add(m);
+		}
+		
+		conn.close();
+		return ordersInfoOne;
 	}
 }

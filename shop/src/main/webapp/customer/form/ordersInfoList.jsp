@@ -83,6 +83,7 @@
 		
 		a{
 			text-decoration: none;
+			color: #000000;
 		}
 		
 		a.page-link{
@@ -152,9 +153,9 @@
 				for(HashMap<String, Object> m : ordersListInfo){
 				%>
 				<tr>
-					<td><%=(String)(m.get("ordersNo"))%></td>
+					<td><%=(Integer)(m.get("ordersNo"))%></td>
 					<td><%=(Integer)(m.get("goodsNo"))%></td>
-					<td><%=(String)(m.get("goodsTitle"))%></td>
+					<td><a href="/shop/customer/form/ordersInfoOne.jsp?mail=<%=mail%>&ordersNo=<%=(Integer)(m.get("ordersNo"))%>"><%=(String)(m.get("goodsTitle"))%></a></td>
 					<td><%=(String)(m.get("addressName"))%></td>
 					<td><%=(String)(m.get("phoneNumber"))%></td>
 					<td><%=(String)(m.get("address"))%></td>
