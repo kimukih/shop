@@ -23,7 +23,6 @@
 	// 주문상세 정보 가져오기
 	ArrayList<HashMap<String, Object>> ordersInfoOne = OrdersDAO.getOrdersInfoOne(mail, ordersNo);
 	System.out.println("ordersInfoOne : " + OrdersDAO.getOrdersInfoOne(mail, ordersNo));
-
 %>
 <!DOCTYPE html>
 <html>
@@ -164,7 +163,7 @@
 					<%
 					}else if(m.get("state").equals("배송완료")){
 					%>
-						<td><a class="btn btn-outline-dark" href="">리뷰작성</a></td>
+						<td><a class="btn btn-outline-dark" href="/shop/customer/form/addGoodsCommentForm.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">리뷰작성</a></td>
 					<%
 					}else{
 					%>

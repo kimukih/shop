@@ -328,7 +328,9 @@
 						<br>
 						<h2>상품 리뷰</h2>
 						<br>
-						상품 리뷰 자리 입니다.
+						<form method="post" action="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>">
+							<textarea name="goodsComment" rows="7" cols="50"></textarea>
+						</form>
 					</div>
 				<%
 				}
