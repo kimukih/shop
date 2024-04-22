@@ -4,6 +4,7 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
 <%@ page import="shop.dao.OrdersDAO"%>
+<%@ page import="shop.dao.CommentDAO"%>
 <%
 	// 로그인 인증 분기
 	if(session.getAttribute("loginCustomer") == null){
@@ -23,6 +24,10 @@
 	// 주문상세 정보 가져오기
 	ArrayList<HashMap<String, Object>> ordersInfoOne = OrdersDAO.getOrdersInfoOne(mail, ordersNo);
 	System.out.println("ordersInfoOne : " + OrdersDAO.getOrdersInfoOne(mail, ordersNo));
+	
+	// 배송완료 상태의 상품 리뷰를 작성했는지 유무 확인
+	boolean checkGoodsComment = CommentDAO.checkGoodsComment(ordersNo);
+	System.out.println("checkGoodsComment : " + checkGoodsComment);
 %>
 <!DOCTYPE html>
 <html>
@@ -162,9 +167,15 @@
 						<td><a class="btn btn-outline-dark" href="/shop/customer/action/deleteOrdersAction.jsp?mail=<%=mail%>&ordersNo=<%=ordersNo%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">주문취소</a></td>
 					<%
 					}else if(m.get("state").equals("배송완료")){
+						if(!checkGoodsComment){
+					%>
+						<td><a class="btn btn-outline-dark disabled" href="/shop/customer/form/addGoodsCommentForm.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">작성완료</a></td>
+					<%
+						}else{
 					%>
 						<td><a class="btn btn-outline-dark" href="/shop/customer/form/addGoodsCommentForm.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">리뷰작성</a></td>
 					<%
+						}
 					}else{
 					%>
 						<td><a class="btn btn-outline-dark disabled" href="">주문취소</a></td>

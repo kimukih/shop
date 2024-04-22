@@ -5,6 +5,7 @@
 <%@ page import="java.net.URLEncoder"%>
 <%@ page import="shop.dao.GoodsDAO"%>
 <%@ page import="shop.dao.CategoryDAO"%>
+<%@ page import="shop.dao.CommentDAO"%>
 <!-- Controller Layer -->
 <%
 	// 로그인 인증 분기
@@ -91,10 +92,15 @@
 	categoryAllRs = categoryAllStmt.executeQuery();
 	*/
 	
+	// 상품 리뷰 리스트 가져오기
+	ArrayList<HashMap<String, Object>> goodsCommentList = CommentDAO.getGoodsCommentList(goodsNo);
+	
 	// DAO 디버깅 코드
 	System.out.println("GoodsDAO.getCategoryCnt() : " + GoodsDAO.getCategoryCnt());
 	System.out.println("GoodsDAO.getGoodsOne(goodsNo) : " + GoodsDAO.getGoodsOne(goodsNo));
 	System.out.println("CategoryDAO.getCategoryAll() : " + CategoryDAO.getCategoryAll());
+	System.out.println("CommentDAO.getGoodsCommentList(goodsNo) : " + CommentDAO.getGoodsCommentList(goodsNo));
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -328,9 +334,26 @@
 						<br>
 						<h2>상품 리뷰</h2>
 						<br>
-						<form method="post" action="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>">
-							<textarea name="goodsComment" rows="7" cols="50"></textarea>
-						</form>
+						<table class="table">
+							<tr>
+								<td style="width: 150px">주문번호</td>
+								<td style="width: 150px">별점</td>
+								<td>상품평</td>
+								<td style="width: 300px">작성일자</td>
+							</tr>
+						<%
+						for(HashMap<String, Object> m2 : goodsCommentList){
+						%>
+							<tr>
+								<td><%=(Integer)(m2.get("ordersNo"))%></td>
+								<td><%=(Integer)(m2.get("score"))%>점 / 5점</td>
+								<td><%=(String)(m2.get("comment"))%></td>
+								<td><%=(String)(m2.get("createDate"))%></td>
+							</tr>
+						<%
+						}
+						%>
+						</table>
 					</div>
 				<%
 				}
