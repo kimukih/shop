@@ -25,6 +25,7 @@
 		<!-- category CRUD page-->
 		<a href="/shop/emp/categoryList.jsp">카테고리관리</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 		<a href="/shop/emp/goodsList.jsp">상품관리</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+		<a href="/shop/emp/ordersStateList.jsp">배송관리</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 		<span>
 			<!-- 개인정보수정 -->
 			<a href="/shop/emp/empOne.jsp">
