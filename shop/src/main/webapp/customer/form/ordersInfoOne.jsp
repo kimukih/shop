@@ -160,7 +160,7 @@
 					<%
 					if(m.get("state").equals("결제완료")){
 					%>
-						<td><a class="btn btn-outline-dark" href="">주문취소</a></td>
+						<td><a class="btn btn-outline-dark" href="/shop/customer/action/deleteOrdersAction.jsp?mail=<%=mail%>&ordersNo=<%=ordersNo%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">주문취소</a></td>
 					<%
 					}else if(m.get("state").equals("배송완료")){
 					%>

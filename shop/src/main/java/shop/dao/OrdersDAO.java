@@ -87,4 +87,27 @@ public class OrdersDAO {
 		conn.close();
 		return ordersInfoOne;
 	}
+	
+	public static boolean deleteOrders(String mail, int ordersNo) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		boolean deleteOrders;
+		
+		String sql = "DELETE FROM orders WHERE mail = ? AND orders_no = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, mail);
+		stmt.setInt(2, ordersNo);
+		
+		int row = stmt.executeUpdate();
+		if(row == 1) {
+			deleteOrders = true;
+		}else {
+			deleteOrders = false;
+		}
+		
+		conn.close();
+		return deleteOrders;
+	}
+	
 }

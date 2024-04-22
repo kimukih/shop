@@ -4,6 +4,7 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
 <%@ page import="shop.dao.OrdersDAO"%>
+<%@ page import="shop.dao.GoodsDAO"%>
 <%
 	// 로그인 인증 분기
 	if(session.getAttribute("loginCustomer") == null){
@@ -37,11 +38,10 @@
 	
 	if(createOrders){
 		System.out.println("상품 결제 정보가 추가되었습니다.");
+		GoodsDAO.setGoodsAmountMinus(goodsNo);
 		response.sendRedirect("/shop/customer/form/ordersGoodsResult.jsp");
 	}else{
 		System.out.println("상품 결제 정보 추가에 실패하였습니다.");
 		response.sendRedirect("/shop/customer/form/ordersGoodsForm.jsp?mail=" + mail +"&goodsNo=" + goodsNo);
 	}
-	
-	// 주문완료된 상품의 재고를 주문한 수량만 큼 빼기
 %>

@@ -307,4 +307,36 @@ public class GoodsDAO {
 			conn.close();
 			return deleteGoodsRow;
 	}
+	
+	public static void setGoodsAmountMinus(int goodsNo) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		String sql = "UPDATE goods SET goods_amount = goods_amount-1 WHERE goods_no = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, goodsNo);
+		
+		int row = stmt.executeUpdate();
+		if(row == 1) {
+			return;
+		}
+		
+		conn.close();
+	}
+	
+	public static void setGoodsAmountPlus(int goodsNo) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		String sql = "UPDATE goods SET goods_amount = goods_amount+1 WHERE goods_no = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, goodsNo);
+		
+		int row = stmt.executeUpdate();
+		if(row == 1) {
+			return;
+		}
+		
+		conn.close();
+	}
 }
