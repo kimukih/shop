@@ -336,7 +336,7 @@
 					for(HashMap<String, Object> m : getGoodsList){
 				%>
 						<div class="product">
-							<a href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo"))%>">
+							<a href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo"))%>&currentPage=1">
 								<%
 								if(m.get("goodsImg").equals("")){
 								%>

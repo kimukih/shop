@@ -32,6 +32,8 @@
 	int goodsNo = Integer.parseInt(request.getParameter("goodsNo"));
 	System.out.println("goodsNo : " + goodsNo);
 	
+	int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+	System.out.println("currentPage : " + currentPage);
 %>
 
 <% 
@@ -92,14 +94,29 @@
 	categoryAllRs = categoryAllStmt.executeQuery();
 	*/
 	
+	
+	// goodsNo와 같은 상품 리뷰의 총 개수를 가져오기
+	int totalGoodsComment = CommentDAO.getTotalGoodsComment(goodsNo);
+	System.out.println("totalGoodsComment : " + totalGoodsComment);
+	
+	// 상품 리뷰 페이징 변수
+	int rowPerPage = 5;
+	int startRow = (currentPage - 1) * rowPerPage;
+	
+	// 마지막 페이지
+	int lastPage = totalGoodsComment / rowPerPage;
+	if(totalGoodsComment % rowPerPage != 0){
+		lastPage = (totalGoodsComment / rowPerPage) + 1;
+	}
+	
 	// 상품 리뷰 리스트 가져오기
-	ArrayList<HashMap<String, Object>> goodsCommentList = CommentDAO.getGoodsCommentList(goodsNo);
+	ArrayList<HashMap<String, Object>> goodsCommentList = CommentDAO.getGoodsCommentList(goodsNo, startRow, rowPerPage);
 	
 	// DAO 디버깅 코드
 	System.out.println("GoodsDAO.getCategoryCnt() : " + GoodsDAO.getCategoryCnt());
 	System.out.println("GoodsDAO.getGoodsOne(goodsNo) : " + GoodsDAO.getGoodsOne(goodsNo));
 	System.out.println("CategoryDAO.getCategoryAll() : " + CategoryDAO.getCategoryAll());
-	System.out.println("CommentDAO.getGoodsCommentList(goodsNo) : " + CommentDAO.getGoodsCommentList(goodsNo));
+	System.out.println("CommentDAO.getGoodsCommentList(goodsNo) : " + CommentDAO.getGoodsCommentList(goodsNo, startRow, rowPerPage));
 	
 %>
 <!DOCTYPE html>
@@ -368,6 +385,35 @@
 						}
 						%>
 						</table>
+						<nav aria-label="Page navigation example">
+						  <ul class="pagination justify-content-center">
+							<%
+							if(currentPage > 1 && currentPage < lastPage){
+							%>
+							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=1">&laquo;</a></li>
+							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=currentPage-1%>">&lsaquo;</a></li>
+							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=currentPage%>"><%=currentPage%></a></li>
+							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
+							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=lastPage%>">&raquo;</a></li>
+							<%
+							}else if(currentPage == 1){
+							%>
+								<li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=currentPage%>"><%=currentPage%></a></li>
+							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
+							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=lastPage%>">&raquo;</a></li>
+							<%
+							}else if(currentPage == lastPage){
+							%>
+								<li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=1">&laquo;</a></li>
+							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=currentPage-1%>">&lsaquo;</a></li>
+							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=currentPage%>"><%=currentPage%></a></li>
+							<%
+							}
+							%>
+						
+						
+						  </ul>
+						</nav>
 					</div>
 				<%
 				}

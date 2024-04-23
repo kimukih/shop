@@ -169,7 +169,7 @@
 					}else if(m.get("state").equals("배송완료")){
 						if(!checkGoodsComment){
 					%>
-						<td><a class="btn btn-outline-dark disabled" href="/shop/customer/form/addGoodsCommentForm.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">작성완료</a></td>
+						<td><a class="btn btn-outline-dark disabled" href="/shop/customer/form/addGoodsCommentForm.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">리뷰작성완료</a></td>
 					<%
 						}else{
 					%>

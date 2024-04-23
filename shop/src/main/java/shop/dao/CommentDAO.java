@@ -33,15 +33,17 @@ public class CommentDAO {
 
 	}
 	
-	public static ArrayList<HashMap<String, Object>> getGoodsCommentList(int goodsNo) throws Exception{
+	public static ArrayList<HashMap<String, Object>> getGoodsCommentList(int goodsNo, int startRow, int rowPerPage) throws Exception{
 		
 		Connection conn = DBHelper.getConnection();
 		
 		ArrayList<HashMap<String, Object>> goodsCommentList = new ArrayList<HashMap<String, Object>>();
 		
-		String sql = "SELECT orders_no ordersNo, mail, name, score, comment, create_date createDate FROM comment WHERE goods_no = ?";
+		String sql = "SELECT orders_no ordersNo, mail, name, score, comment, create_date createDate FROM comment WHERE goods_no = ? LIMIT ?, ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, goodsNo);
+		stmt.setInt(2, startRow);
+		stmt.setInt(3, rowPerPage);
 		
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
@@ -86,7 +88,7 @@ public class CommentDAO {
 		
 		boolean deleteGoodsComment;
 		
-		String sql = "DELETE FROM comment WHERE ordersNo = ?";
+		String sql = "DELETE FROM comment WHERE orders_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, ordersNo);
 		
@@ -99,5 +101,25 @@ public class CommentDAO {
 		
 		conn.close();
 		return deleteGoodsComment;
+	}
+	
+	public static int getTotalGoodsComment(int goodsNo) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		int totalGoodsComment = 0;
+		
+		String sql = "SELECT count(*) totalComment FROM comment WHERE goods_no = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, goodsNo);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			totalGoodsComment = rs.getInt("totalComment");
+		}
+		
+		conn.close();
+		return totalGoodsComment;
 	}
 }
