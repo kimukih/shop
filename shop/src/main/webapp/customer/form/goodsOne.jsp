@@ -336,19 +336,33 @@
 						<br>
 						<table class="table">
 							<tr>
-								<td style="width: 150px">주문번호</td>
-								<td style="width: 150px">별점</td>
+								<td style="width: 100px">주문번호</td>
+								<td style="width: 150px">작성자</td>
 								<td>상품평</td>
-								<td style="width: 300px">작성일자</td>
+								<td style="width: 100px">별점</td>
+								<td style="width: 200px">작성일자</td>
+								<td style="width: 80px">&nbsp;</td>
 							</tr>
 						<%
 						for(HashMap<String, Object> m2 : goodsCommentList){
 						%>
 							<tr>
 								<td><%=(Integer)(m2.get("ordersNo"))%></td>
-								<td><%=(Integer)(m2.get("score"))%>점 / 5점</td>
+								<td><%=(String)(m2.get("name"))%></td>
 								<td><%=(String)(m2.get("comment"))%></td>
+								<td><%=(Integer)(m2.get("score"))%>점 / 5점</td>
 								<td><%=(String)(m2.get("createDate"))%></td>
+								<%
+								if(loginMember.get("mail").equals(m2.get("mail"))){
+								%>
+									<td><a class="btn btn-outline-dark" href="/shop/customer/action/deleteGoodsCommentAction.jsp?ordersNo=<%=(Integer)(m2.get("ordersNo"))%>&goodsNo=<%=goodsNo%>">삭제</a></td>
+								<%
+								}else{
+								%>
+									<td>&nbsp;</td>
+								<%
+								}
+								%>
 							</tr>
 						<%
 						}

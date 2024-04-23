@@ -12,6 +12,11 @@
 %>
 
 <%
+	// 세션 정보 사용
+	HashMap<String, Object> loginMember = 
+	(HashMap<String, Object>)(session.getAttribute("loginCustomer"));
+
+
 	// 요청값 분석
 	int ordersNo = Integer.parseInt(request.getParameter("ordersNo"));
 	int goodsNo = Integer.parseInt(request.getParameter("goodsNo"));
@@ -92,7 +97,7 @@
 				<br>
 				<h3>상품평을 작성하고 모두에게 공유해보세요!</h3>
 				<br><br>
-				<form method="post" action="/shop/customer/action/addGoodsCommentAction.jsp?ordersNo=<%=ordersNo%>&goodsNo=<%=goodsNo%>">
+				<form method="post" action="/shop/customer/action/addGoodsCommentAction.jsp?ordersNo=<%=ordersNo%>&goodsNo=<%=goodsNo%>&mail=<%=loginMember.get("mail")%>&name=<%=loginMember.get("name")%>">
 					<div>
 						<h4>
 						만족도 : &nbsp;&nbsp;&nbsp;

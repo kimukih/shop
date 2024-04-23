@@ -156,7 +156,7 @@
 					<tr>
 						<td><%=(Integer)(m.get("ordersNo"))%></td>
 						<td><%=(Integer)(m.get("goodsNo"))%></td>
-						<td><%=(String)(m.get("goodsTitle"))%></td>
+						<td><a href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo"))%>"><%=(String)(m.get("goodsTitle"))%></a></td>
 						<td><%=(Integer)(m.get("totalAmount"))%></td>
 						<td><%=(Integer)(m.get("totalPrice"))%></td>
 						<td><%=(String)(m.get("ordersDate"))%></td>

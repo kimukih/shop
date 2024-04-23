@@ -5,18 +5,21 @@ import java.util.*;
 
 public class CommentDAO {
 	
-	public static boolean addGoodsComment(int ordersNo, int goodsNo, int score, String comment) throws Exception{
+	public static boolean addGoodsComment(int ordersNo, int goodsNo, String mail, String name, int score, String comment) throws Exception{
 		
 		Connection conn = DBHelper.getConnection();
 		
 		boolean addGoodsComment;
 		
-		String sql = "INSERT INTO comment(orders_no, goods_no, score, comment) VALUES(?, ?, ?, ?)";
+		String sql = "INSERT INTO comment(orders_no, goods_no, mail, name, score, comment) VALUES(?, ?, ?, RPAD(SUBSTR(?, 1, 1), LENGTH(?), '*'), ?, ?)";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, ordersNo);
 		stmt.setInt(2, goodsNo);
-		stmt.setInt(3, score);
-		stmt.setString(4, comment);
+		stmt.setString(3, mail);
+		stmt.setString(4, name);
+		stmt.setString(5, name);
+		stmt.setInt(6, score);
+		stmt.setString(7, comment);
 		
 		int row = stmt.executeUpdate();
 		if(row == 1) {
@@ -36,7 +39,7 @@ public class CommentDAO {
 		
 		ArrayList<HashMap<String, Object>> goodsCommentList = new ArrayList<HashMap<String, Object>>();
 		
-		String sql = "SELECT orders_no ordersNo, score, comment, create_date createDate FROM comment WHERE goods_no = ?";
+		String sql = "SELECT orders_no ordersNo, mail, name, score, comment, create_date createDate FROM comment WHERE goods_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, goodsNo);
 		
@@ -44,6 +47,8 @@ public class CommentDAO {
 		while(rs.next()) {
 			HashMap<String, Object> m = new HashMap<String, Object>();
 			m.put("ordersNo", rs.getInt("ordersNo"));
+			m.put("mail", rs.getString("mail"));
+			m.put("name", rs.getString("name"));
 			m.put("score", rs.getInt("score"));
 			m.put("comment", rs.getString("comment"));
 			m.put("createDate", rs.getString("createDate"));
@@ -73,5 +78,26 @@ public class CommentDAO {
 		
 		conn.close();
 		return checkGoodsComment;
+	}
+	
+	public static boolean deleteGoodsComment(int ordersNo) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		boolean deleteGoodsComment;
+		
+		String sql = "DELETE FROM comment WHERE ordersNo = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, ordersNo);
+		
+		int row = stmt.executeUpdate();
+		if(row == 1) {
+			deleteGoodsComment = true;
+		}else {
+			deleteGoodsComment = false;
+		}
+		
+		conn.close();
+		return deleteGoodsComment;
 	}
 }
