@@ -248,9 +248,9 @@
 				</a>
 			</td>
 			<td rowspan="2" style="width: 70px">
-				<a style="color: #000000;" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=loginMember.get("mail")%>">
+				<a style="color: #000000;" href="/shop/customer/form/wishList.jsp?mail=<%=loginMember.get("mail")%>">
 					<img src="/shop/img/cart.png" style="width: 30px; height: 30px; margin-bottom: 10px;"><br>
-					주문조회
+					장바구니
 				</a>
 			</td>
 			<td rowspan="2" style="width: 70px">
@@ -335,7 +335,9 @@
 							<br>
 							
 							<a href="/shop/customer/form/ordersGoodsForm.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=goodsNo%>" class="btn btn-outline-dark">구매하기</a>
-							<button type="submit" class="btn btn-outline-dark">찜하기</button>
+							<a onclick="alert('상품을 장바구니에 담았습니다.')" href="/shop/customer/action/addWishListAction.jsp?
+								mail=<%=loginMember.get("mail")%>&goodsNo=<%=goodsNo%>&goodsImg=<%=(String)(m.get("goodsImg"))%>&goodsTitle=<%=(String)(m.get("goodsTitle"))%>&category=<%=(String)(m.get("category"))%>&goodsPrice=<%=(Integer)(m.get("goodsPrice"))%>" type="submit" class="btn btn-outline-dark">찜하기
+							</a>
 							</form>
 						</div>
 					</div>
@@ -361,25 +363,33 @@
 								<td style="width: 80px">&nbsp;</td>
 							</tr>
 						<%
-						for(HashMap<String, Object> m2 : goodsCommentList){
+						if(goodsCommentList.size() != 0) {
+							for(HashMap<String, Object> m2 : goodsCommentList){
+						%>
+								<tr>
+									<td><%=(Integer)(m2.get("ordersNo"))%></td>
+									<td><%=(String)(m2.get("name"))%></td>
+									<td><%=(String)(m2.get("comment"))%></td>
+									<td><%=(Integer)(m2.get("score"))%>점 / 5점</td>
+									<td><%=(String)(m2.get("createDate"))%></td>
+									<%
+									if(loginMember.get("mail").equals(m2.get("mail"))){
+									%>
+										<td><a class="btn btn-outline-dark" href="/shop/customer/action/deleteGoodsCommentAction.jsp?ordersNo=<%=(Integer)(m2.get("ordersNo"))%>&goodsNo=<%=goodsNo%>">삭제</a></td>
+									<%
+									}else{
+									%>
+										<td>&nbsp;</td>
+									<%
+									}
+									%>
+								</tr>
+						<%
+							}
+						}else{
 						%>
 							<tr>
-								<td><%=(Integer)(m2.get("ordersNo"))%></td>
-								<td><%=(String)(m2.get("name"))%></td>
-								<td><%=(String)(m2.get("comment"))%></td>
-								<td><%=(Integer)(m2.get("score"))%>점 / 5점</td>
-								<td><%=(String)(m2.get("createDate"))%></td>
-								<%
-								if(loginMember.get("mail").equals(m2.get("mail"))){
-								%>
-									<td><a class="btn btn-outline-dark" href="/shop/customer/action/deleteGoodsCommentAction.jsp?ordersNo=<%=(Integer)(m2.get("ordersNo"))%>&goodsNo=<%=goodsNo%>">삭제</a></td>
-								<%
-								}else{
-								%>
-									<td>&nbsp;</td>
-								<%
-								}
-								%>
+								<td colspan="6"><h3>현재 등록된 상품 리뷰가 없습니다.</h3></td>
 							</tr>
 						<%
 						}

@@ -3,7 +3,6 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
-<%@ page import="shop.dao.OrdersDAO"%>
 <%
 	// 로그인 인증 분기
 	if(session.getAttribute("loginCustomer") == null){
@@ -12,27 +11,24 @@
 }
 %>
 
+<% 
+	HashMap<String, Object> loginMember = 
+	(HashMap<String, Object>)(session.getAttribute("loginCustomer"));
+%>
+
 <%
 	// 요청값 분석
 	String mail = request.getParameter("mail");
-	String addressName = request.getParameter("addressName");
-	String address = request.getParameter("address");
-	String phoneNumber = request.getParameter("phoneNumber");
-	
+
 	System.out.println("mail : " + mail);
-	System.out.println("addressName : " + addressName);
-	System.out.println("address : " + address);
-	System.out.println("phoneNumber : " + phoneNumber);
-	
-	// 주문 정보 가져오기
-	ArrayList<HashMap<String, Object>> ordersListInfo = OrdersDAO.getOrdersListInfo(mail);
-	
+
+
 %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>주문조회</title>
+	<title>장바구니</title>
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<style>
@@ -133,35 +129,26 @@
 <body>
 	<div class="container">
 		<div class="header"></div>
-		<h1 style="text-align: center; margin-bottom: 30px;">주문 상품 리스트</h1>
+		<h1 style="text-align: center; margin-bottom: 30px;">장바구니</h1>
 		<div class="main row">
 			<!-- 메인 내용 시작 -->
-			<h2 style="text-align: left; margin-bottom: 30px;">결제완료목록</h2>
+			<h2 style="text-align: left; margin-bottom: 30px;">찜한상품목록</h2>
 			<hr><br><br>
 			<table class="table">
 				<tr>
-					<td>주문번호</td>
-					<td>상품번호</td>
+					<td style="width: 70px">No</td>
+					<td style="width: 300px">상품이미지</td>
+					<td style="width: 150px">카테고리</td>
 					<td>상품명</td>
-					<td>수취인</td>
-					<td>연락처</td>
-					<td>배송지</td>
-					<td>배송상태</td>
+					<td style="width: 170px">판매가격</td>
+					<td rowspan="2" style="width: 150px; border-left: solid 1px #EAEAEA;"><a class="btn btn-outline-dark" href="">구매하기</a></td>
 				</tr>
-				<%
-				for(HashMap<String, Object> m : ordersListInfo){
-				%>
 				<tr>
-					<td><%=(Integer)(m.get("ordersNo"))%></td>
-					<td><%=(Integer)(m.get("goodsNo"))%></td>
-					<td><a href="/shop/customer/form/ordersInfoOne.jsp?mail=<%=mail%>&ordersNo=<%=(Integer)(m.get("ordersNo"))%>"><%=(String)(m.get("goodsTitle"))%></a></td>
-					<td><%=(String)(m.get("addressName"))%></td>
-					<td><%=(String)(m.get("phoneNumber"))%></td>
-					<td><%=(String)(m.get("address"))%></td>
-					<td><%=(String)(m.get("state"))%></td>
-				<%
-				}
-				%>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
 				</tr>
 			</table>
 			<!-- 메인 내용 끝 -->
