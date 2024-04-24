@@ -56,4 +56,26 @@ public class WishListDAO {
 		conn.close();
 		return wishList;
 	}
+	
+	public static boolean selectWishList(String mail, int goodsNo) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		boolean selectWishList;
+		
+		String sql = "SELECT wish_no FROM wishlist WHERE mail = ? AND goods_no = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, mail);
+		stmt.setInt(2, goodsNo);
+		
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			selectWishList = true;
+		}else {
+			selectWishList = false;
+		}
+		
+		conn.close();
+		return selectWishList;
+	}
 }

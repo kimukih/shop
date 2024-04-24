@@ -6,6 +6,7 @@
 <%@ page import="shop.dao.GoodsDAO"%>
 <%@ page import="shop.dao.CategoryDAO"%>
 <%@ page import="shop.dao.CommentDAO"%>
+<%@ page import="shop.dao.WishListDAO"%>
 <!-- Controller Layer -->
 <%
 	// 로그인 인증 분기
@@ -111,6 +112,11 @@
 	
 	// 상품 리뷰 리스트 가져오기
 	ArrayList<HashMap<String, Object>> goodsCommentList = CommentDAO.getGoodsCommentList(goodsNo, startRow, rowPerPage);
+	
+	// 이미 장바구니에 담은 상품을 한번 더 찜하기 할 경우 메시지 출력 후 찜하기 하지 않음
+	String mail = (String)(loginMember.get("mail"));
+	System.out.println("mail : " + mail);
+	boolean selectWishList = WishListDAO.selectWishList(mail, goodsNo);
 	
 	// DAO 디버깅 코드
 	System.out.println("GoodsDAO.getCategoryCnt() : " + GoodsDAO.getCategoryCnt());
@@ -345,9 +351,22 @@
 							<br>
 							
 							<a href="/shop/customer/form/ordersGoodsForm.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=goodsNo%>" class="btn btn-outline-dark">구매하기</a>
-							<a onclick="alert('상품을 장바구니에 담았습니다.')" href="/shop/customer/action/addWishListAction.jsp?
-								mail=<%=loginMember.get("mail")%>&goodsNo=<%=goodsNo%>&goodsImg=<%=(String)(m.get("goodsImg"))%>&goodsTitle=<%=(String)(m.get("goodsTitle"))%>&category=<%=(String)(m.get("category"))%>&goodsPrice=<%=(Integer)(m.get("goodsPrice"))%>" type="submit" class="btn btn-outline-dark">찜하기
-							</a>
+							<%
+							if(!selectWishList){
+							%>
+								<a onclick="alert('상품을 장바구니에 담았습니다.')" 
+								href="/shop/customer/action/addWishListAction.jsp?
+								mail=<%=loginMember.get("mail")%>&goodsNo=<%=goodsNo%>&goodsImg=<%=(String)(m.get("goodsImg"))%>&goodsTitle=<%=(String)(m.get("goodsTitle"))%>&category=<%=(String)(m.get("category"))%>&goodsPrice=<%=(Integer)(m.get("goodsPrice"))%>" class="btn btn-outline-dark">찜하기
+								</a>
+							<%
+							}else{
+							%>
+								<a onclick="alert('이미 장바구니에 추가된 상품입니다.')" 
+								href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=1" class="btn btn-outline-dark">찜하기
+								</a>
+							<%
+							}
+							%>
 							</form>
 						</div>
 					</div>
