@@ -29,7 +29,7 @@
 	System.out.println("goodsNo : " + goodsNo);
 	
 	// 찜하기 버튼을 누르면 DB의 wishlist Table에 상품정보가 추가됨
-	boolean addWishList = WishListDAO.addWishList(mail, goodsImg, category, goodsTitle, goodsPrice);
+	boolean addWishList = WishListDAO.addWishList(mail, goodsNo, goodsImg, category, goodsTitle, goodsPrice);
 	
 	if(addWishList){
 		System.out.println("상품을 장바구니에 담았습니다.");

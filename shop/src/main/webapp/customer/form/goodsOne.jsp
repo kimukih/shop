@@ -248,7 +248,7 @@
 				</a>
 			</td>
 			<td rowspan="2" style="width: 70px">
-				<a style="color: #000000;" href="/shop/customer/form/wishList.jsp?mail=<%=loginMember.get("mail")%>">
+				<a style="color: #000000;" href="/shop/customer/form/wishList.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=goodsNo%>">
 					<img src="/shop/img/cart.png" style="width: 30px; height: 30px; margin-bottom: 10px;"><br>
 					장바구니
 				</a>
@@ -323,10 +323,20 @@
 							<br>
 							<form>
 							<h4>
-								수량 : <input type="number" name="amount" min="1" max="100" value="1">
-								<a class="plusMinus" href=""><b>&nbsp;+&nbsp;</b></a>
-								<a class="plusMinus" href=""><b>&nbsp;-&nbsp;</b></a>
+								수량 : <input id="amount" type="number" name="amount" min="1" max="100" value="1">
+								<button type="button" onclick="plusBtn()"><b>&nbsp;+&nbsp;</b></button>
+								<button type="button" onclick="minusBtn()"><b>&nbsp;-&nbsp;</b></button>
 							</h4>
+							<script>
+								let amount = 0;
+								function plusBtn() {
+									document.getElementById("amount").value = ++amount;
+								}
+								
+								function minusBtn() {
+									document.getElementById("amount").value = --amount;
+								}
+							</script>
 							<br>
 							
 							<h4>

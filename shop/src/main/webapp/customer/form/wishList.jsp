@@ -3,6 +3,7 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
+<%@ page import="shop.dao.WishListDAO"%>
 <%
 	// 로그인 인증 분기
 	if(session.getAttribute("loginCustomer") == null){
@@ -19,10 +20,11 @@
 <%
 	// 요청값 분석
 	String mail = request.getParameter("mail");
-
 	System.out.println("mail : " + mail);
 
-
+	// 접속한 ID로 추가한 장바구니 목록 리스트
+	ArrayList<HashMap<String, Object>> wishList = WishListDAO.getWishList(mail);
+	System.out.println("WishListDAO.getWishList(mail) : " + WishListDAO.getWishList(mail));
 %>
 <!DOCTYPE html>
 <html>
@@ -134,23 +136,29 @@
 			<!-- 메인 내용 시작 -->
 			<h2 style="text-align: left; margin-bottom: 30px;">찜한상품목록</h2>
 			<hr><br><br>
-			<table class="table">
-				<tr>
-					<td style="width: 70px">No</td>
-					<td style="width: 300px">상품이미지</td>
-					<td style="width: 150px">카테고리</td>
-					<td>상품명</td>
-					<td style="width: 170px">판매가격</td>
-					<td rowspan="2" style="width: 150px; border-left: solid 1px #EAEAEA;"><a class="btn btn-outline-dark" href="">구매하기</a></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-			</table>
+			<%
+			for(HashMap<String, Object> m : wishList){
+			%>
+				<table class="table">
+					<tr>
+						<td style="width: 70px">No</td>
+						<td style="width: 300px">상품이미지</td>
+						<td style="width: 150px">카테고리</td>
+						<td>상품명</td>
+						<td style="width: 170px">판매가격</td>
+						<td rowspan="2" style="width: 150px; border-left: solid 1px #EAEAEA;"><a class="btn btn-outline-dark" href="/shop/customer/form/ordersGoodsForm.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">구매하기</a></td>
+					</tr>
+					<tr>
+						<td><%=(Integer)(m.get("wishNo"))%></td>
+						<td><img src="/shop/img/<%=(String)(m.get("goodsImg"))%>" width="150px" height="150px"></td>
+						<td><%=(String)(m.get("category"))%></td>
+						<td><%=(String)(m.get("goodsTitle"))%></td>
+						<td><%=(Integer)(m.get("goodsPrice"))%></td>
+					</tr>
+				</table>
+			<%
+			}
+			%>
 			<!-- 메인 내용 끝 -->
 		</div>
 	</div>
