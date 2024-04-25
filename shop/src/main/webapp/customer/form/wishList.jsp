@@ -146,7 +146,10 @@
 						<td style="width: 150px">카테고리</td>
 						<td>상품명</td>
 						<td style="width: 170px">판매가격</td>
-						<td rowspan="2" style="width: 150px; border-left: solid 1px #EAEAEA;"><a class="btn btn-outline-dark" href="/shop/customer/form/ordersGoodsForm.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">구매하기</a></td>
+						<td rowspan="2" style="width: 150px; border-left: solid 1px #EAEAEA;">
+							<a style="margin-bottom: 5px" class="btn btn-outline-dark" href="/shop/customer/form/ordersGoodsForm.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">구매하기</a><br>
+							<a style="margin-top: 5px"class="btn btn-outline-danger" href="/shop/customer/action/deleteWishListAction.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">삭제하기</a>
+						</td>
 					</tr>
 					<tr>
 						<td><%=(Integer)(m.get("wishNo"))%></td>

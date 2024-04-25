@@ -11,7 +11,7 @@ public class WishListDAO {
 		
 		boolean addWishList;
 		
-		String sql = "INSERT INTO wishlist(mail, goods_img, category, goods_title, goods_price) VALUES(?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO wishlist(mail, goods_no, goods_img, category, goods_title, goods_price) VALUES(?, ?, ?, ?, ?, ?)";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, mail);
 		stmt.setInt(2, goodsNo);
@@ -77,5 +77,27 @@ public class WishListDAO {
 		
 		conn.close();
 		return selectWishList;
+	}
+	
+	public static boolean deleteWishList(String mail, int goodsNo) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		boolean deleteWishList;
+		
+		String sql = "DELETE FROM wishlist WHERE mail = ? AND goods_no = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, mail);
+		stmt.setInt(2, goodsNo);
+		
+		int row = stmt.executeUpdate();
+		if(row == 1) {	// 장바구니 상품 삭제 성공
+			deleteWishList = true;
+		}else {	// 장바구니 상품 삭제 실패
+			deleteWishList = false;
+		}
+		
+		conn.close();
+		return deleteWishList;
 	}
 }
