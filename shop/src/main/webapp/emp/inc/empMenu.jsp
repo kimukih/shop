@@ -28,7 +28,7 @@
 		<a href="/shop/emp/ordersStateList.jsp">배송관리</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 		<span>
 			<!-- 개인정보수정 -->
-			<a href="/shop/emp/empOne.jsp">
+			<a href="/shop/emp/form/empOne.jsp?empId=<%=(String)(loginMember.get("empId"))%>">
 				(M) <%=(String)(loginMember.get("empName"))%>
 				님 반갑습니다.
 			</a>

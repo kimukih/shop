@@ -280,7 +280,7 @@
 				</form>
 			</td>
 			<td rowspan="2" style="width: 100px">
-				<a href="/shop/emp/empOne.jsp">
+				<a href="/shop/emp/form/empOne.jsp?empId=<%=(String)(loginMember.get("empId"))%>">
 					<img src="/shop/img/user.png" style="width: 30px; height: 30px; margin-bottom: 10px;"><br>
 					(M) <%=(String)(loginMember.get("empName"))%> 님
 				</a>

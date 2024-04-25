@@ -59,7 +59,7 @@ public class EmpDAO {
 		if(loginRs.next()) {	// 입력한 로그인 정보가 DB 정보와 일치 하는 경우 ( -> 로그인성공)
 			// 세션에 저장 할 HashMap 변수인 resultMap에 필요한 DB 정보를 저장
 			resultMap = new HashMap<String, Object>();
-			resultMap.put("empid", loginRs.getString("empId"));
+			resultMap.put("empId", loginRs.getString("empId"));
 			resultMap.put("empName", loginRs.getString("empName"));
 			resultMap.put("grade", loginRs.getInt("grade"));
 		}
@@ -168,5 +168,30 @@ public class EmpDAO {
 		conn.close();
 		return empListOne;
 	}
-
+	
+	public static boolean updateEmpOne(String empName, String empJob, int grade, String empId, String empPw) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		boolean updateEmpOne;
+		
+		String sql = "UPDATE emp SET emp_name = ?, emp_job = ?, grade = ? WHERE emp_id = ? AND emp_pw = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, empName);
+		stmt.setString(2, empJob);
+		stmt.setInt(3, grade);
+		stmt.setString(4, empId);
+		stmt.setString(5, empPw);
+		
+		int row = stmt.executeUpdate();
+		if(row == 1) {	// 정보 업데이트 성공
+			updateEmpOne = true;
+		}else{	// 정보 업데이트 실패
+			updateEmpOne = false;
+		}
+		
+		conn.close();
+		return updateEmpOne;
+	}
+	
 }
