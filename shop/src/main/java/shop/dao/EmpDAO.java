@@ -142,9 +142,31 @@ public class EmpDAO {
 		return modifyActiveRow;
 	}
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	public static ArrayList<HashMap<String, Object>> getEmpListOne(String empId) throws Exception{
+		
+		Connection conn = DBHelper.getConnection();
+		
+		ArrayList<HashMap<String, Object>> empListOne = new ArrayList<HashMap<String, Object>>();
+		
+		String sql = "SELECT emp_id empId, emp_name empName, emp_job empJob, grade, create_date createDate, update_date updateDate FROM emp WHERE emp_id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, empId);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			HashMap<String, Object> m = new HashMap<String, Object>();
+			m.put("empId", rs.getString("empId"));
+			m.put("empName", rs.getString("empName"));
+			m.put("empJob", rs.getString("empJob"));
+			m.put("grade", rs.getInt("grade"));
+			m.put("createDate", rs.getString("createDate"));
+			m.put("updateDate", rs.getString("updateDate"));
+			empListOne.add(m);
+		}
+		
+		conn.close();
+		return empListOne;
 	}
 
 }

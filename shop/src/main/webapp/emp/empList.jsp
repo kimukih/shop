@@ -125,6 +125,10 @@
 			text-decoration: none;
 		}
 		
+		a.link:hover{
+			color: #8C8C8C;
+		}
+		
 		a.page-link{
 			color: #000000;
 		}
@@ -171,7 +175,7 @@
 						 String타입으로 형변환 할 때 m.get()값 전체에 괄호를 씌워주지 않으면 에러발생 -->
 						<tr>
 							<td><%=(String)(m.get("empId"))%></td>
-							<td><%=(String)(m.get("empName"))%></td>
+							<td><a class="link" href="/shop/emp/form/empOne.jsp?empId=<%=(String)(m.get("empId"))%>"><%=(String)(m.get("empName"))%></a></td>
 							<td><%=(String)(m.get("empJob"))%></td>
 							<td><%=(String)(m.get("hireDate"))%></td>
 					<%
