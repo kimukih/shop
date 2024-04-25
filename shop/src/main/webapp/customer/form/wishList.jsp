@@ -137,28 +137,34 @@
 			<h2 style="text-align: left; margin-bottom: 30px;">찜한상품목록</h2>
 			<hr><br><br>
 			<%
-			for(HashMap<String, Object> m : wishList){
+			if(wishList.size() != 0){
+				for(HashMap<String, Object> m : wishList){
 			%>
-				<table class="table">
-					<tr>
-						<td style="width: 70px">No</td>
-						<td style="width: 300px">상품이미지</td>
-						<td style="width: 150px">카테고리</td>
-						<td>상품명</td>
-						<td style="width: 170px">판매가격</td>
-						<td rowspan="2" style="width: 150px; border-left: solid 1px #EAEAEA;">
-							<a style="margin-bottom: 5px" class="btn btn-outline-dark" href="/shop/customer/form/ordersGoodsForm.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">구매하기</a><br>
-							<a style="margin-top: 5px"class="btn btn-outline-danger" href="/shop/customer/action/deleteWishListAction.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">삭제하기</a>
-						</td>
-					</tr>
-					<tr>
-						<td><%=(Integer)(m.get("wishNo"))%></td>
-						<td><img src="/shop/img/<%=(String)(m.get("goodsImg"))%>" width="150px" height="150px"></td>
-						<td><%=(String)(m.get("category"))%></td>
-						<td><%=(String)(m.get("goodsTitle"))%></td>
-						<td><%=(Integer)(m.get("goodsPrice"))%></td>
-					</tr>
-				</table>
+					<table class="table">
+						<tr>
+							<td style="width: 70px">No</td>
+							<td style="width: 300px">상품이미지</td>
+							<td style="width: 150px">카테고리</td>
+							<td>상품명</td>
+							<td style="width: 170px">판매가격</td>
+							<td rowspan="2" style="width: 150px; border-left: solid 1px #EAEAEA;">
+								<a style="margin-bottom: 5px" class="btn btn-outline-dark" href="/shop/customer/form/ordersGoodsForm.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">구매하기</a><br>
+								<a style="margin-top: 5px"class="btn btn-outline-danger" href="/shop/customer/action/deleteWishListAction.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=(Integer)(m.get("goodsNo"))%>">삭제하기</a>
+							</td>
+						</tr>
+						<tr>
+							<td><%=(Integer)(m.get("wishNo"))%></td>
+							<td><img src="/shop/img/<%=(String)(m.get("goodsImg"))%>" width="150px" height="150px"></td>
+							<td><%=(String)(m.get("category"))%></td>
+							<td><%=(String)(m.get("goodsTitle"))%></td>
+							<td><%=(Integer)(m.get("goodsPrice"))%></td>
+						</tr>
+					</table>
+			<%
+				}
+			}else{
+			%>
+					<h2 style="margin-bottom: 30px">장바구니에 담은 상품이 없습니다.</h2>
 			<%
 			}
 			%>

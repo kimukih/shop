@@ -47,7 +47,4 @@
 	
 	int addCustomerRow = addCustomerStmt.executeUpdate();
 	*/
-	
-	// DAO 디버깅 코드
-	System.out.println("CustomerDAO.addCustomer(mail, pw, name, birth, gender) : " + CustomerDAO.addCustomer(mail, pw, name, birth, gender));
 %>

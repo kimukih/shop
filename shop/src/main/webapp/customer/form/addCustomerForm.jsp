@@ -99,14 +99,14 @@
 			<br>
 			<h3>회원가입</h3>
 			<br>
-			<form method="post" action="/shop/customer/action/checkIdAction.jsp">
 				<table class="table table-hover" border=1>
+				<form method="post" action="/shop/customer/action/checkIdAction.jsp">
 					<tr>
-						<td>이메일 중복체크 : </td>
+						<td style="width: 150px">이메일 : </td>
 						<%
 						if(errMsg != null){
 						%>
-						<td>
+						<td style="width: 450px">
 							<input type="email" name="mailCheck" required="required" style="width: 350px;" placeholder="이메일을 입력해주세요." value="<%=mailCheck%>">
 							<br>
 							<%=errMsg%>
@@ -128,41 +128,34 @@
 						<%
 						}
 						%>
-						<td><button class="btn btn-outline-dark" type="submit">중복체크</button></td>
+						<td style="width: 120px">
+							<button class="btn btn-outline-dark" type="submit">중복체크</button>
+						</td>
 					</tr>
-				</table>
-			</form>
-			<form method="post" action="/shop/customer/action/addCustomerAction.jsp">
-				<table class="table table-hover" border=1>
+				</form>
+					
+				<form method="post" action="/shop/customer/action/addCustomerAction.jsp">
 					<tr>
-						<td>이메일 : </td>
 						<%
 						if(sucMsg != null){
 						%>
-						<td>
-							<input type="email" name="mail" style="width: 350px;" required="required" value="<%=mailCheck%>" readonly="readonly">
-						</td>
-						<%
-						}else{
-						%>
-						<td>
-							<input type="email" name="mail" style="width: 350px;" required="required" placeholder="이메일 중복체크를 진행해주세요." readonly="readonly">
-						</td>
+							<input type="hidden" name="mail" required="required" value="<%=mailCheck%>">
 						<%
 						}
 						%>
-					</tr>
-					<tr>
 						<td>비밀번호 : </td>
 						<td><input type="password" name="pw" style="width: 350px;" required="required" placeholder="비밀번호를 입력해주세요."></td>
+						<td>&nbsp;</td>
 					</tr>
 					<tr>
 						<td>이름 : </td>
 						<td><input type="text" name="name" style="width: 350px;" required="required" placeholder="이름을 입력해주세요."></td>
+						<td>&nbsp;</td>
 					</tr>
 					<tr>
 						<td>생년월일 : </td>
-						<td><input type="date" name="birth" required="required"></td>
+						<td><input type="date" name="birth" style="width: 350px;" required="required"></td>
+						<td>&nbsp;</td>
 					</tr>
 					<tr>
 						<td>성별 : </td>
@@ -170,6 +163,7 @@
 							<input type="radio" name="gender" value="남"> 남&nbsp;&nbsp;&nbsp;&nbsp;
 							<input type="radio" name="gender" value="여"> 여
 						</td>
+						<td>&nbsp;</td>
 					</tr>
 				</table>
 				<br>

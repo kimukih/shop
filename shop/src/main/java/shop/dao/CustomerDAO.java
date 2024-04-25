@@ -155,7 +155,6 @@ public class CustomerDAO {
 		addCustomerStmt.setString(3, name);
 		addCustomerStmt.setString(4, birth);
 		addCustomerStmt.setString(5, gender);
-		System.out.println("addCustomerStmt : " + addCustomerStmt);
 		
 		int addCustomerRow = addCustomerStmt.executeUpdate();
 		
