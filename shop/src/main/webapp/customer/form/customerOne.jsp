@@ -144,11 +144,12 @@
 				%>
 				</table>
 				<br>
-				<span style="margin-right: 290px;">
+				<span style="margin-right: 220px;">
 					<a class="btn btn-outline-dark" href="/shop/customer/form/updateCustomerForm.jsp?mail=<%=mail%>">정보수정</a>
+					<a class="btn btn-outline-dark" href="/shop/customer/form/modifyCustomerPwForm.jsp?mail=<%=mail%>">비밀번호변경</a>
 					<a class="btn btn-outline-dark" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>">주문조회</a>
 				</span>
-				<span style="margin-left: 290px;">
+				<span style="margin-left: 220px;">
 					<a class="btn btn-outline-danger" href="/shop/customer/form/deleteCustomerForm.jsp?mail=<%=mail%>">회원탈퇴</a>
 				</span>
 			<!-- 메인 내용 시작 -->

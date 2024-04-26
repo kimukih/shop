@@ -4,6 +4,52 @@ import java.sql.*;
 import java.util.*;
 
 public class CustomerDAO {
+	
+	public static boolean modifyCustomerPw(String mail, String pw, String newPw) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		boolean modifyCustomerPw;
+		
+		String sql = "UPDATE customer SET pw = PASSWORD(?) WHERE mail = ? AND pw = PASSWORD(?)";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, newPw);
+		stmt.setString(2, mail);
+		stmt.setString(3, pw);
+		
+		int row = stmt.executeUpdate();
+		if(row == 1) {
+			modifyCustomerPw = true;
+		}else {
+			modifyCustomerPw = false;
+		}
+		
+		conn.close();
+		return modifyCustomerPw;
+	}
+	
+	public static boolean pwCheck(String mail, String pw) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		boolean pwCheck;
+		
+		String sql = "SELECT pw FROM customer WHERE mail = ? AND pw = PASSWORD(?)";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, mail);
+		stmt.setString(2, pw);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		if(rs.next()) {
+			pwCheck = true;
+		}else {
+			pwCheck = false;
+		}
+		
+		conn.close();
+		return pwCheck;
+	}
 		
 	public static HashMap<String, Object> getCusName(String name) throws Exception {
 		
