@@ -102,21 +102,21 @@
 					<%
 						if(m.get("state").equals("결제완료")){
 					%>
-							<a class="btn btn-dark" href="/shop/emp/action/modifyStateAction.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&state=<%=m.get("state")%>">결제완료</a>
+							<a class="btn btn-dark disabled" href="/shop/emp/action/modifyStateAction.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&state=<%=m.get("state")%>">결제완료</a>
 							<a class="btn btn-outline-dark" href="/shop/emp/action/modifyStateAction.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&state=배송중">배송중</a>
 							<a class="btn btn-outline-dark disabled" href="/shop/emp/action/modifyStateAction.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&state=배송완료">배송완료</a>
 					<%
 						}else if(m.get("state").equals("배송중")){
 					%>
 							<a class="btn btn-outline-dark disabled" href="/shop/emp/action/modifyStateAction.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&state=결재완료%>">결제완료</a>
-							<a class="btn btn-dark" href="/shop/emp/action/modifyStateAction.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&state=<%=m.get("state")%>">배송중</a>
+							<a class="btn btn-dark disabled" href="/shop/emp/action/modifyStateAction.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&state=<%=m.get("state")%>">배송중</a>
 							<a class="btn btn-outline-dark" href="/shop/emp/action/modifyStateAction.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&state=배송완료">배송완료</a>
 					<%
 						}else if(m.get("state").equals("배송완료")){
 					%>
 							<a class="btn btn-outline-dark disabled" href="/shop/emp/action/modifyStateAction.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&state=결재완료">결제완료</a>
 							<a class="btn btn-outline-dark disabled" href="/shop/emp/action/modifyStateAction.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&state=배송중">배송중</a>
-							<a class="btn btn-dark" href="/shop/emp/action/modifyStateAction.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&state=<%=m.get("state")%>">배송완료</a>
+							<a class="btn btn-dark disabled" href="/shop/emp/action/modifyStateAction.jsp?ordersNo=<%=(Integer)(m.get("ordersNo"))%>&state=<%=m.get("state")%>">배송완료</a>
 					<%
 						}
 					%>

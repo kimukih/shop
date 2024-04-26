@@ -33,6 +33,6 @@
 	
 	if(addGoodsComment){
 		System.out.println("성공적으로 리뷰를 작성하였습니다.");
-		response.sendRedirect("/shop/customer/form/goodsOne.jsp?goodsNo=" + goodsNo);
+		response.sendRedirect("/shop/customer/form/goodsOne.jsp?goodsNo=" + goodsNo + "&currentPage=1");
 	}
 %>

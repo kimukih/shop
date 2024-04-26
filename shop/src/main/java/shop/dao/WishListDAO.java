@@ -31,15 +31,17 @@ public class WishListDAO {
 		return addWishList;
 	}
 	
-	public static ArrayList<HashMap<String, Object>> getWishList(String mail) throws Exception{
+	public static ArrayList<HashMap<String, Object>> getWishList(String mail, int startRow, int rowPerPage) throws Exception{
 		
 		Connection conn = DBHelper.getConnection();
 		
 		ArrayList<HashMap<String, Object>> wishList = new ArrayList<HashMap<String, Object>>();
 		
-		String sql = "SELECT wish_no wishNo, goods_no goodsNo, goods_img goodsImg, category, goods_title goodsTitle, goods_price goodsPrice FROM wishlist WHERE mail = ?";
+		String sql = "SELECT wish_no wishNo, goods_no goodsNo, goods_img goodsImg, category, goods_title goodsTitle, goods_price goodsPrice FROM wishlist WHERE mail = ? LIMIT ?, ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, mail);
+		stmt.setInt(2, startRow);
+		stmt.setInt(3, rowPerPage);
 		
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
@@ -99,5 +101,25 @@ public class WishListDAO {
 		
 		conn.close();
 		return deleteWishList;
+	}
+	
+	public static int getTotalWishList(String mail) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		int totalWishList = 0;
+		
+		String sql = "SELECT count(*) cnt FROM wishlist WHERE mail = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, mail);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()){
+			totalWishList = rs.getInt("cnt");
+		}
+		
+		conn.close();
+		return totalWishList;
 	}
 }

@@ -254,7 +254,7 @@
 				</a>
 			</td>
 			<td rowspan="2" style="width: 70px">
-				<a style="color: #000000;" href="/shop/customer/form/wishList.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=goodsNo%>">
+				<a style="color: #000000;" href="/shop/customer/form/wishList.jsp?mail=<%=loginMember.get("mail")%>&goodsNo=<%=goodsNo%>&currentPage=1">
 					<img src="/shop/img/cart.png" style="width: 30px; height: 30px; margin-bottom: 10px;"><br>
 					장바구니
 				</a>
