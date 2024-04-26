@@ -3,7 +3,6 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
-<%@ page import="shop.dao.EmpDAO"%>
 <!-- Controller Layer -->
 <%
 	// 로그인 인증 분기
@@ -16,17 +15,19 @@
 <%
 	// 요청값 분석
 	String empId = request.getParameter("empId");
+	String msg = request.getParameter("msg");
+	String msg2 = request.getParameter("msg2");
+
 	System.out.println("empId : " + empId);
-	
-	// empId에 해당하는 관리자의 정보 출력
-	ArrayList<HashMap<String, Object>> empListOne = EmpDAO.getEmpListOne(empId);
+	System.out.println("msg : " + msg);
+	System.out.println("msg2 : " + msg2);
 
 %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>관리자 상세</title>
+	<title>관리자 비밀번호변경</title>
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<style>
@@ -84,49 +85,49 @@
 	<div class="container">
 		<div class="header">
 		<span><a class="btn btn-outline-dark" href="/shop/emp/action/empLogout.jsp">로그아웃</a></span>
-		<span><a class="btn btn-outline-dark" href="/shop/emp/empList.jsp">이전</a></span>
+		<span><a class="btn btn-outline-dark" href="/shop/emp/form/empOne.jsp?empId=<%=empId%>">이전</a></span>
 		</div>
 		<div class="row">
 			<div class="col"></div>
 			<div class="main col-8">
 			<!-- 메인 내용 시작 -->
-				<h1>관리자 정보 상세</h1>
+				<h1>관리자 비밀번호변경</h1>
 				<br>
-				<table class="table table-hover" border=1>
-				<%
-				for(HashMap<String, Object> m : empListOne){
-				%>
-				<tr>
-					<td>관리자ID</td>
-					<td><%=(String)(m.get("empId"))%></td>
-				</tr>
-				<tr>
-					<td>이름</td>
-					<td><%=(String)(m.get("empName"))%></td>
-				</tr>
-				<tr>
-					<td>직책</td>
-					<td><%=(String)(m.get("empJob"))%></td>
-				</tr>
-				<tr>
-					<td>권한등급</td>
-					<td><%=(Integer)(m.get("grade"))%></td>
-				</tr>
-				<tr>
-					<td>가입날짜</td>
-					<td><%=(String)(m.get("createDate"))%></td>
-				</tr>
-				<tr>
-					<td>수정날짜</td>
-					<td><%=(String)(m.get("updateDate"))%></td>
-				</tr>
-				<%
-				}
-				%>
-				</table>
-				<br>
-					<a class="btn btn-outline-dark" href="/shop/emp/form/updateEmpOneForm.jsp?empId=<%=empId%>">정보수정</a>
-					<a class="btn btn-outline-dark" href="/shop/emp/form/modifyEmpPwForm.jsp?empId=<%=empId%>">비밀번호변경</a>
+				<form method="post" action="/shop/emp/action/modifyEmpPwAction.jsp">
+					<table class="table table-hover" border=1>
+						<tr>
+							<td>관리자 아이디 : </td>
+							<td><input type="text" name="empId" style="width: 350px;" value="<%=empId%>" readonly="readonly"></td>
+						</tr>
+						<tr>
+							<td>현재 비밀번호 : </td>
+							<td>
+								<input type="password" name="empPw" style="width: 350px;" required="required" placeholder="현재 비밀번호를 입력해주세요.">
+							<%
+								if(msg != null){
+							%>
+									<br><%=msg%>
+							<%
+								}
+							%>
+							</td>
+						</tr>
+						<tr>
+							<td>새로운 비밀번호 : </td>
+							<td><input type="password" name="newEmpPw" style="width: 350px;" required="required" placeholder="새로운 비밀번호를 입력해주세요.">
+							<%
+								if(msg2 != null){
+							%>
+									<br><%=msg2%>
+							<%
+								}
+							%>
+							</td>
+						</tr>
+					</table>
+					<br>
+					<button class="btn btn-outline-dark" type="submit">변경하기</button>
+				</form>
 			<!-- 메인 내용 끝 -->
 			</div>
 			<div class="col"></div>

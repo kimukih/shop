@@ -25,6 +25,6 @@
 	
 	if(modifyOrdersState){
 		System.out.println("배송 현황이 성공적으로 변경되었습니다.");
-		response.sendRedirect("/shop/emp/ordersStateList.jsp");
+		response.sendRedirect("/shop/emp/ordersStateList.jsp?currentPage=1");
 	}
 %>

@@ -6,6 +6,52 @@ import java.util.*;
 // emp 테이블을 CRUD하는 STATIC 메서드의 컨테이너
 public class EmpDAO {
 	
+	public static boolean empPwCheck(String empId, String empPw) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		boolean pwCheck;
+		
+		String sql = "SELECT emp_pw FROM emp WHERE emp_id = ? AND emp_pw = PASSWORD(?)";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, empId);
+		stmt.setString(2,empPw);
+		
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			pwCheck = true;
+		}else {
+			pwCheck = false;
+		}
+		
+		conn.close();
+		return pwCheck;
+	}
+	
+	
+	public static boolean modifyEpmPw(String empId, String empPw, String newEmpPw) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		boolean modifyEmpPw;
+		
+		String sql = "UPDATE emp SET emp_pw = PASSWORD(?) WHERE emp_id = ? AND emp_pw = PASSWORD(?)";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, newEmpPw);
+		stmt.setString(2, empId);
+		stmt.setString(3, empPw);
+		
+		int row = stmt.executeUpdate();
+		if(row == 1) {
+			modifyEmpPw = true;
+		}else{
+			modifyEmpPw = false;
+		}
+		
+		conn.close();
+		return modifyEmpPw;
+	}
+	
 	public static int insertEmp(
 			String empId,
 			String empPw,
@@ -21,7 +67,7 @@ public class EmpDAO {
 			Class.forName("org.mariadb.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
 		*/
-		String addEmpSql = "INSERT INTO emp(emp_id, emp_pw, emp_name, emp_job, hire_date) VALUES(?, ?, ?, ?, ?)";
+		String addEmpSql = "INSERT INTO emp(emp_id, emp_pw, emp_name, emp_job, hire_date) VALUES(?, PASSWORD(?), ?, ?, ?)";
 		PreparedStatement addEmpStmt = conn.prepareStatement(addEmpSql);
 		addEmpStmt.setString(1, empId);
 		addEmpStmt.setString(2, empPw);
