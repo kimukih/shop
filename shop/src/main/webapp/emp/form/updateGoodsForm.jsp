@@ -105,7 +105,7 @@
 			<!-- 메인 내용 시작 -->
 				<h1>상품상세 수정</h1>
 				<br>
-				<form method="post" action="/shop/emp/action/updateGoodsAction.jsp">
+				<form method="post" action="/shop/emp/action/updateGoodsAction.jsp" enctype="multipart/form-data">
 					<table class="table table-hover" border=1>
 						<%
 						for(HashMap<String, Object> m : goodsBoardOne){
@@ -131,9 +131,9 @@
 							<td><%=(String)(m.get("empId"))%></td>
 						</tr>
 						<tr>
-							<td class="column" style="vertical-align: middle">상품이미지</td>
+							<td class="column">상품이미지</td>
 							<td>
-								<img src="/shop/img/<%=(String)(m.get("goodsImg"))%>" width="200px" height="200px">
+								<input type="file" name="goodsImg" required="required">
 							</td>
 						</tr>
 						<tr>

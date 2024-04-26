@@ -272,18 +272,19 @@ public class GoodsDAO {
 		return addGoodsRow;
 	}
 	
-	public static int updateGoods(String goodsTitle, String goodsContent, String goodsPrice, int goodsNo) throws Exception {
+	public static int updateGoods(String goodsTitle, String fileName, String goodsContent, String goodsPrice, int goodsNo) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
 		
-		String updateGoodsSql = "UPDATE goods SET goods_title = ?, goods_price = ?, goods_content = ? WHERE goods_no = ?";
+		String updateGoodsSql = "UPDATE goods SET goods_title = ?, goods_img = ?, goods_price = ?, goods_content = ? WHERE goods_no = ?";
 		PreparedStatement updateGoodsStmt = null;
 		
 		updateGoodsStmt = conn.prepareStatement(updateGoodsSql);
 		updateGoodsStmt.setString(1, goodsTitle);
-		updateGoodsStmt.setString(2, goodsPrice);
-		updateGoodsStmt.setString(3, goodsContent);
-		updateGoodsStmt.setInt(4, goodsNo);
+		updateGoodsStmt.setString(2, fileName);
+		updateGoodsStmt.setString(3, goodsPrice);
+		updateGoodsStmt.setString(4, goodsContent);
+		updateGoodsStmt.setInt(5, goodsNo);
 		System.out.println("updateGoodsStmt : " + updateGoodsStmt);
 		
 		int updateGoodsRow = updateGoodsStmt.executeUpdate();

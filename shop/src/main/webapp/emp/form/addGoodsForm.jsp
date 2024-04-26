@@ -17,21 +17,6 @@
 <%
 	// 카테고리 테이블 내용 DB에서 가져오기
 	ArrayList<String> categoryList = CategoryDAO.getAddGoodsCategoryList();
-
-	/*
-	String categoryListSql = "SELECT category FROM category";
-	PreparedStatement categoryListStmt = null;
-	ResultSet categoryListRs = null;
-	
-	categoryListStmt = conn.prepareStatement(categoryListSql);
-	categoryListRs = categoryListStmt.executeQuery();
-	
-	ArrayList<String> categoryList = new ArrayList<String>();
-	
-	while(categoryListRs.next()){
-		categoryList.add(categoryListRs.getString("category"));
-	}
-	*/
 	
 	// DAO 디버깅 코드
 	System.out.println("CategoryDAO.getAddGoodsCategoryList() : " + CategoryDAO.getAddGoodsCategoryList());
