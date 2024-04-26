@@ -33,14 +33,17 @@ public class OrdersDAO {
 		return createOrders;
 	}
 	
-	public static ArrayList<HashMap<String, Object>> getOrdersStateList() throws Exception{
+	public static ArrayList<HashMap<String, Object>> getOrdersStateList(int startRow, int rowPerPage) throws Exception{
 		
 		Connection conn = DBHelper.getConnection();
 		
 		ArrayList<HashMap<String, Object>> ordersStateList = new ArrayList<HashMap<String, Object>>();
 		
-		String sql = "SELECT orders_no ordersNo, goods_no goodsNo, goods_title goodsTitle, orders_date ordersDate, state FROM orders";
+		String sql = "SELECT orders_no ordersNo, goods_no goodsNo, goods_title goodsTitle, orders_date ordersDate, state FROM orders LIMIT ?, ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, startRow);
+		stmt.setInt(2, rowPerPage);
+		
 		ResultSet rs = stmt.executeQuery();
 		
 		while(rs.next()) {
@@ -166,6 +169,25 @@ public class OrdersDAO {
 	
 		conn.close();
 		return modifyOrdersState;
+	}
+	
+	public static int getTotalOrders() throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		int totalOrders = 0;
+		
+		String sql = "SELECT count(*) cnt FROM orders";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			totalOrders = rs.getInt("cnt");
+		}
+		
+		conn.close();
+		return totalOrders;
 	}
 	
 }

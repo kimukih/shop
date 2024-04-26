@@ -170,7 +170,7 @@
 </head>
 <body>
 	<div class="container">
-		<div class="header"></div>
+		<div class="header">
 			<table class="head">
 			<tr>
 				<td rowspan="2" style="text-align: center; width: 300px;">
@@ -239,7 +239,7 @@
 				</td>
 			</tr>
 		</table>
-		<br>
+		</div>
 		<h1 style="text-align: center; margin-bottom: 30px;">장바구니</h1>
 		<div class="main row">
 			<!-- 메인 내용 시작 -->

@@ -14,11 +14,28 @@
 %>
 
 <%
+	// 요청값 분석
+	int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+	System.out.println("currentPage : " + currentPage);
+
+	// 결제 완료된 상품의 총 개수를 가져오기
+	int totalOrders = OrdersDAO.getTotalOrders();
+	System.out.println("totalOrders : " + totalOrders);
+	
+	// 상품 리뷰 페이징 변수
+	int rowPerPage = 10;
+	int startRow = (currentPage - 1) * rowPerPage;
+	
+	// 마지막 페이지
+	int lastPage = totalOrders / rowPerPage;
+	if(totalOrders % rowPerPage != 0){
+		lastPage = (totalOrders / rowPerPage) + 1;
+	}
+		
 	// 주문 완료된 상품의 배송현황 리스트 가져오기
-	ArrayList<HashMap<String, Object>> ordersStateList = OrdersDAO.getOrdersStateList();
-	System.out.println("ordersStateList : " + OrdersDAO.getOrdersStateList());
-	
-	
+	ArrayList<HashMap<String, Object>> ordersStateList = OrdersDAO.getOrdersStateList(startRow, rowPerPage);
+	System.out.println("ordersStateList : " + OrdersDAO.getOrdersStateList(startRow, rowPerPage));
+
 %>
 
 
@@ -126,6 +143,34 @@
 					}
 					%>
 				</table>
+				<br>
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+						<%
+						if(currentPage > 1 && currentPage < lastPage){
+						%>
+							<li class="page-item"><a class="page-link" href="/shop/emp/ordersStateList.jsp?currentPage=1">&laquo;</a></li>
+						    <li class="page-item"><a class="page-link" href="/shop/emp/ordersStateList.jsp?currentPage=<%=currentPage-1%>">&lsaquo;</a></li>
+						    <li class="page-item"><a class="page-link" href="/shop/emp/ordersStateList.jsp?currentPage=<%=currentPage%>"><%=currentPage%></a></li>
+						    <li class="page-item"><a class="page-link" href="/shop/emp/ordersStateList.jsp?currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
+						    <li class="page-item"><a class="page-link" href="/shop/emp/ordersStateList.jsp?currentPage=<%=lastPage%>">&raquo;</a></li>
+						<%
+						}else if(currentPage == 1){
+						%>
+							<li class="page-item"><a class="page-link" href="/shop/emp/ordersStateList.jsp?currentPage=1"><%=currentPage%></a></li>
+						    <li class="page-item"><a class="page-link" href="/shop/emp/ordersStateList.jsp?currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
+						    <li class="page-item"><a class="page-link" href="/shop/emp/ordersStateList.jsp?currentPage=<%=lastPage%>">&raquo;</a></li>
+						<%
+						}else if(currentPage == lastPage){
+						%>
+							<li class="page-item"><a class="page-link" href="/shop/emp/ordersStateList.jsp?currentPage=1">&laquo;</a></li>
+						    <li class="page-item"><a class="page-link" href="/shop/emp/ordersStateList.jsp?currentPage=<%=currentPage-1%>">&lsaquo;</a></li>
+						    <li class="page-item"><a class="page-link" href="/shop/emp/ordersStateList.jsp?currentPage=<%=currentPage%>"><%=currentPage%></a></li>
+						<%
+						}
+						%>		
+					</ul>
+				</nav>
 			<!-- 메인 내용 끝 -->
 			</div>
 			<div class="col"></div>
