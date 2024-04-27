@@ -21,6 +21,7 @@
 	int grade = Integer.parseInt(request.getParameter("grade"));
 	String empPw = request.getParameter("empPw");
 	
+	// 파라미터 디버깅 코드
 	System.out.println("empId : " + empId);
 	System.out.println("empName : " + empName);
 	System.out.println("empJob : " + empJob);
@@ -38,4 +39,7 @@
 		String msg = URLEncoder.encode("비밀번호가 일치하지 않습니다. 다시 시도해주세요.", "UTF-8");
 		response.sendRedirect("/shop/emp/form/updateEmpOneForm.jsp?empId=" + empId + "&msg=" + msg);
 	}
+	
+	// DAO 디버깅 코드
+	System.out.println("updateEmpOne : " + EmpDAO.updateEmpOne(empName, empJob, grade, empId, empPw));
 %>

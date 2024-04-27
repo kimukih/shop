@@ -18,12 +18,12 @@
 	String empId = request.getParameter("empId");
 	String empPw = request.getParameter("empPw");
 	
+	// 파라미터 디버깅 코드
 	System.out.println("empId : " + empId);
 	System.out.println("empPw : " + empPw);
 	
 	// 로그인 실패 empLoginForm.jsp
 	// 로그인 성공 empList.jsp
-	
 	HashMap<String, Object> loginEmp = EmpDAO.empLogin(empId, empPw);
 	
 	// 로그인 성공하면 empList로 이동
@@ -55,7 +55,7 @@
 	}
 	
 	// DAO 디버깅 코드
-	System.out.println("EmpDAO.empLogin(empId, empPw) : " + EmpDAO.empLogin(empId, empPw));
+	System.out.println("loginEmp : " + EmpDAO.empLogin(empId, empPw));
 	
 	/*
 	// model code

@@ -11,20 +11,21 @@
 		return;
 	}
 
-	// 로그인 실패시 에러메시지 출력
-	String msg = request.getParameter("msg");
-	System.out.println("msg : " + msg);
 %>
 
 <%
+	// 로그인 실패시 에러메시지 출력
+	String msg = request.getParameter("msg");
+
 	// 요청값 분석
 	String mail = request.getParameter("mail");
-	System.out.println("mail : " + mail);
-	
 	String mailCheck = request.getParameter("mailCheck");
 	String errMsg = request.getParameter("errMsg");
 	String sucMsg = request.getParameter("sucMsg");
 	
+	// 파라미터 디버깅 코드
+	System.out.println("mail : " + mail);
+	System.out.println("msg : " + msg);
 	System.out.println("mailCheck : " + mailCheck);
 	System.out.println("errMsg : " + errMsg);
 	System.out.println("sucMsg : " + sucMsg);

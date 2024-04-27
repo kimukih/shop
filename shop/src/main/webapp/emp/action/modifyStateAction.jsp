@@ -27,4 +27,7 @@
 		System.out.println("배송 현황이 성공적으로 변경되었습니다.");
 		response.sendRedirect("/shop/emp/ordersStateList.jsp?currentPage=1");
 	}
+	
+	// DAO 디버깅 코드
+	System.out.println("modifyOrdersState : " + OrdersDAO.modifyOrdersState(ordersNo, state));
 %>

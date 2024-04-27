@@ -17,9 +17,10 @@
 <%
 	// 요청값 분석
 	String mail = request.getParameter("mail");
-	System.out.println("mail : " + mail);
-	
 	String msg = request.getParameter("msg");
+	
+	// 파라미터 디버깅 코드
+	System.out.println("mail : " + mail);
 	System.out.println("msg : " + msg);
 %>
 <!DOCTYPE html>

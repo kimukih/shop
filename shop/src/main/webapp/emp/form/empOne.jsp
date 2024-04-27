@@ -16,10 +16,15 @@
 <%
 	// 요청값 분석
 	String empId = request.getParameter("empId");
+
+	// 파라미터 디버깅 코드
 	System.out.println("empId : " + empId);
 	
 	// empId에 해당하는 관리자의 정보 출력
 	ArrayList<HashMap<String, Object>> empListOne = EmpDAO.getEmpListOne(empId);
+	
+	// DAO 디버깅 코드
+	System.out.println("empListOne : " + EmpDAO.getEmpListOne(empId));
 
 %>
 <!DOCTYPE html>

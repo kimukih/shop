@@ -21,6 +21,7 @@
 	int ordersNo = Integer.parseInt(request.getParameter("ordersNo"));
 	int goodsNo = Integer.parseInt(request.getParameter("goodsNo"));
 	
+	// 파라미터 디버깅 코드
 	System.out.println("ordersNo : " + ordersNo);
 	System.out.println("goodsNo : " + goodsNo);
 

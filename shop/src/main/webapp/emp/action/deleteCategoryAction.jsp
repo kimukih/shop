@@ -16,11 +16,13 @@
 <%
 	// 요청값 분석
 	String category = request.getParameter("category");
+
+	// 파라미터 디버깅 코드
 	System.out.println("category : " + category);
 	
 	// DB에서 카테고리 명에 해당하는 카테고리 삭제시키는 쿼리
-	int deleteCategoryRow = CategoryDAO.deleteCategory(category);
-	if(deleteCategoryRow == 1){
+	boolean deleteCategory = CategoryDAO.deleteCategory(category);
+	if(deleteCategory){
 		System.out.println("카테고리 삭제 성공!");
 		response.sendRedirect("/shop/emp/categoryList.jsp");
 	}else{
@@ -29,7 +31,7 @@
 	}
 	
 	// DAO 디버깅 코드
-	System.out.println("CategoryDAO.deleteCategory(category) : " + CategoryDAO.deleteCategory(category));
+	System.out.println("deleteCategory : " + CategoryDAO.deleteCategory(category));
 	
 	/*
 	Class.forName("org.mariadb.jdbc.Driver");

@@ -18,16 +18,19 @@
 	String mail = request.getParameter("mail");
 	int ordersNo = Integer.parseInt(request.getParameter("ordersNo"));
 	
+	// 파라미터 디버깅 코드
 	System.out.println("mail : " + mail);
 	System.out.println("ordersNo : " + ordersNo);
 
 	// 주문상세 정보 가져오기
 	ArrayList<HashMap<String, Object>> ordersInfoOne = OrdersDAO.getOrdersInfoOne(mail, ordersNo);
-	System.out.println("ordersInfoOne : " + OrdersDAO.getOrdersInfoOne(mail, ordersNo));
 	
 	// 배송완료 상태의 상품 리뷰를 작성했는지 유무 확인
 	boolean checkGoodsComment = CommentDAO.checkGoodsComment(ordersNo);
-	System.out.println("checkGoodsComment : " + checkGoodsComment);
+	
+	// DAO 디버깅 코드
+	System.out.println("ordersInfoOne : " + OrdersDAO.getOrdersInfoOne(mail, ordersNo));
+	System.out.println("checkGoodsComment : " + CommentDAO.checkGoodsComment(ordersNo));
 %>
 <!DOCTYPE html>
 <html>

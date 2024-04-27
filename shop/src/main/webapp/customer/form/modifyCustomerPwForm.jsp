@@ -18,6 +18,7 @@
 	String msg = request.getParameter("msg");
 	String msg2 = request.getParameter("msg2");
 
+	// 파라미터 디버깅 코드
 	System.out.println("mail : " + mail);
 	System.out.println("msg : " + msg);
 	System.out.println("msg2 : " + msg2);

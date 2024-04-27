@@ -22,6 +22,7 @@
 	String gender = request.getParameter("gender");
 	String pw = request.getParameter("pw");
 	
+	// 파라미터 디버깅 코드
 	System.out.println("mail : " + mail);
 	System.out.println("name : " + name);
 	System.out.println("birth : " + birth);
@@ -29,9 +30,9 @@
 	System.out.println("pw : " + pw);
 
 	// 수정한 회원 정보를 DB customer table에 반영하기
-	int updateCustomerRow = CustomerDAO.updateCustomer(mail, pw, name, birth, gender);
+	boolean updateCustomer = CustomerDAO.updateCustomer(mail, pw, name, birth, gender);
 	
-	if(updateCustomerRow == 1){
+	if(updateCustomer){
 		System.out.println("회원 정보 수정에 성공하였습니다.");
 		response.sendRedirect("/shop/customer/form/customerOne.jsp?mail=" + mail);
 	}else{
@@ -39,6 +40,9 @@
 		String msg = URLEncoder.encode("비밀번호가 일치하지 않습니다. 다시 시도해주세요.", "UTF-8");
 		response.sendRedirect("/shop/customer/form/updateCustomerForm.jsp?mail=" + mail + "&msg=" + msg);
 	}
+	
+	// DAO 디버깅 코드
+	System.out.println("updateCustomer : " + CustomerDAO.updateCustomer(mail, pw, name, birth, gender));
 	
 	/*
 	Class.forName("org.mariadb.jdbc.Driver");
@@ -58,6 +62,4 @@
 	int updateCustomerRow = updateCustomerStmt.executeUpdate();
 	*/
 	
-	// DAO 디버깅 코드
-	System.out.println("CustomerDAO.updateCustomer(mail, pw, name, birth, gender) : " + CustomerDAO.updateCustomer(mail, pw, name, birth, gender));
 %>

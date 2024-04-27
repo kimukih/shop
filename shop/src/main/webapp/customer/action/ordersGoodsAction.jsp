@@ -24,6 +24,7 @@
 	String address = request.getParameter("address");
 	String phoneNumber = request.getParameter("phoneNumber");
 	
+	// 파라미터 디버깅 코드
 	System.out.println("mail : " + mail);
 	System.out.println("goodsTitle : " + goodsTitle);
 	System.out.println("goodsNo : " + goodsNo);
@@ -44,4 +45,7 @@
 		System.out.println("상품 결제 정보 추가에 실패하였습니다.");
 		response.sendRedirect("/shop/customer/form/ordersGoodsForm.jsp?mail=" + mail +"&goodsNo=" + goodsNo);
 	}
+	
+	// DAO 디버깅 코드
+	System.out.println("createOrders : " + OrdersDAO.createOrders(mail, goodsNo, goodsTitle, totalAmount, totalPrice, addressName, address, phoneNumber));
 %>

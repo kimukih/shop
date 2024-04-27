@@ -21,6 +21,7 @@
 	String mail = request.getParameter("mail");
 	String name = request.getParameter("name");
 	
+	// 파라미터 디버깅 코드
 	System.out.println("ordersNo : " + ordersNo);
 	System.out.println("goodsNo : " + goodsNo);
 	System.out.println("score : " + score);
@@ -35,4 +36,7 @@
 		System.out.println("성공적으로 리뷰를 작성하였습니다.");
 		response.sendRedirect("/shop/customer/form/goodsOne.jsp?goodsNo=" + goodsNo + "&currentPage=1");
 	}
+	
+	// DAO 디버깅 코드
+	System.out.println("addGoodsComment : " + CommentDAO.addGoodsComment(ordersNo, goodsNo, mail, name, score, comment));
 %>

@@ -19,6 +19,7 @@
 	String pw = request.getParameter("pw");
 	String newPw = request.getParameter("newPw");
 	
+	// 파라미터 디버깅 코드
 	System.out.println("mail : " + mail);
 	System.out.println("pw : " + pw);
 	System.out.println("newPw : " + newPw);
@@ -48,4 +49,9 @@
 			}
 		}
 	}
+	
+	// DAO 디버깅 코드
+	System.out.println("pwCheck : " + CustomerDAO.pwCheck(mail, pw));
+	System.out.println("modifyCustomerPw : " + CustomerDAO.modifyCustomerPw(mail, pw, newPw));
+	
 %>

@@ -23,6 +23,7 @@
 	String empPw = request.getParameter("empPw");
 	String newEmpPw = request.getParameter("newEmpPw");
 	
+	// 파라미터 디버깅 코드
 	System.out.println("empId : " + empId);
 	System.out.println("empPw : " + empPw);
 	System.out.println("newEmpPw : " + newEmpPw);
@@ -44,6 +45,9 @@
 		}else{
 			// 현재 비밀번호 일치여부 확인 후 새로운 비밀번호로 변경
 			boolean modifyEmpPw = EmpDAO.modifyEpmPw(empId, empPw, newEmpPw);
+			
+			// DAO 디버깅 코드
+			System.out.println("modifyEmpPw : " + EmpDAO.modifyEpmPw(empId, empPw, newEmpPw));
 	
 			if(modifyEmpPw){
 				System.out.println("비밀번호가 변경되었습니다.");
@@ -51,4 +55,7 @@
 			}
 		}
 	}
+	
+	// DAO 디버깅 코드
+	System.out.println("pwCheck : " + EmpDAO.modifyEpmPw(empId, empPw, newEmpPw));
 %>

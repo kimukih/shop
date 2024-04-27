@@ -16,11 +16,13 @@
 <%
 	// 요청값 분석
 	String category = request.getParameter("category");
+
+	// 파라미터 디버깅 코드
 	System.out.println("category : " + category);
 	
 	// category 파라미터로 받아서 DB에 카테고리 추가하기
-	int addCategoryRow = CategoryDAO.getAddCategory(category);
-	if(addCategoryRow == 1){
+	boolean addCategory = CategoryDAO.addCategory(category);
+	if(addCategory){
 		response.sendRedirect("/shop/emp/categoryList.jsp");
 		System.out.println("카테고리 추가 성공!");
 	}else{
@@ -29,7 +31,7 @@
 	}
 	
 	// DAO 디버깅 코드
-	System.out.println("CategoryDAO.getAddCategory(category) : " + CategoryDAO.getAddCategory(category));
+	System.out.println("addCategory : " + CategoryDAO.addCategory(category));
 	
 	/*
 	String addCategorySql = "INSERT INTO category(category) VALUES(?)";

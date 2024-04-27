@@ -240,7 +240,7 @@ public class GoodsDAO {
 		return goodsBoardOne;
 	}
 	
-	public static int getAddGoods(
+	public static boolean addGoods(
 			String category,
 			String empId,
 			String goodsTitle,
@@ -251,6 +251,8 @@ public class GoodsDAO {
 			) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
+		
+		boolean addGoods;
 		
 		String addGoodsSql = "INSERT INTO goods(category, emp_id, goods_title, goods_content, goods_price, goods_amount, goods_img) VALUES(?, ?, ?, ?, ?, ?, ?)";
 		
@@ -267,14 +269,21 @@ public class GoodsDAO {
 		System.out.println("addGoodsStmt : " + addGoodsStmt);
 		
 		int addGoodsRow = addGoodsStmt.executeUpdate();
+		if(addGoodsRow == 1){
+			addGoods = true;
+		}else{
+			addGoods = false;
+		}
 		
 		conn.close();
-		return addGoodsRow;
+		return addGoods;
 	}
 	
-	public static int updateGoods(String goodsTitle, String fileName, String goodsContent, String goodsPrice, int goodsNo) throws Exception {
+	public static boolean updateGoods(String goodsTitle, String fileName, String goodsContent, String goodsPrice, int goodsNo) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
+		
+		boolean updateGoods;
 		
 		String updateGoodsSql = "UPDATE goods SET goods_title = ?, goods_img = ?, goods_price = ?, goods_content = ? WHERE goods_no = ?";
 		PreparedStatement updateGoodsStmt = null;
@@ -289,13 +298,21 @@ public class GoodsDAO {
 		
 		int updateGoodsRow = updateGoodsStmt.executeUpdate();
 		
+		if(updateGoodsRow == 1) {
+			updateGoods = true;
+		}else{
+			updateGoods = false;
+		}
+		
 		conn.close();
-		return updateGoodsRow;
+		return updateGoods;
 	}
 	
-	public static int deleteGoods(int goodsNo) throws Exception {
+	public static boolean deleteGoods(int goodsNo) throws Exception {
 			
 			Connection conn = DBHelper.getConnection();
+			
+			boolean deleteGoods;
 			
 			String deleteGoodsSql = "DELETE FROM goods WHERE goods_no = ?";
 			PreparedStatement deleteGoodsStmt = null;
@@ -305,8 +322,14 @@ public class GoodsDAO {
 			
 			int deleteGoodsRow = deleteGoodsStmt.executeUpdate();
 			
+			if(deleteGoodsRow == 1){
+				deleteGoods = true;
+			}else{
+				deleteGoods = false;
+			}
+			
 			conn.close();
-			return deleteGoodsRow;
+			return deleteGoods;
 	}
 	
 	public static void setGoodsAmountMinus(int goodsNo) throws Exception {

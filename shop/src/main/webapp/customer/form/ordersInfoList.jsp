@@ -19,6 +19,7 @@
 	String address = request.getParameter("address");
 	String phoneNumber = request.getParameter("phoneNumber");
 	
+	// 파라미터 디버깅 코드
 	System.out.println("mail : " + mail);
 	System.out.println("addressName : " + addressName);
 	System.out.println("address : " + address);
@@ -27,6 +28,8 @@
 	// 주문 정보 가져오기
 	ArrayList<HashMap<String, Object>> ordersListInfo = OrdersDAO.getOrdersListInfo(mail);
 	
+	// DAO 디버깅 코드
+	System.out.println("ordersListInfo : " + OrdersDAO.getOrdersListInfo(mail));
 %>
 <!DOCTYPE html>
 <html>

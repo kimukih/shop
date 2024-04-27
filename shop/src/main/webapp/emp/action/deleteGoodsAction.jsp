@@ -11,8 +11,8 @@ pageEncoding="UTF-8"%>
 	System.out.println("goodsNo : " + goodsNo);
 	
 	// goodsNo에 해당하는 게시물을 DB 삭제
-	int deleteGoodsRow = GoodsDAO.deleteGoods(goodsNo);
-	if(deleteGoodsRow == 1){
+	boolean deleteGoods = GoodsDAO.deleteGoods(goodsNo);
+	if(deleteGoods){
 		response.sendRedirect("/shop/emp/goodsList.jsp");
 		System.out.println("상품 삭제 성공!");
 	}else{
@@ -21,7 +21,7 @@ pageEncoding="UTF-8"%>
 	}
 	
 	// DAO 디버깅 코드
-	System.out.println("GoodsDAO.deleteGoods(goodsNo) : " + GoodsDAO.deleteGoods(goodsNo));
+	System.out.println("deleteGoods : " + GoodsDAO.deleteGoods(goodsNo));
 	
 	/*
 	Class.forName("org.mariadb.jdbc.Driver");

@@ -38,7 +38,7 @@
 	*/
 	
 	// DAO 디버깅 코드
-	System.out.println("CategoryDAO.getCategoryList() : " + CategoryDAO.getCategoryList());
+	System.out.println("categoryList : " + CategoryDAO.getCategoryList());
 %>
 <!DOCTYPE html>
 <html>

@@ -20,13 +20,14 @@
 	String mail = request.getParameter("mail");
 	String pw = request.getParameter("pw");
 	
+	// 파라미터 디버깅 코드
 	System.out.println("mail : " + mail);
 	System.out.println("pw : " + pw);
 	
 	// DB의 mail, pw에 해당하는 회원정보 삭제하기
-	int deleteCustomerRow = CustomerDAO.deleteCustomer(mail, pw);
+	boolean deleteCustomer = CustomerDAO.deleteCustomer(mail, pw);
 	
-	if(deleteCustomerRow == 1){
+	if(deleteCustomer){
 		System.out.println("회원 정보 삭제에 성공하였습니다.");
 		session.invalidate();
 		response.sendRedirect("/shop/customer/form/deleteCustomerResult.jsp");
@@ -35,6 +36,9 @@
 		String msg = URLEncoder.encode("비밀번호가 일치하지 않습니다. 다시 시도해주세요.", "UTF-8");
 		response.sendRedirect("/shop/customer/form/deleteCustomerForm.jsp?mail=" + mail + "&msg=" + msg);
 	}
+	
+	// DAO 디버깅 코드
+	System.out.println("deleteCustomer : " + CustomerDAO.deleteCustomer(mail, pw));
 	
 	/*
 	Class.forName("org.mariadb.jdbc.Driver");
@@ -61,6 +65,4 @@
 	}
 	*/
 	
-	// DAO 디버깅 코드
-	System.out.println("CustomerDAO.deleteCustomer(mail, pw) : " + CustomerDAO.deleteCustomer(mail, pw));
 %>

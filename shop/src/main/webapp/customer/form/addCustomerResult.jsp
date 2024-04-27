@@ -7,10 +7,15 @@
 <%
 	// 요청값 분석
 	String name = request.getParameter("name");
+
+	// 파라미터 디버깅 코드
 	System.out.println("name : " + name);
 	
 	// 회원가입한 정보 중 name을 DB에서 가져오기
 	HashMap<String, Object> cusName = CustomerDAO.getCusName(name);
+	
+	// DAO 디버깅 코드
+	System.out.println("cusName : " + CustomerDAO.getCusName(name));
 	
 	/*
 	Class.forName("org.mariadb.jdbc.Driver");
@@ -26,9 +31,6 @@
 	
 	cusNameRs = cusNameStmt.executeQuery();
 	*/
-	
-	// DAO 디버깅 코드
-	System.out.println("CustomerDAO.getCusName(name) : " + CustomerDAO.getCusName(name));
 %>
 <!DOCTYPE html>
 <html>

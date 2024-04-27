@@ -19,7 +19,7 @@
 	ArrayList<String> categoryList = CategoryDAO.getAddGoodsCategoryList();
 	
 	// DAO 디버깅 코드
-	System.out.println("CategoryDAO.getAddGoodsCategoryList() : " + CategoryDAO.getAddGoodsCategoryList());
+	System.out.println("categoryList : " + CategoryDAO.getAddGoodsCategoryList());
 %>
 <!DOCTYPE html>
 <html>

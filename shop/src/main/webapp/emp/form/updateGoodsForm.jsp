@@ -16,6 +16,8 @@
 <%
 	// 요청값 분석
 	int goodsNo = Integer.parseInt(request.getParameter("goodsNo"));
+
+	// 파라미터 디버깅 코드
 	System.out.println("goodsNo : " + goodsNo);
 
 	// 상품 정보에 대한 데이터 DB에서 가져오기
@@ -33,7 +35,7 @@
 	*/
 	
 	// DAO 디버깅 코드
-	System.out.println("GoodsDAO.getGoodsBoardOne(goodsNo) : " + GoodsDAO.getGoodsBoardOne(goodsNo));
+	System.out.println("goodsBoardOne : " + GoodsDAO.getGoodsBoardOne(goodsNo));
 %>
 <!DOCTYPE html>
 <html>

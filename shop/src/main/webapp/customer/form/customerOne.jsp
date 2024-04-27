@@ -18,10 +18,15 @@
 <%
 	// 요청값 분석
 	String mail = request.getParameter("mail");
+
+	// 파라미터 디버깅 코드
 	System.out.println("mail : " + mail);
 	
 	// mail에 해당하는 customer의 상세 정보 가져오기
 	ArrayList<HashMap<String, Object>> customerOne = CustomerDAO.getCustomerOne(mail);
+	
+	// DAO 디버깅 코드
+	System.out.println("customerOne : " + CustomerDAO.getCustomerOne(mail));
 	
 	/*
 	Class.forName("org.mariadb.jdbc.Driver");
@@ -38,8 +43,6 @@
 	customerOneRs = customerOneStmt.executeQuery();
 	*/
 	
-	// DAO 디버깅 코드
-	System.out.println("CustomerDAO.getCustomerOne(mail) : " + CustomerDAO.getCustomerOne(mail));
 %>
 <!DOCTYPE html>
 <html>

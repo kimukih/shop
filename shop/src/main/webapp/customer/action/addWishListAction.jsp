@@ -21,6 +21,7 @@
 	int goodsPrice = Integer.parseInt(request.getParameter("goodsPrice"));
 	int goodsNo = Integer.parseInt(request.getParameter("goodsNo"));
 	
+	// 파라미터 디버깅 코드
 	System.out.println("mail : " + mail);
 	System.out.println("goodsImg : " + goodsImg);
 	System.out.println("category : " + category);
@@ -38,5 +39,8 @@
 		System.out.println("상품을 장바구니에 담는데 실패하였습니다.");
 		response.sendRedirect("/shop/customer/form/goodsOne.jsp?goodsNo=" + goodsNo + "&currentPage=1");
 	}
+	
+	// DAO 디버깅 코드
+	System.out.println("addWishList : " + WishListDAO.addWishList(mail, goodsNo, goodsImg, category, goodsTitle, goodsPrice));
 	
 %>

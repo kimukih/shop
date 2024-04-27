@@ -22,12 +22,21 @@
 %>
 
 <%
+	// 요청값 분석
 	String category = request.getParameter("category");
 	String empId = request.getParameter("empId");
 	String goodsTitle = request.getParameter("goodsTitle");
 	int goodsPrice = Integer.parseInt(request.getParameter("goodsPrice"));
 	int goodsAmount = Integer.parseInt(request.getParameter("goodsAmount"));
 	String goodsContent = request.getParameter("goodsContent");
+	
+	// 파라미터 디버깅 코드
+	System.out.println("category : " + category);
+	System.out.println("empId : " + empId);
+	System.out.println("goodsTitle : " + goodsTitle);
+	System.out.println("goodsPrice : " + goodsPrice);
+	System.out.println("goodsAmount : " + goodsAmount);
+	System.out.println("goodsContent : " + goodsContent);
 	
 	// 첨부 파일의 바이너리(정보) 그대로 받아서 part 객체 안에 저장
 	Part part = request.getPart("goodsImg");
@@ -47,20 +56,13 @@
 	// 랜덤한 파일명. + 확장자 로 저장
 	fileName = fileName + ext;
 	
-	// 디버깅 코드
-	System.out.println("category : " + category);
-	System.out.println("empId : " + empId);
-	System.out.println("goodsTitle : " + goodsTitle);
-	System.out.println("goodsPrice : " + goodsPrice);
-	System.out.println("goodsAmount : " + goodsAmount);
-	System.out.println("goodsContent : " + goodsContent);
 %>
 	<!-- Controller Layer -->
 <%
 	//DB에 goods 정보 추가
-	int addGoodsRow = GoodsDAO.getAddGoods(category, empId, goodsTitle, goodsContent, goodsPrice, goodsAmount, fileName);
+	boolean addGoods = GoodsDAO.addGoods(category, empId, goodsTitle, goodsContent, goodsPrice, goodsAmount, fileName);
 	
-	if(addGoodsRow == 1){
+	if(addGoods){
 		// 저장될 위치를 현재 프로젝트(톰켓 컨텍스트)안으로 지정
 		String uploadPath = request.getServletContext().getRealPath("img");
 		System.out.println(uploadPath);
@@ -84,7 +86,7 @@
 	}
 	
 	// DAO 디버깅 코드
-	System.out.println("GoodsDAO.getAddGoods(category, empId, goodsTitle, goodsContent, goodsPrice, goodsAmount, fileName) : " + GoodsDAO.getAddGoods(category, empId, goodsTitle, goodsContent, goodsPrice, goodsAmount, fileName));
+	System.out.println("addGoods : " + GoodsDAO.addGoods(category, empId, goodsTitle, goodsContent, goodsPrice, goodsAmount, fileName));
 
 	/*
 	File df = new File(filePath, rs.getString("fileName"));

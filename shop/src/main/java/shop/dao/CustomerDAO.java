@@ -167,9 +167,11 @@ public class CustomerDAO {
 		return customerLogin;
 	}
 	
-	public static int updateCustomer(String mail, String pw, String name, String birth, String gender) throws Exception {
+	public static boolean updateCustomer(String mail, String pw, String name, String birth, String gender) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
+		
+		boolean updateCustomer;
 		
 		String updateCustomerSql = "UPDATE customer SET name = ?, birth = ?, gender = ?, update_date = NOW() WHERE mail = ? AND pw = PASSWORD(?)";
 		PreparedStatement updateCustomerStmt = null;
@@ -184,13 +186,21 @@ public class CustomerDAO {
 		
 		int updateCustomerRow = updateCustomerStmt.executeUpdate();
 		
+		if(updateCustomerRow == 1) {
+			updateCustomer = true;
+		}else{
+			updateCustomer = false;
+		}
+		
 		conn.close();
-		return updateCustomerRow;
+		return updateCustomer;
 	}
 	
-	public static int addCustomer(String mail, String pw, String name, String birth, String gender) throws Exception {
+	public static boolean addCustomer(String mail, String pw, String name, String birth, String gender) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
+		
+		boolean addCustomer;
 		
 		String addCustomerSql = "INSERT INTO customer(mail, pw, name, birth, gender) VALUES(?, PASSWORD(?), ?, ?, ?)";
 		PreparedStatement addCustomerStmt = null;
@@ -204,8 +214,14 @@ public class CustomerDAO {
 		
 		int addCustomerRow = addCustomerStmt.executeUpdate();
 		
+		if(addCustomerRow == 1){
+			addCustomer = true;
+		}else{
+			addCustomer = false;
+		}
+		
 		conn.close();
-		return addCustomerRow;
+		return addCustomer;
 	}
 	
 	public static boolean checkId(String mail) throws Exception {
@@ -231,9 +247,11 @@ public class CustomerDAO {
 		return checkId;
 	}
 	
-	public static int deleteCustomer(String mail, String pw) throws Exception {
+	public static boolean deleteCustomer(String mail, String pw) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
+		
+		boolean deleteCustomer;
 		
 		String deleteCustomerSql = "DELETE FROM customer WHERE mail = ? AND pw = PASSWORD(?)";
 		PreparedStatement deleteCustomerStmt = null;
@@ -245,8 +263,14 @@ public class CustomerDAO {
 		
 		int deleteCustomerRow = deleteCustomerStmt.executeUpdate();
 		
+		if(deleteCustomerRow == 1){
+			deleteCustomer = true;
+		}else{
+			deleteCustomer = false;
+		}
+		
 		conn.close();
-		return deleteCustomerRow;
+		return deleteCustomer;
 	}
 
 }

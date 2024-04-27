@@ -16,11 +16,9 @@
 <%
 	// 요청값 분석
 	int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-	System.out.println("currentPage : " + currentPage);
 
 	// 결제 완료된 상품의 총 개수를 가져오기
 	int totalOrders = OrdersDAO.getTotalOrders();
-	System.out.println("totalOrders : " + totalOrders);
 	
 	// 상품 리뷰 페이징 변수
 	int rowPerPage = 10;
@@ -31,11 +29,16 @@
 	if(totalOrders % rowPerPage != 0){
 		lastPage = (totalOrders / rowPerPage) + 1;
 	}
-		
+
+	// 파라미터 디버깅 코드
+	System.out.println("currentPage : " + currentPage);
+	
 	// 주문 완료된 상품의 배송현황 리스트 가져오기
 	ArrayList<HashMap<String, Object>> ordersStateList = OrdersDAO.getOrdersStateList(startRow, rowPerPage);
+	
+	// DAO 디버깅 코드
+	System.out.println("totalOrders : " + OrdersDAO.getTotalOrders());
 	System.out.println("ordersStateList : " + OrdersDAO.getOrdersStateList(startRow, rowPerPage));
-
 %>
 
 

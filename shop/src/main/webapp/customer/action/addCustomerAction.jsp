@@ -12,7 +12,7 @@
 	String birth = request.getParameter("birth");
 	String gender = request.getParameter("gender");
 	
-	// 디버깅 코드
+	// 파라미터 디버깅 코드
 	System.out.println("mail : " + mail);
 	System.out.println("pw : " + pw);
 	System.out.println("name : " + name);
@@ -20,15 +20,18 @@
 	System.out.println("gender : " + gender);
 
 	// 회원가입 시 작성한 내용을 DB안의 customer table에 추가하는 코트
-	int addCustomerRow = CustomerDAO.addCustomer(mail, pw, name, birth, gender);
+	boolean addCustomer = CustomerDAO.addCustomer(mail, pw, name, birth, gender);
 	
-	if(addCustomerRow == 1){
+	if(addCustomer){
 		System.out.println("회원가입이 성공적으로 완료되었습니다.");
 		response.sendRedirect("/shop/customer/form/addCustomerResult.jsp?name=" + URLEncoder.encode(name, "UTF-8"));
 	}else{
 		System.out.println("회원가입에 실패하였습니다.");
 		response.sendRedirect("/shop/customer/form/addCustomerForm.jsp");
 	}
+	
+	// DAO 디버깅 코드
+	System.out.println("addCustomer : " + CustomerDAO.addCustomer(mail, pw, name, birth, gender));
 	
 	/*
 	Class.forName("org.mariadb.jdbc.Driver");

@@ -17,9 +17,10 @@
 <%
 	//요청값 분석
 	int goodsNo = Integer.parseInt(request.getParameter("goodsNo"));
-	System.out.println("goodsNo : " + goodsNo);
-	
 	String mail = request.getParameter("mail");
+	
+	// 파라미터 디버깅 코드
+	System.out.println("goodsNo : " + goodsNo);
 	System.out.println("mail : " + mail);
 %>
 
@@ -35,7 +36,10 @@
 
 	// 구매 상품 정보 가져오기
 	ArrayList<HashMap<String, Object>> goodsOne = GoodsDAO.getGoodsOne(goodsNo);
-	System.out.println("goodsOne : " + goodsOne);
+	
+	// DAO 디버깅 코드
+	System.out.println("customerInfo : " + CustomerDAO.getCustomerInfo(mail));
+	System.out.println("goodsOne : " + GoodsDAO.getGoodsOne(goodsNo));
 %>
 <!DOCTYPE html>
 <html>

@@ -17,6 +17,7 @@
 	int ordersNo = Integer.parseInt(request.getParameter("ordersNo"));
 	int goodsNo = Integer.parseInt(request.getParameter("goodsNo"));
 	
+	// 파라미터 디버깅 코드
 	System.out.println("ordersNo : " + ordersNo);
 	System.out.println("goodsNo : " + goodsNo);
 	
@@ -30,4 +31,7 @@
 		System.out.println("리뷰 삭제에 실패하였습니다.");
 		response.sendRedirect("/shop/customer/form/goodsOne.jsp?goodsNo=" + goodsNo);
 	}
+	
+	// DAO 디버깅 코드
+	System.out.println("deleteGoodsComment : " + CommentDAO.deleteGoodsComment(ordersNo));
 %>

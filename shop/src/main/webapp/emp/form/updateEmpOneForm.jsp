@@ -18,11 +18,15 @@
 	String empId = request.getParameter("empId");
 	String msg = request.getParameter("msg");
 	
+	// 파라미터 디버깅 코드
 	System.out.println("empId : " + empId);
 	System.out.println("msg : " + msg);
 	
 	// 정보 수정하기 전 기존 관리자 정보 출력
 	ArrayList<HashMap<String, Object>> empOne = EmpDAO.getEmpListOne(empId);
+	
+	// DAO 디버깅 코드
+	System.out.println("empOne : " + EmpDAO.getEmpListOne(empId));
 %>
 <!DOCTYPE html>
 <html>

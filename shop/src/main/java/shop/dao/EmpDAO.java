@@ -164,9 +164,11 @@ public class EmpDAO {
 		return list;
 	}
 	
-	public static int modifyEmpActive(String empId, String active) throws Exception {
+	public static boolean modifyEmpActive(String empId, String active) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
+		
+		boolean modifyEmpActive;
 		
 		String activeSwitchSql = null;
 		PreparedStatement activeSwitchStmt = null;
@@ -184,8 +186,14 @@ public class EmpDAO {
 		
 		int modifyActiveRow = activeSwitchStmt.executeUpdate();
 		
+		if(modifyActiveRow == 1){
+			modifyEmpActive = true;
+		}else {
+			modifyEmpActive = false;
+		}
+		
 		conn.close();
-		return modifyActiveRow;
+		return modifyEmpActive;
 	}
 	
 	public static ArrayList<HashMap<String, Object>> getEmpListOne(String empId) throws Exception{

@@ -21,6 +21,8 @@
 	if(request.getParameter("currentPage") != null){
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 	}
+	
+	// 파라미터 디버깅 코드
 	System.out.println("currentPage : " + currentPage);
 	
 	// 한 페이지당 출력할 게시물 수
@@ -51,6 +53,9 @@
 	if(empCnt % rowPerPage != 0){
 		lastPage = empCnt / rowPerPage + 1;
 	}
+	
+	// DAO 디버깅 코드
+	System.out.println("empCnt : " + EmpDAO.getEmpCnt());
 %>
 
 <!-- Model Layer -->

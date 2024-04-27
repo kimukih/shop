@@ -20,15 +20,17 @@
 	if(category == null){
 		category = "";
 	}
-	System.out.println("category : " + category);
 	
 	String keyword = request.getParameter("keyword");
 	if(keyword == null){
 		keyword = "";
 	}
-	System.out.println("keyword : " + keyword);
 	
 	int goodsNo = Integer.parseInt(request.getParameter("goodsNo"));
+	
+	// 파라미터 디버깅 코드
+	System.out.println("keyword : " + keyword);
+	System.out.println("category : " + category);
 	System.out.println("goodsNo : " + goodsNo);
 	
 %>
@@ -43,9 +45,6 @@
 	// 카테고리 테이블 내용 DB에서 가져오기
 	ArrayList<HashMap<String, Object>> categoryList = CategoryDAO.getCategoryCnt();
 	
-	// 디버깅 코드
-	System.out.println(categoryList);
-	
 	// goodsNo에 해당하는 정보를 DB에서 불러오기
 	ArrayList<HashMap<String, Object>> goodsOne = GoodsDAO.getGoodsOne(goodsNo);
 	
@@ -53,9 +52,9 @@
 	ArrayList<String> categoryAll = CategoryDAO.getCategoryAll();
 	
 	// DAO 디버깅 코드
-	System.out.println("CategoryDAO.getCategoryCnt() : " + CategoryDAO.getCategoryCnt());
-	System.out.println("GoodsDAO.getGoodsOne(goodsNo) : " + GoodsDAO.getGoodsOne(goodsNo));
-	System.out.println("CategoryDAO.getCategoryAll() : " + CategoryDAO.getCategoryAll());
+	System.out.println("categoryList : " + CategoryDAO.getCategoryCnt());
+	System.out.println("goodsOne : " + GoodsDAO.getGoodsOne(goodsNo));
+	System.out.println("categoryAll : " + CategoryDAO.getCategoryAll());
 %>
 <!DOCTYPE html>
 <html>

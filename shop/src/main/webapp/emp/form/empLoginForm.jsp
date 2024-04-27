@@ -9,6 +9,8 @@
 
 	// 로그인 실패시 에러메시지 출력
 	String msg = request.getParameter("msg");
+	
+	// 파라미터 디버깅 코드
 	System.out.println("msg : " + msg);
 %>
 <!DOCTYPE html>

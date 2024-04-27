@@ -11,15 +11,15 @@
 
 	
 	// active 상태가 OFF 일 때 누르면 ON으로, ON 일 때 누르면 OFF로 변경
-	int modifyActiveRow = EmpDAO.modifyEmpActive(empId, active);
-	if(modifyActiveRow == 1){
+	boolean modifyEmpActive = EmpDAO.modifyEmpActive(empId, active);
+	if(modifyEmpActive){
 		System.out.println("Active 상태 변경 성공");
 		response.sendRedirect("/shop/emp/empList.jsp");
 		return;
 	}
 	
 	// DAO 디버깅 코드
-	System.out.println("EmpDAO.modifyEmpActive(empId, active) : " + EmpDAO.modifyEmpActive(empId, active));
+	System.out.println("modifyEmpActive : " + EmpDAO.modifyEmpActive(empId, active));
 	
 	/*
 	Class.forName("org.mariadb.jdbc.Driver");

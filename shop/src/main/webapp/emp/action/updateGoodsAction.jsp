@@ -23,6 +23,7 @@
 	String goodsPrice = request.getParameter("goodsPrice");
 	String goodsContent = request.getParameter("goodsContent");
 	
+	// 파라미터 디버깅 코드
 	System.out.println("goodsNo : " + goodsNo);
 	System.out.println("goodsTitle : " + goodsTitle);
 	System.out.println("goodsImg : " + goodsImg);
@@ -48,9 +49,9 @@
 	fileName = fileName + ext;
 	
 	// 상품 상세 정보를 수정한 내용을 DB에 저장하기
-	int updateGoodsRow = GoodsDAO.updateGoods(goodsTitle, fileName, goodsContent, goodsPrice, goodsNo);
+	boolean updateGoods = GoodsDAO.updateGoods(goodsTitle, fileName, goodsContent, goodsPrice, goodsNo);
 	
-	if(updateGoodsRow == 1){
+	if(updateGoods){
 		// 저장될 위치를 현재 프로젝트(톰켓 컨텍스트)안으로 지정
 		String uploadPath = request.getServletContext().getRealPath("img");
 		System.out.println(uploadPath);
@@ -73,4 +74,7 @@
 		System.out.println("상품 상세 정보 수정에 실패하였습니다.");
 		response.sendRedirect("/shop/emp/form/updateGoodsForm.jsp?goodsNo=" + goodsNo);
 	}
+	
+	// DAO 디버깅 코드
+	System.out.println("updateGoods : " + GoodsDAO.updateGoods(goodsTitle, fileName, goodsContent, goodsPrice, goodsNo));
 %>

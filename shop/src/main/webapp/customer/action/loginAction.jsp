@@ -19,7 +19,8 @@
 	// 요청값 분석
 	String mail = request.getParameter("mail");
 	String pw = request.getParameter("pw");
-	// 디버깅 코드
+	
+	// 파라미터 디버깅 코드
 	System.out.println("mail : " + mail);
 	System.out.println("pw : " + pw);
 	
@@ -37,6 +38,9 @@
 		String msg = URLEncoder.encode("로그인 정보가 일치하지 않습니다. 다시 시도해주세요.", "UTF-8");
 		response.sendRedirect("/shop/customer/form/loginForm.jsp?msg=" + msg);
 	}
+	
+	// DAO 디버깅 코드
+	System.out.println("loginCustomer : " + CustomerDAO.customerLogin(mail, pw));
 	
 	/*
 	Class.forName("org.mariadb.jdbc.Driver");
@@ -65,6 +69,4 @@
 	}
 	*/
 	
-	// DAO 디버깅 코드
-	System.out.println("CustomerDAO.customerLogin(mail, pw) : " + CustomerDAO.customerLogin(mail, pw));
 %>

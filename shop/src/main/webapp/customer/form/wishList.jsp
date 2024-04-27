@@ -24,19 +24,20 @@
 	String mail = request.getParameter("mail");
 	int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 	
-	System.out.println("mail : " + mail);
-	System.out.println("currentPage : " + currentPage);
-	
 	String category = request.getParameter("category");
 	if(category == null){
 		category = "";
 	}
-	System.out.println("category : " + category);
 	
 	String keyword = request.getParameter("keyword");
 	if(keyword == null){
 		keyword = "";
 	}
+	
+	// 파라미터 디버깅 코드
+	System.out.println("mail : " + mail);
+	System.out.println("currentPage : " + currentPage);
+	System.out.println("category : " + category);
 	System.out.println("keyword : " + keyword);
 	
 	// 검색을 위한 카테고리 목록 가져오기
@@ -47,7 +48,6 @@
 	
 	// 접속한 아이디의 장바구니 목록 모두 가져오기
 	int totalWishList = WishListDAO.getTotalWishList(mail);
-	System.out.println("totalWishList : " + totalWishList);
 		
 	// 상품 리뷰 페이징 변수
 	int rowPerPage = 5;
@@ -64,7 +64,11 @@
 
 	// 접속한 ID로 추가한 장바구니 목록 리스트
 	ArrayList<HashMap<String, Object>> wishList = WishListDAO.getWishList(mail, startRow, rowPerPage);
-	System.out.println("WishListDAO.getWishList(mail) : " + WishListDAO.getWishList(mail, startRow, rowPerPage));
+	
+	// DAO 디버깅 코드
+	System.out.println("totalWishList : " + WishListDAO.getTotalWishList(mail));
+	System.out.println("getGoodsList : " + GoodsDAO.getGoodsList(category, keyword, startRow, rowPerPage));
+	System.out.println("wishList : " + WishListDAO.getWishList(mail, startRow, rowPerPage));
 %>
 <!DOCTYPE html>
 <html>

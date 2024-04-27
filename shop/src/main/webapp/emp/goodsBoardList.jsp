@@ -16,6 +16,8 @@
 <%
 	// 요청값 분석
 	String category = request.getParameter("category");
+
+	// 파라미터 디버깅 코드
 	System.out.println("category : " + category);	
 %>
 
@@ -23,26 +25,6 @@
 <%
 	// 카테고리 테이블 내용 DB에서 가져오기
 	ArrayList<HashMap<String, Object>> categoryList = GoodsDAO.getCategoryCnt();
-	
-	/*
-	String categoryCntSql = "SELECT category, COUNT(*) cnt FROM goods GROUP BY category ORDER BY category";
-	PreparedStatement categoryCntStmt = null;
-	ResultSet categoryCntRs = null;
-	
-	categoryCntStmt = conn.prepareStatement(categoryCntSql);
-	categoryCntRs = categoryCntStmt.executeQuery();
-	
-	ArrayList<HashMap<String, Object>> categoryList = new ArrayList<HashMap<String, Object>>();
-	
-	while(categoryCntRs.next()){
-		HashMap<String, Object> m = new HashMap<String, Object>();
-		m.put("category", categoryCntRs.getString("category"));
-		m.put("cnt", categoryCntRs.getInt("cnt"));
-		categoryList.add(m);
-	*/
-	// 디버깅 코드
-	System.out.println(categoryList);
-	System.out.println("category : " + category);
 	
 	// 페이지네이션
 	int currentPage = 1;
@@ -57,31 +39,6 @@
 	// 총 게시물 개수 구하기
 	int categoryListCnt = GoodsDAO.getCategoryListCnt(category);
 	
-	/*
-	String categoryListCntSql = "";
-	
-	if(request.getParameter("category") == null){
-		// SELECT * FROM category
-		categoryListCntSql = "SELECT COUNT(*) cnt FROM goods";
-	}else{
-		// SELECT * FROM category WHERE category = ?
-		categoryListCntSql = "SELECT COUNT(*) cnt FROM goods WHERE category = ?";
-	}
-	PreparedStatement categoryListCntStmt = null;
-	ResultSet categoryListCntRs = null;
-			
-	categoryListCntStmt = conn.prepareStatement(categoryListCntSql);
-	categoryListCntStmt.setString(1, category);
-	System.out.println("categoryListCntStmt : " + categoryListCntStmt);
-	
-	categoryListCntRs = categoryListCntStmt.executeQuery();
-	
-	int categoryListCnt = 0;
-	if(categoryListCntRs.next()){
-		categoryListCnt = categoryListCntRs.getInt("cnt");
-	}
-	*/
-	
 	// 마지막 페이지
 	// 총 게시물 개수를 페이지당 게시물 수로 나눔
 	int lastPage = categoryListCnt / rowPerPage;
@@ -92,34 +49,10 @@
 	// 카테고리에 해당하는 상품리스트를 가져오는 코드 작성
 	ArrayList<HashMap<String, Object>> goodsBoardList = GoodsDAO.getGoodsBoardList(category, startRow, rowPerPage);
 	
-	/*
-	String categoryListSql = "";
-	PreparedStatement categoryListStmt = null;
-	ResultSet categoryListRs = null;
-	
-	if(request.getParameter("category") == null){
-		// SELECT * FROM category
-		categoryListSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, emp_id empId, FORMAT(goods_price, 0) goodsPrice FROM goods LIMIT ?, ?";
-		categoryListStmt = conn.prepareStatement(categoryListSql);
-		categoryListStmt.setInt(1, startRow);
-		categoryListStmt.setInt(2, rowPerPage);
-		System.out.println("categoryListStmt : " + categoryListStmt);
-	}else{
-		// SELECT * FROM category WHERE category = ?
-		categoryListSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, emp_id empId, FORMAT(goods_price, 0) goodsPrice FROM goods WHERE category = ? LIMIT ?, ?";
-		categoryListStmt = conn.prepareStatement(categoryListSql);
-		categoryListStmt.setString(1, category);
-		categoryListStmt.setInt(2, startRow);
-		categoryListStmt.setInt(3, rowPerPage);
-		System.out.println("categoryListStmt : " + categoryListStmt);
-	}
-	categoryListRs = categoryListStmt.executeQuery();
-	*/
-	
 	// DAO 디버깅 코드
-	System.out.println("GoodsDAO.getCategoryList() : " + GoodsDAO.getCategoryCnt());
-	System.out.println("GoodsDAO.getCategoryListCnt(category) : " + GoodsDAO.getCategoryListCnt(category));
-	System.out.println("GoodsDAO.getGoodsBoardList(category, startRow, rowPerPage) : " + GoodsDAO.getGoodsBoardList(category, startRow, rowPerPage));	
+	System.out.println("categoryList : " + GoodsDAO.getCategoryCnt());
+	System.out.println("categoryListCnt : " + GoodsDAO.getCategoryListCnt(category));
+	System.out.println("goodsBoardList : " + GoodsDAO.getGoodsBoardList(category, startRow, rowPerPage));	
 %>
 <!DOCTYPE html>
 <html>

@@ -22,18 +22,20 @@
 	if(category == null){
 		category = "";
 	}
-	System.out.println("category : " + category);
 	
 	String keyword = request.getParameter("keyword");
 	if(keyword == null){
 		keyword = "";
 	}
-	System.out.println("keyword : " + keyword);
 	
 	int goodsNo = Integer.parseInt(request.getParameter("goodsNo"));
-	System.out.println("goodsNo : " + goodsNo);
 	
 	int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+	
+	// 파라미터 디버깅 코드
+	System.out.println("category : " + category);
+	System.out.println("keyword : " + keyword);
+	System.out.println("goodsNo : " + goodsNo);
 	System.out.println("currentPage : " + currentPage);
 %>
 
@@ -55,7 +57,6 @@
 	
 	// goodsNo와 같은 상품 리뷰의 총 개수를 가져오기
 	int totalGoodsComment = CommentDAO.getTotalGoodsComment(goodsNo);
-	System.out.println("totalGoodsComment : " + totalGoodsComment);
 	
 	// 상품 리뷰 페이징 변수
 	int rowPerPage = 5;
@@ -72,15 +73,20 @@
 	
 	// 이미 장바구니에 담은 상품을 한번 더 찜하기 할 경우 메시지 출력 후 찜하기 하지 않음
 	String mail = (String)(loginMember.get("mail"));
+	
+	// 파라미터 디버깅 코드
 	System.out.println("mail : " + mail);
+	
+	// 상품이 장바구니에 이미 담겨있는지 아닌지 조회
 	boolean selectWishList = WishListDAO.selectWishList(mail, goodsNo);
 	
 	// DAO 디버깅 코드
-	System.out.println("GoodsDAO.getCategoryCnt() : " + GoodsDAO.getCategoryCnt());
-	System.out.println("GoodsDAO.getGoodsOne(goodsNo) : " + GoodsDAO.getGoodsOne(goodsNo));
-	System.out.println("CategoryDAO.getCategoryAll() : " + CategoryDAO.getCategoryAll());
-	System.out.println("CommentDAO.getGoodsCommentList(goodsNo) : " + CommentDAO.getGoodsCommentList(goodsNo, startRow, rowPerPage));
-	
+	System.out.println("categoryList : " + GoodsDAO.getCategoryCnt());
+	System.out.println("goodsOne : " + GoodsDAO.getGoodsOne(goodsNo));
+	System.out.println("categoryAll : " + CategoryDAO.getCategoryAll());
+	System.out.println("totalGoodsComment : " + totalGoodsComment);
+	System.out.println("goodsCommentList : " + CommentDAO.getGoodsCommentList(goodsNo, startRow, rowPerPage));
+	System.out.println("selectWishList : " + WishListDAO.selectWishList(mail, goodsNo));
 %>
 <!DOCTYPE html>
 <html>

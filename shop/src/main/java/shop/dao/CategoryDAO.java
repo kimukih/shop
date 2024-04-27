@@ -89,9 +89,11 @@ public class CategoryDAO {
 		return categoryList;
 	}
 	
-	public static int getAddCategory(String category) throws Exception {
+	public static boolean addCategory(String category) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
+		
+		boolean addCategory;
 		
 		String addCategorySql = "INSERT INTO category(category) VALUES(?)";
 		PreparedStatement addCategoryStmt = null;
@@ -102,13 +104,21 @@ public class CategoryDAO {
 		
 		int addCategoryRow = addCategoryStmt.executeUpdate();
 		
+		if(addCategoryRow == 1){
+			addCategory = true;
+		}else{
+			addCategory = false;
+		}
+		
 		conn.close();
-		return addCategoryRow;
+		return addCategory;
 	}
 	
-	public static int deleteCategory(String category) throws Exception {
+	public static boolean deleteCategory(String category) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
+		
+		boolean deleteCategory;
 		
 		String deleteCategorySql = "DELETE FROM category WHERE category = ?";
 		PreparedStatement deleteCategoryStmt = null;
@@ -119,8 +129,14 @@ public class CategoryDAO {
 		
 		int deleteCategoryRow = deleteCategoryStmt.executeUpdate();
 		
+		if(deleteCategoryRow == 1){
+			deleteCategory = true;
+		}else{
+			deleteCategory = false;
+		}
+		
 		conn.close();
-		return deleteCategoryRow;
+		return deleteCategory;
 	}
 	
 	public static void main(String[] args) {

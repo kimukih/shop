@@ -11,13 +11,12 @@
 	int ordersNo = Integer.parseInt(request.getParameter("ordersNo"));
 	int goodsNo = Integer.parseInt(request.getParameter("goodsNo"));
 	
+	// 파라미터 디버깅 코드
 	System.out.println("mail : " + mail);
 	System.out.println("ordersNo : " + ordersNo);
 	System.out.println("goodsNo : " + goodsNo);
 	
 	// 주문 취소 시 취소한 상품의 재고수량 원복하기
-	
-	
 	// 주문 정보 삭제 처리
 	boolean deleteOrders = OrdersDAO.deleteOrders(mail, ordersNo);
 	if(deleteOrders){
@@ -28,5 +27,8 @@
 		System.out.println("주문 취소에 실패하였습니다.");
 		response.sendRedirect("/shop/customer/form/ordersInfoOne.jsp?mail=" + mail + "&ordersNo=" + ordersNo);
 	}
+	
+	// DAO 디버깅 코드
+	System.out.println("deleteOrders : " + OrdersDAO.deleteOrders(mail, ordersNo));
 
 %>
