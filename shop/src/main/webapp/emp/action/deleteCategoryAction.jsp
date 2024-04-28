@@ -32,18 +32,4 @@
 	
 	// DAO 디버깅 코드
 	System.out.println("deleteCategory : " + CategoryDAO.deleteCategory(category));
-	
-	/*
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	
-	String deleteCategorySql = "DELETE FROM category WHERE category = ?";
-	PreparedStatement deleteCategoryStmt = null;
-	
-	deleteCategoryStmt = conn.prepareStatement(deleteCategorySql);
-	deleteCategoryStmt.setString(1, category);
-	System.out.println("deleteCategoryStmt : " + deleteCategoryStmt);
-	
-	int deleteCategoryRow = deleteCategoryStmt.executeUpdate();
-	*/
 %>

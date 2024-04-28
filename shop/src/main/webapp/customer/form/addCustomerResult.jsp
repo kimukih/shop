@@ -5,6 +5,14 @@
 <%@ page import="java.net.URLEncoder"%>
 <%@ page import="shop.dao.CustomerDAO"%>
 <%
+	// 로그인 인증 분기
+	if(session.getAttribute("loginCustomer") == null){
+	response.sendRedirect("/shop/customer/form/loginForm.jsp");
+	return;
+}
+%>
+
+<%
 	// 요청값 분석
 	String name = request.getParameter("name");
 
@@ -16,21 +24,6 @@
 	
 	// DAO 디버깅 코드
 	System.out.println("cusName : " + CustomerDAO.getCusName(name));
-	
-	/*
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	
-	String cusNameSql = "SELECT name FROM customer WHERE name = ?";
-	PreparedStatement cusNameStmt = null;
-	ResultSet cusNameRs = null;
-	
-	cusNameStmt = conn.prepareStatement(cusNameSql);
-	cusNameStmt.setString(1, name);
-	System.out.println("cusNameStmt : " + cusNameStmt);
-	
-	cusNameRs = cusNameStmt.executeQuery();
-	*/
 %>
 <!DOCTYPE html>
 <html>

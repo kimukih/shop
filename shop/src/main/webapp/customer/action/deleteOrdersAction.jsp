@@ -30,5 +30,4 @@
 	
 	// DAO 디버깅 코드
 	System.out.println("deleteOrders : " + OrdersDAO.deleteOrders(mail, ordersNo));
-
 %>

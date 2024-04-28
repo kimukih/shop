@@ -16,10 +16,10 @@
 <!-- Model Layer -->
 <%
 	// 카테고리 테이블 내용 DB에서 가져오기
-	ArrayList<String> categoryList = CategoryDAO.getAddGoodsCategoryList();
+	ArrayList<String> categoryList = CategoryDAO.getCategoryAll();
 	
 	// DAO 디버깅 코드
-	System.out.println("categoryList : " + CategoryDAO.getAddGoodsCategoryList());
+	System.out.println("categoryList : " + CategoryDAO.getCategoryAll());
 %>
 <!DOCTYPE html>
 <html>

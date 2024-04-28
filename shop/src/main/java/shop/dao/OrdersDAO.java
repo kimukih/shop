@@ -5,6 +5,7 @@ import java.util.*;
 
 public class OrdersDAO {
 
+	// 상품 주문을 추가하는 DAO
 	public static boolean createOrders(String mail, int goodsNo, String goodsTitle, int totalAmount, int totalPrice, String addressName, String address, String phoneNumber) throws Exception {
 		
 		boolean createOrders;
@@ -33,6 +34,7 @@ public class OrdersDAO {
 		return createOrders;
 	}
 	
+	// 상품 배송 현황 목록을 가져오는 DAO
 	public static ArrayList<HashMap<String, Object>> getOrdersStateList(int startRow, int rowPerPage) throws Exception{
 		
 		Connection conn = DBHelper.getConnection();
@@ -60,6 +62,7 @@ public class OrdersDAO {
 		return ordersStateList;
 	}
 	
+	// 주문 목록 정보를 가져오는 DAO
 	public static ArrayList<HashMap<String, Object>> getOrdersListInfo(String mail) throws Exception{
 		
 		Connection conn = DBHelper.getConnection();
@@ -87,6 +90,7 @@ public class OrdersDAO {
 		return ordersListInfo;
 	}
 	
+	// 주문 목록 상품들의 상세 정보를 가져오는 DAO
 	public static ArrayList<HashMap<String, Object>> getOrdersInfoOne(String mail, int ordersNo) throws Exception{
 		
 		Connection conn = DBHelper.getConnection();
@@ -115,6 +119,7 @@ public class OrdersDAO {
 		return ordersInfoOne;
 	}
 	
+	// 상품 주문을 삭제하는 DAO
 	public static boolean deleteOrders(String mail, int ordersNo) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -137,6 +142,7 @@ public class OrdersDAO {
 		return deleteOrders;
 	}
 	
+	// 상품 배송 현황을 변경하는 DAO
 	public static boolean modifyOrdersState(int ordersNo, String state) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -171,6 +177,7 @@ public class OrdersDAO {
 		return modifyOrdersState;
 	}
 	
+	// 주문 목록 페이징을 위해 주문상품의 총 개수를 가져오는 DAO
 	public static int getTotalOrders() throws Exception {
 		
 		Connection conn = DBHelper.getConnection();

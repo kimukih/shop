@@ -22,7 +22,6 @@
 	System.out.println("empId : " + empId);
 	System.out.println("msg : " + msg);
 	System.out.println("msg2 : " + msg2);
-
 %>
 <!DOCTYPE html>
 <html>

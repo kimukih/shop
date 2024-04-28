@@ -13,7 +13,6 @@
 }
 %>
 
-
 <%
 	// 페이징 코드
 	// 요청값 분석
@@ -34,20 +33,6 @@
 	// 화면에 표시할 직원리스트 개수 DB에서 가져오기
 	int empCnt = EmpDAO.getEmpCnt();
 	
-	/*
-	String empCntSql = "SELECT COUNT(*) cnt FROM emp";
-	PreparedStatement empCntStmt = null;
-	ResultSet empCntRs = null;
-	
-	empCntStmt = conn.prepareStatement(empCntSql);
-	empCntRs = empCntStmt.executeQuery();
-	
-	int empCnt = 0;
-	while(empCntRs.next()){
-		empCnt = empCntRs.getInt("cnt");
-	}
-	*/
-	
 	// 가장 마지막 페이지
 	int lastPage = empCnt / rowPerPage;
 	if(empCnt % rowPerPage != 0){
@@ -66,34 +51,6 @@
 	// 일반화된 자료구조로 변경 (ArrayList<HashMap>) --> 모델 취득
 	// ex) 데이터 : RDBMS, API : JDBC
 	ArrayList<HashMap<String, Object>> list = EmpDAO.getEmpList(startRow, rowPerPage);
-	
-	/*
-	String empListSql = "SELECT emp_id empId, emp_name empName, grade, emp_job empJob, hire_date hireDate, active FROM emp ORDER BY active, hire_date DESC LIMIT ?, ?";
-	PreparedStatement empListStmt = null;
-	ResultSet empListRs = null;
-	
-	empListStmt = conn.prepareStatement(empListSql);
-	empListStmt.setInt(1, startRow);
-	empListStmt.setInt(2, rowPerPage);
-	System.out.println("empListStmt : " + empListStmt);
-	
-	empListRs = empListStmt.executeQuery();	
-	// JDBC API에 종속된 자료구조 모델 --> 기본 API 자료구조 모델로 변경(List)
-	
-	ArrayList<HashMap<String, Object>> list
-	= new ArrayList<HashMap<String, Object>>();
-	
-	while(empListRs.next()){
-		HashMap<String, Object> m = new HashMap<String, Object>();
-		m.put("empId", empListRs.getString("empId"));
-		m.put("empName", empListRs.getString("empName"));
-		m.put("empJob", empListRs.getString("empJob"));
-		m.put("hireDate", empListRs.getString("hireDate"));
-		m.put("active", empListRs.getString("active"));
-		m.put("grade", empListRs.getInt("grade"));
-		list.add(m);
-	}
-	*/
 	
 	// DAO 디버깅 코드
 	System.out.println("EmpDAO.getEmpCnt() : " + EmpDAO.getEmpCnt());

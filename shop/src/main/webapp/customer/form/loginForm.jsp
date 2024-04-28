@@ -7,7 +7,9 @@
 		response.sendRedirect("/shop/customer/goodsList.jsp");
 		return;
 	}
+%>
 
+<%
 	// 로그인 실패시 에러메시지 출력
 	String msg = request.getParameter("msg");
 	

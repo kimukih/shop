@@ -25,7 +25,6 @@
 	
 	// DAO 디버깅 코드
 	System.out.println("empListOne : " + EmpDAO.getEmpListOne(empId));
-
 %>
 <!DOCTYPE html>
 <html>

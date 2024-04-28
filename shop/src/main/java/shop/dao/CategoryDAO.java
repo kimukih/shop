@@ -5,6 +5,7 @@ import java.util.*;
 
 public class CategoryDAO {
 
+	// 상품 카테고리 목록을 가져오는 DAO
 	public static ArrayList<HashMap<String, String>> getCategoryList() throws Exception{
 		
 		Connection conn = DBHelper.getConnection();
@@ -28,6 +29,7 @@ public class CategoryDAO {
 		return list;
 	}
 	
+	// 상품 카테고리 목록의 개수를 가져오는 DAO
 	public static ArrayList<HashMap<String, Object>> getCategoryCnt() throws Exception{
 		
 		Connection conn = DBHelper.getConnection();
@@ -51,6 +53,7 @@ public class CategoryDAO {
 		return categoryCnt;
 	}
 	
+	// 상품 카테고리 내용을 모두 가져오는 DAO
 	public static ArrayList<String> getCategoryAll() throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -69,26 +72,7 @@ public class CategoryDAO {
 		return categoryAll;
 	}
 	
-	public static ArrayList<String> getAddGoodsCategoryList() throws Exception{
-		
-		Connection conn = DBHelper.getConnection();
-		
-		String categoryListSql = "SELECT category FROM category";
-		PreparedStatement categoryListStmt = null;
-		ResultSet categoryListRs = null;
-		
-		categoryListStmt = conn.prepareStatement(categoryListSql);
-		categoryListRs = categoryListStmt.executeQuery();
-		
-		ArrayList<String> categoryList = new ArrayList<String>();
-		
-		while(categoryListRs.next()){
-			categoryList.add(categoryListRs.getString("category"));
-		}
-		conn.close();
-		return categoryList;
-	}
-	
+	// 카테고리를 추가하는 DAO
 	public static boolean addCategory(String category) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -114,6 +98,7 @@ public class CategoryDAO {
 		return addCategory;
 	}
 	
+	// 카테고리를 삭제하는 DAO
 	public static boolean deleteCategory(String category) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -137,11 +122,6 @@ public class CategoryDAO {
 		
 		conn.close();
 		return deleteCategory;
-	}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

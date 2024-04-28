@@ -6,6 +6,14 @@ pageEncoding="UTF-8"%>
 <%@ page import="java.net.URLEncoder"%>
 <%@ page import="shop.dao.GoodsDAO"%>
 <%
+	// 로그인 인증 분기
+	if(session.getAttribute("loginEmp") == null){
+	response.sendRedirect("/shop/emp/form/empLoginForm.jsp");
+	return;
+}
+%>
+
+<%
 	// 요청값 분석
 	int goodsNo = Integer.parseInt(request.getParameter("goodsNo"));
 	System.out.println("goodsNo : " + goodsNo);
@@ -22,18 +30,4 @@ pageEncoding="UTF-8"%>
 	
 	// DAO 디버깅 코드
 	System.out.println("deleteGoods : " + GoodsDAO.deleteGoods(goodsNo));
-	
-	/*
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	
-	String deleteGoodsSql = "DELETE FROM goods WHERE goods_no = ?";
-	PreparedStatement deleteGoodsStmt = null;
-	deleteGoodsStmt = conn.prepareStatement(deleteGoodsSql);
-	deleteGoodsStmt.setInt(1, goodsNo);
-	System.out.println("deleteGoodsStmt : " + deleteGoodsStmt);
-	
-	int deleteGoodsRow = deleteGoodsStmt.executeUpdate();
-	*/
-
 %>

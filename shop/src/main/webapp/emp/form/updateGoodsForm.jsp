@@ -23,17 +23,6 @@
 	// 상품 정보에 대한 데이터 DB에서 가져오기
 	ArrayList<HashMap<String, Object>> goodsBoardOne = GoodsDAO.getGoodsBoardOne(goodsNo);
 	
-	/*
-	String goodsBoardOneSql = "SELECT goods_no goodsNo, category, goods_title goodsTitle, goods_content goodsContent, FORMAT(goods_price, 0) goodsPrice, emp_id empId, goods_img goodsImg FROM goods WHERE goods_no = ?";
-	PreparedStatement goodsBoardOneStmt = null;
-	ResultSet goodsBoardOneRs = null;
-	goodsBoardOneStmt = conn.prepareStatement(goodsBoardOneSql);
-	goodsBoardOneStmt.setInt(1, goodsNo);
-	System.out.println("goodsBoardOneStmt : " + goodsBoardOneStmt);
-		
-	goodsBoardOneRs = goodsBoardOneStmt.executeQuery();
-	*/
-	
 	// DAO 디버깅 코드
 	System.out.println("goodsBoardOne : " + GoodsDAO.getGoodsBoardOne(goodsNo));
 %>

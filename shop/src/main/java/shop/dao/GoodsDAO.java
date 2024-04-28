@@ -5,6 +5,7 @@ import java.util.*;
 
 public class GoodsDAO {
 	
+	// 상품 리스트의 페이징을 위해 상품 목록의 전체 개수를 가져오는 DAO
 	public static int getCategoryListCnt(String category, String keyword) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -38,6 +39,7 @@ public class GoodsDAO {
 		return categoryListCnt;
 	}
 	
+	// 전체 상품 목록을 가져오는 DAO
 	public static ArrayList<HashMap<String, Object>> getGoodsList(String category, String keyword, int startRow, int rowPerPage) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -84,6 +86,7 @@ public class GoodsDAO {
 		return goodsList;
 	}
 	
+	// 카테고리와 카테고리별 상품의 총 개수를 가져오는 DAO
 	public static ArrayList<HashMap<String, Object>> getCategoryCnt() throws Exception{
 		
 		Connection conn = DBHelper.getConnection();
@@ -104,6 +107,7 @@ public class GoodsDAO {
 		return categoryCntList;
 	}
 	
+	// 전체 상품의 개수 혹은 카테고리별 상품의 개수를 가져오는 DAO
 	public static int getCategoryListCnt(String category) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -134,6 +138,7 @@ public class GoodsDAO {
 		return categoryListCnt;
 	}
 	
+	// 상품 목록을 나타내기 위해 상품 정보를 가져오는 DAO
 	public static ArrayList<HashMap<String, Object>> getGoodsBoardList(String category, int startRow, int rowPerPage) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -176,6 +181,7 @@ public class GoodsDAO {
 		return goodsBoardList;
 	}
 	
+	// 상품 상세 정보를 가져오는 DAO
 	public static ArrayList<HashMap<String, Object>> getGoodsOne(int goodsNo) throws Exception {
 		
 		ArrayList<HashMap<String, Object>> goodsOne = new ArrayList<HashMap<String, Object>>();
@@ -209,6 +215,7 @@ public class GoodsDAO {
 		return goodsOne;
 	}
 	
+	// 상품 목록 리스트의 상품 상세 정보를 가져오는 DAO
 	public static ArrayList<HashMap<String, Object>> getGoodsBoardOne(int goodsNo) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -240,15 +247,16 @@ public class GoodsDAO {
 		return goodsBoardOne;
 	}
 	
+	// 상품을 추가하는 DAO
 	public static boolean addGoods(
-			String category,
-			String empId,
-			String goodsTitle,
-			String goodsContent,
-			int goodsPrice,
-			int goodsAmount,
-			String fileName
-			) throws Exception {
+		String category,
+		String empId,
+		String goodsTitle,
+		String goodsContent,
+		int goodsPrice,
+		int goodsAmount,
+		String fileName
+		) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
 		
@@ -279,6 +287,7 @@ public class GoodsDAO {
 		return addGoods;
 	}
 	
+	// 상품 정보를 수정하는 DAO
 	public static boolean updateGoods(String goodsTitle, String fileName, String goodsContent, String goodsPrice, int goodsNo) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -308,6 +317,7 @@ public class GoodsDAO {
 		return updateGoods;
 	}
 	
+	// 상품을 삭제하는 DAO
 	public static boolean deleteGoods(int goodsNo) throws Exception {
 			
 			Connection conn = DBHelper.getConnection();
@@ -332,6 +342,7 @@ public class GoodsDAO {
 			return deleteGoods;
 	}
 	
+	// 상품이 판매되면 판매수량만큼 감소시키는 DAO
 	public static void setGoodsAmountMinus(int goodsNo) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -348,6 +359,7 @@ public class GoodsDAO {
 		conn.close();
 	}
 	
+	// 상품 판매가 취소되면 취소수량만큼 증가시키는 DAO
 	public static void setGoodsAmountPlus(int goodsNo) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();

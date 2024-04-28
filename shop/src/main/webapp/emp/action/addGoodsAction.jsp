@@ -73,7 +73,6 @@
 		is.transferTo(os);
 		
 		// Spring Framework 에서는 part.transferTo(file); 이 가능해짐
-		
 		System.out.println("상품 추가 성공");
 		
 		is.close();
@@ -87,35 +86,4 @@
 	
 	// DAO 디버깅 코드
 	System.out.println("addGoods : " + GoodsDAO.addGoods(category, empId, goodsTitle, goodsContent, goodsPrice, goodsAmount, fileName));
-
-	/*
-	File df = new File(filePath, rs.getString("fileName"));
-	df.delete();
-	*/
-	// response.sendRedirect("/shop/emp/goodsList.jsp")
-	
-	// I/O stream은 가비지컬렉터의 대상이 아니기 때문에
-	// 사용후 지워주지 않으면 심각한 메모리 누수가 발생한다
-	
-	/*
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	
-	String addGoodsSql = "INSERT INTO goods(category, emp_id, goods_title, goods_content, goods_price, goods_amount, goods_img) VALUES(?, ?, ?, ?, ?, ?, ?)";
-	
-	PreparedStatement addGoodsStmt = null;
-	addGoodsStmt = conn.prepareStatement(addGoodsSql);
-	addGoodsStmt.setString(1, category);
-	addGoodsStmt.setString(2, empId);
-	addGoodsStmt.setString(3, goodsTitle);
-	addGoodsStmt.setString(4, goodsContent);
-	addGoodsStmt.setInt(5, goodsPrice);
-	addGoodsStmt.setInt(6, goodsAmount);
-	addGoodsStmt.setString(7, fileName);
-	
-	System.out.println("addGoodsStmt : " + addGoodsStmt);
-	
-	int addGoodsRow = addGoodsStmt.executeUpdate();
-	*/
 %>

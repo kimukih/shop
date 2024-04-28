@@ -40,8 +40,6 @@
 	System.out.println("totalOrders : " + OrdersDAO.getTotalOrders());
 	System.out.println("ordersStateList : " + OrdersDAO.getOrdersStateList(startRow, rowPerPage));
 %>
-
-
 <!DOCTYPE html>
 <html>
 <head>

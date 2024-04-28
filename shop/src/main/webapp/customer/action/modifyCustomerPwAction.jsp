@@ -53,5 +53,4 @@
 	// DAO 디버깅 코드
 	System.out.println("pwCheck : " + CustomerDAO.pwCheck(mail, pw));
 	System.out.println("modifyCustomerPw : " + CustomerDAO.modifyCustomerPw(mail, pw, newPw));
-	
 %>

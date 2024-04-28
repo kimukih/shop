@@ -5,6 +5,7 @@ import java.util.*;
 
 public class CustomerDAO {
 	
+	// 회원 비밀번호를 변경하는 DAO
 	public static boolean modifyCustomerPw(String mail, String pw, String newPw) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -28,6 +29,7 @@ public class CustomerDAO {
 		return modifyCustomerPw;
 	}
 	
+	// 회원 비밀번호를 체크하는 DAO
 	public static boolean pwCheck(String mail, String pw) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -50,7 +52,8 @@ public class CustomerDAO {
 		conn.close();
 		return pwCheck;
 	}
-		
+	
+	// 회원 정보 중 이름을 가져오는 DAO
 	public static HashMap<String, Object> getCusName(String name) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -75,6 +78,7 @@ public class CustomerDAO {
 		return cusName;
 	}
 	
+	// 회원 상세 정보를 가져오는 DAO
 	public static ArrayList<HashMap<String, Object>> getCustomerOne(String mail) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -106,6 +110,7 @@ public class CustomerDAO {
 		return customerOne;
 	}
 	
+	// 회원의 개인 정보를 가져오는 DAO
 	public static ArrayList<HashMap<String, Object>> getCustomerInfo(String mail) throws Exception {
 			
 			Connection conn = DBHelper.getConnection();
@@ -135,6 +140,7 @@ public class CustomerDAO {
 			return customerInfo;
 	}
 	
+	// 회원 로그인 DAO
 	public static HashMap<String, String> customerLogin(String mail, String pw) throws Exception{
 		
 		HashMap<String, String> customerLogin = null;
@@ -167,6 +173,7 @@ public class CustomerDAO {
 		return customerLogin;
 	}
 	
+	// 회원 정보를 수정하는 DAO
 	public static boolean updateCustomer(String mail, String pw, String name, String birth, String gender) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -196,6 +203,7 @@ public class CustomerDAO {
 		return updateCustomer;
 	}
 	
+	// 회원가입 DAO
 	public static boolean addCustomer(String mail, String pw, String name, String birth, String gender) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -224,6 +232,7 @@ public class CustomerDAO {
 		return addCustomer;
 	}
 	
+	// 회원가입 ID 충복체크 DAO
 	public static boolean checkId(String mail) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -247,6 +256,7 @@ public class CustomerDAO {
 		return checkId;
 	}
 	
+	// 회원탈퇴 DAO
 	public static boolean deleteCustomer(String mail, String pw) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();

@@ -14,6 +14,7 @@
 	return;
 }
 %>
+
 <%
 	// 요청값 분석
 	String mail = request.getParameter("mail");
@@ -43,23 +44,4 @@
 	
 	// DAO 디버깅 코드
 	System.out.println("updateCustomer : " + CustomerDAO.updateCustomer(mail, pw, name, birth, gender));
-	
-	/*
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	
-	String updateCustomerSql = "UPDATE customer SET name = ?, birth = ?, gender = ?, update_date = NOW() WHERE mail = ? AND pw = PASSWORD(?)";
-	PreparedStatement updateCustomerStmt = null;
-	
-	updateCustomerStmt = conn.prepareStatement(updateCustomerSql);
-	updateCustomerStmt.setString(1, name);
-	updateCustomerStmt.setString(2, birth);
-	updateCustomerStmt.setString(3, gender);
-	updateCustomerStmt.setString(4, mail);
-	updateCustomerStmt.setString(5, pw);
-	System.out.println("updateCustomerStmt : " + updateCustomerStmt);
-	
-	int updateCustomerRow = updateCustomerStmt.executeUpdate();
-	*/
-	
 %>

@@ -6,6 +6,7 @@ import java.util.*;
 // emp 테이블을 CRUD하는 STATIC 메서드의 컨테이너
 public class EmpDAO {
 	
+	// 관리자 계정의 비밀번호를 체크하는 DAO
 	public static boolean empPwCheck(String empId, String empPw) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -28,7 +29,7 @@ public class EmpDAO {
 		return pwCheck;
 	}
 	
-	
+	// 관리자 계정 비밀번호를 변경하는 DAO
 	public static boolean modifyEpmPw(String empId, String empPw, String newEmpPw) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -52,6 +53,7 @@ public class EmpDAO {
 		return modifyEmpPw;
 	}
 	
+	// 관리자 계정을 추가하는 DAO
 	public static int insertEmp(
 			String empId,
 			String empPw,
@@ -85,6 +87,7 @@ public class EmpDAO {
 	// String empId, String empPw : 로그인 폼에서 사용자가 입력한 ID/PW
 	
 	// 호출코드 : HashMap<String, Object> m = EmpDAO.empLogin("admin", "1234");
+	// 관리자 로그인 DAO
 	public static HashMap<String, Object> empLogin(String empId, String empPw) throws Exception{
 		
 		// 세션으로 사용될 HashMap변수 resultMap
@@ -112,7 +115,7 @@ public class EmpDAO {
 		conn.close();
 		return resultMap;
 	}
-	// empList - empCnt 가져오기
+	// 관리자 리스트 페이징을 위해 관리자 목록의 총 개수를 가져오는 DAO
 	public static int getEmpCnt() throws Exception {
 			
 			Connection conn = DBHelper.getConnection();
@@ -129,11 +132,12 @@ public class EmpDAO {
 			return empCnt;
 		}
 	
+	// 관리자 리스트의 정보를 가져오는 DAO
 	public static ArrayList<HashMap<String, Object>> getEmpList(
-			
-			int startRow,
-			int rowPerPage
-			) throws Exception{
+		int startRow,
+		int rowPerPage
+		) throws Exception{
+		
 		Connection conn = DBHelper.getConnection();
 		
 		String empListSql = "SELECT emp_id empId, emp_name empName, grade, emp_job empJob, hire_date hireDate, active FROM emp ORDER BY active, hire_date DESC LIMIT ?, ?";
@@ -164,6 +168,7 @@ public class EmpDAO {
 		return list;
 	}
 	
+	// 관리자 활동 상태를 변경하는 DAO
 	public static boolean modifyEmpActive(String empId, String active) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -196,6 +201,7 @@ public class EmpDAO {
 		return modifyEmpActive;
 	}
 	
+	// 관리자 상세 정보를 가져오는 DAO
 	public static ArrayList<HashMap<String, Object>> getEmpListOne(String empId) throws Exception{
 		
 		Connection conn = DBHelper.getConnection();
@@ -223,6 +229,7 @@ public class EmpDAO {
 		return empListOne;
 	}
 	
+	// 관리자 상세 정보를 변경하는 DAO
 	public static boolean updateEmpOne(String empName, String empJob, int grade, String empId, String empPw) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();

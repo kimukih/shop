@@ -32,22 +32,4 @@
 	
 	// DAO 디버깅 코드
 	System.out.println("addCustomer : " + CustomerDAO.addCustomer(mail, pw, name, birth, gender));
-	
-	/*
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	
-	String addCustomerSql = "INSERT INTO customer(mail, pw, name, birth, gender) VALUES(?, PASSWORD(?), ?, ?, ?)";
-	PreparedStatement addCustomerStmt = null;
-	
-	addCustomerStmt = conn.prepareStatement(addCustomerSql);
-	addCustomerStmt.setString(1, mail);
-	addCustomerStmt.setString(2, pw);
-	addCustomerStmt.setString(3, name);
-	addCustomerStmt.setString(4, birth);
-	addCustomerStmt.setString(5, gender);
-	System.out.println("addCustomerStmt : " + addCustomerStmt);
-	
-	int addCustomerRow = addCustomerStmt.executeUpdate();
-	*/
 %>

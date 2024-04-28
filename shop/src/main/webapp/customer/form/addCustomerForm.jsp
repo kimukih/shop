@@ -10,7 +10,6 @@
 		response.sendRedirect("/shop/customer/goodsList.jsp");
 		return;
 	}
-
 %>
 
 <%

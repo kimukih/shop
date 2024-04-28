@@ -26,31 +26,4 @@
 	
 	// DAO 디버깅 코드
 	System.out.println("checkId : " + CustomerDAO.checkId(mail));
-	
-	/*
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	
-	String checkIdSql = "SELECT mail FROM customer WHERE mail = ?";
-	PreparedStatement checkIdStmt = null;
-	ResultSet checkIdRs = null;
-	
-	checkIdStmt = conn.prepareStatement(checkIdSql);
-	checkIdStmt.setString(1, mail);
-	System.out.println("checkIdStmt : " + checkIdStmt);
-	
-	checkIdRs = checkIdStmt.executeQuery();
-	
-	if(checkIdRs.next()){
-		// 중복된 ID가 있는 경우
-		System.out.println("중복된 ID 입니다.");
-		String errMsg = URLEncoder.encode("중복된 메일 주소 입니다. 다른 이메일 주소를 사용해주세요.", "UTF-8");
-		response.sendRedirect("/shop/customer/form/addCustomerForm.jsp?mailCheck=" + mail + "&errMsg=" + errMsg);
-	}else{
-		// 중복된 ID가 없는 경우
-		System.out.println("사용할 수 있는 ID 입니다.");
-		String sucMsg = URLEncoder.encode("사용 가능한 이메일 주소 입니다.", "UTF-8");
-		response.sendRedirect("/shop/customer/form/addCustomerForm.jsp?mailCheck=" + mail + "&sucMsg=" + sucMsg);
-	*/
-	
 %>

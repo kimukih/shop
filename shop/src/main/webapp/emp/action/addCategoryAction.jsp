@@ -32,13 +32,4 @@
 	
 	// DAO 디버깅 코드
 	System.out.println("addCategory : " + CategoryDAO.addCategory(category));
-	
-	/*
-	String addCategorySql = "INSERT INTO category(category) VALUES(?)";
-	PreparedStatement addCategoryStmt = null;
-	
-	addCategoryStmt = conn.prepareStatement(addCategorySql);
-	addCategoryStmt.setString(1, category);
-	System.out.println("addCategoryStmt : " + addCategoryStmt);
-	*/
 %>

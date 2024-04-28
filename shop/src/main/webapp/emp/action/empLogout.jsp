@@ -4,7 +4,6 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="java.net.URLEncoder"%>
 <%
-		session.invalidate();
-		response.sendRedirect("/shop/emp/form/empLoginForm.jsp");
-	
+	session.invalidate();
+	response.sendRedirect("/shop/emp/form/empLoginForm.jsp");
 %>

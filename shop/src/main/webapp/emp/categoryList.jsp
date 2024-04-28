@@ -15,27 +15,6 @@
 
 <%
 	ArrayList<HashMap<String, String>> categoryList = CategoryDAO.getCategoryList();
-
-	/*
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	
-	String categoryListSql = "SELECT category, create_date createDate FROM category";
-	PreparedStatement categoryListStmt = null;
-	ResultSet categoryListRs = null;
-	
-	categoryListStmt = conn.prepareStatement(categoryListSql);
-	categoryListRs = categoryListStmt.executeQuery();
-	
-	ArrayList<HashMap<String, String>> list = new ArrayList<>();
-	while(categoryListRs.next()){
-		HashMap<String, String> m = new HashMap<>();
-		m.put("category", categoryListRs.getString("category"));
-		m.put("createDate", categoryListRs.getString("createDate"));
-		
-		list.add(m);
-	}
-	*/
 	
 	// DAO 디버깅 코드
 	System.out.println("categoryList : " + CategoryDAO.getCategoryList());

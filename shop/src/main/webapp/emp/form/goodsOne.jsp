@@ -32,7 +32,6 @@
 	System.out.println("keyword : " + keyword);
 	System.out.println("category : " + category);
 	System.out.println("goodsNo : " + goodsNo);
-	
 %>
 
 <% 

@@ -5,6 +5,7 @@ import java.util.*;
 
 public class CommentDAO {
 	
+	// 상품 리뷰를 추가하는 DAO
 	public static boolean addGoodsComment(int ordersNo, int goodsNo, String mail, String name, int score, String comment) throws Exception{
 		
 		Connection conn = DBHelper.getConnection();
@@ -33,6 +34,7 @@ public class CommentDAO {
 
 	}
 	
+	// 상품 리뷰 리스트를 가져오는 DAO
 	public static ArrayList<HashMap<String, Object>> getGoodsCommentList(int goodsNo, int startRow, int rowPerPage) throws Exception{
 		
 		Connection conn = DBHelper.getConnection();
@@ -61,6 +63,7 @@ public class CommentDAO {
 		return goodsCommentList;
 	}
 	
+	// 해당 상품의 리뷰 작성 여부를 판단하는 DAO
 	public static boolean checkGoodsComment(int ordersNo) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -82,6 +85,7 @@ public class CommentDAO {
 		return checkGoodsComment;
 	}
 	
+	// 상품 리뷰를 삭제하는 DAO
 	public static boolean deleteGoodsComment(int ordersNo) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();
@@ -103,6 +107,7 @@ public class CommentDAO {
 		return deleteGoodsComment;
 	}
 	
+	// 상품 리뷰 페이징을 위해 상품리뷰의 전체 개수를 가져오는 DAO
 	public static int getTotalGoodsComment(int goodsNo) throws Exception {
 		
 		Connection conn = DBHelper.getConnection();

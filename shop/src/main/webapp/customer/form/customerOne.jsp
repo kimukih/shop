@@ -27,22 +27,6 @@
 	
 	// DAO 디버깅 코드
 	System.out.println("customerOne : " + CustomerDAO.getCustomerOne(mail));
-	
-	/*
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	
-	String customerOneSql = "SELECT mail, name, birth, gender, update_date updateDate, create_date createDate FROM customer WHERE mail = ?";
-	PreparedStatement customerOneStmt = null;
-	ResultSet customerOneRs = null;
-	
-	customerOneStmt = conn.prepareStatement(customerOneSql);
-	customerOneStmt.setString(1, mail);
-	System.out.println("customerOneStmt : " + customerOneStmt);
-	
-	customerOneRs = customerOneStmt.executeQuery();
-	*/
-	
 %>
 <!DOCTYPE html>
 <html>
