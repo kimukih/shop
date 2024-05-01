@@ -6,6 +6,84 @@ import java.util.*;
 // emp 테이블을 CRUD하는 STATIC 메서드의 컨테이너
 public class EmpDAO {
 	
+	// 관리자 회원가입 DAO
+		public static boolean addEmp(String empId, String empPw, String empName, String empJob, String hireDate) throws Exception {
+			
+			Connection conn = DBHelper.getConnection();
+			
+			boolean addEmp;
+			
+			String addEmpSql = "INSERT INTO emp(emp_id, emp_pw, emp_name, emp_job, hire_date) VALUES(?, PASSWORD(?), ?, ?, ?)";
+			PreparedStatement addEmpStmt = null;
+			
+			addEmpStmt = conn.prepareStatement(addEmpSql);
+			addEmpStmt.setString(1, empId);
+			addEmpStmt.setString(2, empPw);
+			addEmpStmt.setString(3, empName);
+			addEmpStmt.setString(4, empJob);
+			addEmpStmt.setString(5, hireDate);
+			
+			int addEmpRow = addEmpStmt.executeUpdate();
+			
+			if(addEmpRow == 1){
+				addEmp = true;
+			}else{
+				addEmp = false;
+			}
+			
+			conn.close();
+			return addEmp;
+		}
+		
+	// 회원가입 ID 충복체크 DAO
+	public static boolean checkEmpId(String empId) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		boolean checkEmpId;
+		
+		String checkEmpIdSql = "SELECT emp_id empId FROM emp WHERE emp_id = ?";
+		PreparedStatement checkEmpIdStmt = null;
+		ResultSet checkEmpIdRs = null;
+		
+		checkEmpIdStmt = conn.prepareStatement(checkEmpIdSql);
+		checkEmpIdStmt.setString(1, empId);
+		
+		checkEmpIdRs = checkEmpIdStmt.executeQuery();
+		if(checkEmpIdRs.next()) {
+			checkEmpId = true;
+		}else {
+			checkEmpId = false;
+		}
+		
+		conn.close();
+		return checkEmpId;
+	}
+	
+	// 관리자 정보 중 이름을 가져오는 DAO
+	public static HashMap<String, Object> getEmpName(String empName) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		HashMap<String, Object> getEmpName = new HashMap<>();
+		
+		String empNameSql = "SELECT emp_name empName FROM emp WHERE emp_name = ?";
+		PreparedStatement empNameStmt = null;
+		ResultSet empNameRs = null;
+		
+		empNameStmt = conn.prepareStatement(empNameSql);
+		empNameStmt.setString(1, empName);
+		System.out.println("cusNameStmt : " + empNameStmt);
+		
+		empNameRs = empNameStmt.executeQuery();
+		
+		if(empNameRs.next()) {
+			getEmpName.put("empName", empNameRs.getString("empName"));
+		}
+		
+		conn.close();
+		return getEmpName;
+	}
+	
 	// 관리자 계정의 비밀번호를 체크하는 DAO
 	public static boolean empPwCheck(String empId, String empPw) throws Exception {
 		

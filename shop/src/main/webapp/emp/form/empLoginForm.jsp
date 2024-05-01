@@ -91,7 +91,7 @@
 				</table>
 				<br>
 					<button type="submit" class="btn btn-outline-dark">로그인</button>
-					<a class="btn btn-outline-dark" href="">회원가입</a>
+					<a class="btn btn-outline-dark" href="/shop/emp/form/addEmpForm.jsp">회원가입</a>
 				</form>
 				<br>
 				<%
