@@ -3,14 +3,6 @@
 <%@ page import="java.net.URLEncoder"%>
 <%@ page import="shop.dao.EmpDAO"%>
 <%
-	//로그인 인증 분기
-	if(session.getAttribute("loginEmp") != null){
-		response.sendRedirect("/shop/emp/empList.jsp");
-		return;
-	}
-%>
-
-<%
 	// 요청값 분석
 	String empId = request.getParameter("empId");
 	String active = request.getParameter("active");

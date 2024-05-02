@@ -142,7 +142,7 @@
 							<td><%=(String)(m.get("hireDate"))%></td>
 					<%
 							HashMap<String, Object> sm = (HashMap<String, Object>)(session.getAttribute("loginEmp"));
-								if((Integer)(sm.get("grade")) > 0){
+							if((Integer)(sm.get("grade")) > 0){
 					%>
 								
 								<td><a class="btn btn-outline-dark" href="/shop/emp/action/modifyEmpActive.jsp?empId=<%=(String)(m.get("empId"))%>&active=<%=(String)(m.get("active"))%>"><%=(String)(m.get("active"))%></a></td>					
