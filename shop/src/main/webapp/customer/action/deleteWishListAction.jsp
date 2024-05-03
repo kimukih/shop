@@ -29,12 +29,9 @@
 	
 	if(deleteWishList){	// 장바구니 상품 삭제 성공
 		System.out.println("장바구니에서 상품을 성공적으로 삭제하였습니다.");
-		response.sendRedirect("/shop/customer/form/wishList.jsp?mail=" + mail + "&goodsNo=" + goodsNo);
+		response.sendRedirect("/shop/customer/form/wishList.jsp?mail=" + mail + "&currentPage=1");
 	}else{				// 장바구니 상품 삭제 실패
 		System.out.println("장바구니 상품 삭제에 실패하였습니다.");
-		response.sendRedirect("/shop/customer/form/wishList.jsp?mail=" + mail + "&goodsNo=" + goodsNo);
+		response.sendRedirect("/shop/customer/form/wishList.jsp?mail=" + mail + "&currentPage=1");
 	}
-	
-	// DAO 디버깅 코드
-	System.out.println("deleteWishList : " + WishListDAO.deleteWishList(mail, goodsNo));
 %>

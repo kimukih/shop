@@ -39,8 +39,4 @@
 		System.out.println("상품을 장바구니에 담는데 실패하였습니다.");
 		response.sendRedirect("/shop/customer/form/goodsOne.jsp?goodsNo=" + goodsNo + "&currentPage=1");
 	}
-	
-	// DAO 디버깅 코드
-	System.out.println("addWishList : " + WishListDAO.addWishList(mail, goodsNo, goodsImg, category, goodsTitle, goodsPrice));
-	
 %>

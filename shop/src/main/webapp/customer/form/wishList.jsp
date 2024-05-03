@@ -58,6 +58,7 @@
 	if(totalWishList % rowPerPage != 0){
 		lastPage = (totalWishList / rowPerPage) + 1;
 	}
+	System.out.println("lastPage : " + lastPage);
 	
 	// 카테고리에 해당하는 상품리스트를 가져오는 코드 작성
 	ArrayList<HashMap<String, Object>> getGoodsList = GoodsDAO.getGoodsList(category, keyword, startRow, rowPerPage);
@@ -293,6 +294,10 @@
 						<li class="page-item"><a class="page-link" href="/shop/customer/form/wishList.jsp?mail=<%=mail%>&currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
 						<li class="page-item"><a class="page-link" href="/shop/customer/form/wishList.jsp?mail=<%=mail%>&currentPage=<%=lastPage%>">&raquo;</a></li>
 					<%
+					}else if(lastPage == 1){
+					%>
+					<li class="page-item"><a class="page-link" href="/shop/customer/form/wishList.jsp?mail=<%=mail%>&currnetPage=<%=lastPage%>"><%=lastPage%></a></li>
+					<%
 					}else if(currentPage == 1){
 					%>
 					<li class="page-item"><a class="page-link" href="/shop/customer/form/wishList.jsp?mail=<%=mail%>&currentPage=<%=currentPage%>"><%=currentPage%></a></li>
@@ -307,6 +312,7 @@
 					<%
 					}
 					%>
+					
 				</ul>
 			</nav>
 			<!-- 메인 내용 끝 -->
