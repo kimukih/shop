@@ -29,7 +29,4 @@
 		System.out.println("회원가입에 실패하였습니다.");
 		response.sendRedirect("/shop/customer/form/addCustomerForm.jsp");
 	}
-	
-	// DAO 디버깅 코드
-	System.out.println("addCustomer : " + CustomerDAO.addCustomer(mail, pw, name, birth, gender));
 %>
