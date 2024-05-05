@@ -4,6 +4,26 @@ import java.sql.*;
 import java.util.*;
 
 public class OrdersDAO {
+	
+	// ordersInfoList의 총 개수를 가져오는 DAO
+	public static int getTotalOrdersInfo(String mail) throws Exception {
+		
+		Connection conn = DBHelper.getConnection();
+		
+		int totalOrdersInfo = 0;
+		
+		String sql = "SELECT COUNT(*) cnt FROM orders WHERE mail = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, mail);
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			totalOrdersInfo = rs.getInt("cnt");
+		}
+		
+		conn.close();
+		return totalOrdersInfo;
+	}
 
 	// 상품 주문을 추가하는 DAO
 	public static boolean createOrders(String mail, int goodsNo, String goodsTitle, int totalAmount, int totalPrice, String addressName, String address, String phoneNumber) throws Exception {
@@ -63,15 +83,17 @@ public class OrdersDAO {
 	}
 	
 	// 주문 목록 정보를 가져오는 DAO
-	public static ArrayList<HashMap<String, Object>> getOrdersListInfo(String mail) throws Exception{
+	public static ArrayList<HashMap<String, Object>> getOrdersListInfo(String mail, int startRow, int rowPerPage) throws Exception{
 		
 		Connection conn = DBHelper.getConnection();
 		
 		ArrayList<HashMap<String, Object>> ordersListInfo = new ArrayList<HashMap<String, Object>>();
 		
-		String sql = "SELECT orders_no ordersNo, goods_no goodsNo, goods_title goodsTitle, address_name addressName, address, phone_number phoneNumber, state FROM orders WHERE mail= ?";
+		String sql = "SELECT orders_no ordersNo, goods_no goodsNo, goods_title goodsTitle, address_name addressName, address, phone_number phoneNumber, state FROM orders WHERE mail= ? LIMIT ?, ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, mail);
+		stmt.setInt(2, startRow);
+		stmt.setInt(3, rowPerPage);
 		
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {

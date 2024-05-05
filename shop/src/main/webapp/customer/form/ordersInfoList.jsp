@@ -18,18 +18,33 @@
 	String addressName = request.getParameter("addressName");
 	String address = request.getParameter("address");
 	String phoneNumber = request.getParameter("phoneNumber");
+	int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 	
 	// 파라미터 디버깅 코드
 	System.out.println("mail : " + mail);
 	System.out.println("addressName : " + addressName);
 	System.out.println("address : " + address);
 	System.out.println("phoneNumber : " + phoneNumber);
+	System.out.println("currentPage : " + currentPage);
+	
+	// ordersInfoList의 총 개수를 가져오기
+	int totalOrdersInfo = OrdersDAO.getTotalOrdersInfo(mail);
+	
+	// 상품 주문 리스트 페이징 변수
+	int rowPerPage = 8;
+	int startRow = (currentPage - 1) * rowPerPage;
+	
+	// 마지막 페이지
+	int lastPage = totalOrdersInfo / rowPerPage;
+	if(totalOrdersInfo % rowPerPage != 0){
+		lastPage = (totalOrdersInfo / rowPerPage) + 1;
+	}
 	
 	// 주문 정보 가져오기
-	ArrayList<HashMap<String, Object>> ordersListInfo = OrdersDAO.getOrdersListInfo(mail);
+	ArrayList<HashMap<String, Object>> ordersListInfo = OrdersDAO.getOrdersListInfo(mail, startRow, rowPerPage);
 	
 	// DAO 디버깅 코드
-	System.out.println("ordersListInfo : " + OrdersDAO.getOrdersListInfo(mail));
+	System.out.println("ordersListInfo : " + OrdersDAO.getOrdersListInfo(mail, startRow, rowPerPage));
 %>
 <!DOCTYPE html>
 <html>
@@ -167,6 +182,33 @@
 				%>
 				</tr>
 			</table>
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<%
+					if(currentPage > 1 && currentPage < lastPage){
+					%>
+					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=1">&laquo;</a></li>
+					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=currentPage-1%>">&lsaquo;</a></li>
+					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=currentPage%>"><%=currentPage%></a></li>
+					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
+					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=lastPage%>">&raquo;</a></li>
+					<%
+					}else if(currentPage == 1){
+					%>
+						<li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=currentPage%>"><%=currentPage%></a></li>
+					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
+					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=lastPage%>">&raquo;</a></li>
+					<%
+					}else if(currentPage == lastPage){
+					%>
+						<li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=1">&laquo;</a></li>
+					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=currentPage-1%>">&lsaquo;</a></li>
+					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=currentPage%>"><%=currentPage%></a></li>
+					<%
+					}
+					%>
+				</ul>
+			</nav>
 			<!-- 메인 내용 끝 -->
 		</div>
 	</div>
