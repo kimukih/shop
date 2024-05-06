@@ -36,7 +36,4 @@
 		System.out.println("성공적으로 리뷰를 작성하였습니다.");
 		response.sendRedirect("/shop/customer/form/goodsOne.jsp?goodsNo=" + goodsNo + "&currentPage=1");
 	}
-	
-	// DAO 디버깅 코드
-	System.out.println("addGoodsComment : " + CommentDAO.addGoodsComment(ordersNo, goodsNo, mail, name, score, comment));
 %>
