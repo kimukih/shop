@@ -67,6 +67,7 @@
 	if(totalGoodsComment % rowPerPage != 0){
 		lastPage = (totalGoodsComment / rowPerPage) + 1;
 	}
+	System.out.println("lastPage : " + lastPage);
 	
 	// 상품 리뷰 리스트 가져오기
 	ArrayList<HashMap<String, Object>> goodsCommentList = CommentDAO.getGoodsCommentList(goodsNo, startRow, rowPerPage);
@@ -398,11 +399,9 @@
 							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
 							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=lastPage%>">&raquo;</a></li>
 							<%
-							}else if(currentPage == 1){
+							}else if(lastPage == 0){
 							%>
 								<li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=currentPage%>"><%=currentPage%></a></li>
-							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
-							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=lastPage%>">&raquo;</a></li>
 							<%
 							}else if(currentPage == lastPage){
 							%>
@@ -410,10 +409,14 @@
 							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=currentPage-1%>">&lsaquo;</a></li>
 							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=currentPage%>"><%=currentPage%></a></li>
 							<%
-							}
+							}else if(currentPage == 1){
 							%>
-						
-						
+								<li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=currentPage%>"><%=currentPage%></a></li>
+							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
+							    <li class="page-item"><a class="page-link" href="/shop/customer/form/goodsOne.jsp?goodsNo=<%=goodsNo%>&currentPage=<%=lastPage%>">&raquo;</a></li>
+							<%
+							}
+							%>		
 						  </ul>
 						</nav>
 					</div>

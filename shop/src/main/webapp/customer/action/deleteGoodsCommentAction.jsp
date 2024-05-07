@@ -26,10 +26,10 @@
 	
 	if(deleteGoodsComment){
 		System.out.println("리뷰가 성공적으로 삭제되었습니다.");
-		response.sendRedirect("/shop/customer/form/goodsOne.jsp?goodsNo=" + goodsNo);
+		response.sendRedirect("/shop/customer/form/goodsOne.jsp?goodsNo=" + goodsNo + "&currentPage=1");
 	}else{
 		System.out.println("리뷰 삭제에 실패하였습니다.");
-		response.sendRedirect("/shop/customer/form/goodsOne.jsp?goodsNo=" + goodsNo);
+		response.sendRedirect("/shop/customer/form/goodsOne.jsp?goodsNo=" + goodsNo + "&currentPage=1");
 	}
 	
 	// DAO 디버깅 코드
