@@ -193,17 +193,21 @@
 					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
 					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=lastPage%>">&raquo;</a></li>
 					<%
-					}else if(currentPage == 1){
+					}else if(lastPage == 1){
 					%>
-						<li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=currentPage%>"><%=currentPage%></a></li>
-					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
-					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=lastPage%>">&raquo;</a></li>
+						<li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=lastPage%>"><%=lastPage%></a></li>
 					<%
 					}else if(currentPage == lastPage){
 					%>
 						<li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=1">&laquo;</a></li>
 					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=currentPage-1%>">&lsaquo;</a></li>
 					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=currentPage%>"><%=currentPage%></a></li>
+					<%
+					}else if(currentPage == 1){
+					%>
+						<li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=currentPage%>"><%=currentPage%></a></li>
+					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=currentPage+1%>">&rsaquo;</a></li>
+					    <li class="page-item"><a class="page-link" href="/shop/customer/form/ordersInfoList.jsp?mail=<%=mail%>&currentPage=<%=lastPage%>">&raquo;</a></li>
 					<%
 					}
 					%>
